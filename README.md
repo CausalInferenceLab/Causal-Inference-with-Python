@@ -1,12 +1,13 @@
 # Python으로 하는 인과추론 : 개념부터 실습까지
 
-## 한국어 번역 
+## Causal Inference for The Brave and True 책 소개 
 
 안녕하세요. 가짜연구소 Causal Inference 팀입니다.   
-이 책은 Matheus Facure (Nubank Data Scientist)의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)을 한국어로 번역한 자료입니다. 해당 책은 인과추론에 대한 기본 개념과 Python 실습, 나아가 최신 사례까지 다루고 있습니다.   
-가짜연구소 Causal Inference 팀은 전문 번역가가 아닌, 데이터분석가/과학자/연구자로 구성 되어 있습니다. 따라서, 번역 과정에서 발생할 수 있는 문제점에 대해 미리 사과의 말씀드리며 오류에 대해 언제든 피드백 주시면 개선하도록 하겠습니다.   
-이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 깊은 감사의 말씀을 전합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.
+이 책은 Matheus Facure (Nubank Data Scientist)의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)을 한국어로 번역한 자료입니다. 해당 책은 인과추론에 대한 기본 개념과 Python 실습, 나아가 최신 사례까지 다루고 있습니다.
 <br>
+가짜연구소 Causal Inference 팀은 전문 번역가가 아닌, 데이터분석가/과학자/연구자로 구성 되어 있습니다. 따라서, 번역 과정에서 발생할 수 있는 문제점에 대해 미리 사과의 말씀드리며 오류에 대해 언제든 피드백 주시면 개선하도록 하겠습니다.   
+<br>
+이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 깊은 감사의 말씀을 전합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.
 → 가짜연구소 Team Causal Inference ←
 
 
@@ -25,10 +26,22 @@
 * [Causal Inference Book](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/)
 
 
-
-
+## 한국어 번역 일정 
 
 Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 같은 일정에 따라 진행될 예정입니다. 
+
+| 순서 | 세미나 | 과제 |커리큘럼 내용 |
+| ------ | -- | -- |----------- |
+| 1 | ☑️ | ☑️ | iOS 기초, H.I.G를 통한 컴포넌트의 이해, 화면 전환 |
+| 2 | ☑️ | ☑️ | Autolayout을 통한 기초 UI구성, Scroll View의 이해 |
+| 3 | ☑️ | ☑️ | TableView, CollectionView, 데이터 전달 방식 |
+| 4 | ☑️ | ☑️ | Cocoapods & Networking + 솝커톤 전 보충 세미나 |
+| 5 |  |  |디자인 합동 세미나 |
+| 6 |  |  |서버 합동 세미나 + 솝커톤  |
+| 7 |  |  |클론 코딩을 통한 실전 UI 구성, Animation, 통신 보충  |
+| 8 |  |  |e기획 경선 + 앱잼 전 보충 세미나 + 앱스토어 배포 가이드  |
+
+
 
 
 
