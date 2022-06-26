@@ -12,10 +12,7 @@
 이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 감사의 말씀을 전합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.   
 또한, 번역과 실습자료를 만들기 위해 같이 고생해준 Causal Inference 팀 멤버들에게도 진심으로 감사드립니다!   
 
-<br>
-→ 가짜연구소 Team Causal Inference ←
 
-<br>
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 
 
