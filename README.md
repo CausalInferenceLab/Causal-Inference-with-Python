@@ -11,7 +11,6 @@
 → 가짜연구소 Team Causal Inference ←
 
 
-![img](./causal-inference-for-the-brave-and-true/data/img/brave-and-true.png)
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 
 
@@ -31,12 +30,12 @@
 
 Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 같은 일정에 따라 진행될 예정입니다. 
 
-| 순서 | 완료여부 | Chapter | 날짜 |
-| ------ | - |----------- |------|
-| 1 | ☑️ | 1. 인과추론 입문 (Introduction To Causality) | 2022-07-03 |
-| 2 |  | 2. 무작위 실험 (Randomised Experiments) | |
-| 3 |  | 3. 통계 리뷰 : 가장 위험한 방정식 (Stats Review: The Most Dangerous Equation) | |
-| 4 |  | 4. 그래프 인과 모델 (Graphical Causal Models) | |
-| 5 |  | 5. 선형 회귀의 불합리한 효과 (The Unreasonable Effectiveness of Linear Regression) | |
-| 6 |  | 6. 그룹화된/더미 변수를 이용한 회귀분석 (Grouped and Dummy Regression) | |
+| 순서 | 완료여부 | Chapter | 완료일 |
+| ------ | -- |----------- |------|
+| 1 | ☑️ | 1. 인과추론 입문 | 2022-07-03 |
+| 2 |  | 2. 무작위 실험 | |
+| 3 |  | 3. 통계 리뷰 : 가장 위험한 방정식 | |
+| 4 |  | 4. 그래프 인과 모델 | |
+| 5 |  | 5. 선형 회귀의 불합리한 효과 | |
+| 6 |  | 6. 그룹화된/더미 변수를 이용한 회귀분석 | |
 
