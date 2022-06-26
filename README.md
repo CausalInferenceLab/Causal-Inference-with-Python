@@ -1,15 +1,20 @@
 # Python으로 하는 인과추론 : 개념부터 실습까지
 
-## Causal Inference for The Brave and True 책 소개 
+## Causal Inference for The Brave and True 책 번역 
 
 안녕하세요. 가짜연구소 Causal Inference 팀입니다.   
+<br> 
 이 책은 Matheus Facure (Nubank Data Scientist)의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)을 한국어로 번역한 자료입니다. 이 책은 인과추론에 대한 기본 개념과 Python 실습, 나아가 최신 사례까지 다루고 있습니다. 
+
 <br>
 가짜연구소 Causal Inference 팀은 전문 번역가가 아닌, 데이터분석가/과학자/연구자로 구성 되어 있습니다. 따라서, 한국어 번역 과정에서 이상하거나 어색한 부분이 발생할 수 있습니다. 해당 부분에 대해서는 피드백 주시면 개선하도록 하겠습니다. 
+
 <br>
 이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 감사의 말씀을 전합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.
 <br>
-→ 가짜연구소 Team Causal Inference ←
+
+
+→ **가짜연구소 Team Causal Inference** ←
 
 
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
