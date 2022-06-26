@@ -25,21 +25,20 @@
 * [Mastering 'Metrics](https://www.masteringmetrics.com/)
 * [Causal Inference Book](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/)
 
+<br>
 
 ## 한국어 번역 일정 
 
 Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 같은 일정에 따라 진행될 예정입니다. 
 
-| 순서 | 세미나 | 과제 |커리큘럼 내용 |
-| ------ | -- | -- |----------- |
-| 1 | ☑️ | ☑️ | iOS 기초, H.I.G를 통한 컴포넌트의 이해, 화면 전환 |
-| 2 | ☑️ | ☑️ | Autolayout을 통한 기초 UI구성, Scroll View의 이해 |
-| 3 | ☑️ | ☑️ | TableView, CollectionView, 데이터 전달 방식 |
-| 4 | ☑️ | ☑️ | Cocoapods & Networking + 솝커톤 전 보충 세미나 |
-| 5 |  |  |디자인 합동 세미나 |
-| 6 |  |  |서버 합동 세미나 + 솝커톤  |
-| 7 |  |  |클론 코딩을 통한 실전 UI 구성, Animation, 통신 보충  |
-| 8 |  |  |e기획 경선 + 앱잼 전 보충 세미나 + 앱스토어 배포 가이드  |
+| 순서 | 완료여부 | Chapter | 날짜 |
+| ------ | -- |----------- |
+| 1 | ☑️ | 1. 인과추론 입문 (Introduction To Causality) | 2022-07-03 |
+| 2 |  | 2. 무작위 실험 (Randomised Experiments) |
+| 3 |  | 3. 통계 리뷰 : 가장 위험한 방정식 (Stats Review: The Most Dangerous Equation) |
+| 4 |  | 4. 그래프 인과 모델 (Graphical Causal Models) |
+| 5 |  | 5. 선형 회귀의 불합리한 효과 (The Unreasonable Effectiveness of Linear Regression) |
+| 6 |  | 6. 그룹화된/더미 변수를 이용한 회귀분석 (Grouped and Dummy Regression)
 
 
 
