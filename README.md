@@ -12,14 +12,13 @@
 이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 감사의 말씀을 전합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.   
 
 <br>
-→ 가짜연구소 Team Causal Inference ←
+   → 가짜연구소 Team Causal Inference ←
 
 
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 
 
-이 책은 Joshua Angrist, Alberto Abadie, Christopher Walters, Miguel Hernan 및 Jamie Robins 등을 포함한 많은 연구자들의 계량 경제학 수업과 바탕으로 하고 있으며, 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔습니다.
-아래 
+이 책은 Joshua Angrist, Alberto Abadie, Christopher Walters, Miguel Hernan 및 Jamie Robins 등을 포함한 많은 연구자들의 계량 경제학 수업과 바탕으로 하고 있으며, 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔습니다. 이 책을 작성하기 위해 아래 자료/서적을 참고했습니다.
 
 
 * [Cross-Section Econometrics](https://www.aeaweb.org/conference/cont-ed/2017-webcasts)
