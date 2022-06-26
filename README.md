@@ -13,9 +13,9 @@
 또한, 번역과 실습자료를 만들기 위해 같이 고생해준 Causal Inference 팀 멤버들에게도 진심으로 감사드립니다!   
 
 <br>
-→ 가짜연구소 Team Causal Inference ←
+→ 가짜연구소 Team Causal Inference ←   
 
-
+<br>
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 
 
