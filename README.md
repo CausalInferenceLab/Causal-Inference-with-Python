@@ -50,6 +50,6 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 15 | ☑️ | [15. Synthetic Control](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
 | 16 |  | 16. Regression Discontinuity Design | | |
 
-
+<br>
 
 ## Main Contributors
