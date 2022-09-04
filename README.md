@@ -45,11 +45,11 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 10 |  | 10. Matching | | |
 | 11 |  | 11. Propensity Score | | |
 | 12 |  | 12. Doubly Robust Estimation | | |
-| 13 | ☑️ | 13. Difference-in-Differences | | |
+| 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
 | 14 |  | 14. Panel Data and Fixed Effects | | |
-| 15 | ☑️ | 15. Synthetic Control | 2022-09-03 | |
+| 15 | ☑️ | [15. Synthetic Control](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
 | 16 |  | 16. Regression Discontinuity Design | | |
 
 
 
-## Contributors
+## Main Contributors
