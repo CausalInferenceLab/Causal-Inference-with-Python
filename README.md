@@ -33,12 +33,23 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 
 | 순서 | 완료여부 | Chapter | 완료일 | 작성자 |
 | ------ | -- |----------- |------|------|
-| 1 | ☑️ | 1. 인과추론 입문 | 2022-08-20 | 신진수
-| 2 |  | 2. 무작위 실험 | | |
-| 3 |  | 3. 통계 리뷰 : 가장 위험한 방정식 | | |
-| 4 |  | 4. 그래프 인과 모델 | | |
-| 5 |  | 5. 선형 회귀의 불합리한 효과 | | |
-| 6 |  | 6. 그룹화된/더미 변수를 이용한 회귀분석 | | |
+| 1 | ☑️ | [1. Introduction To Causality](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/01-Introduction-To-Causality.ipynb) | 2022-08-20 | [신진수](https://github.com/jsshin2019)
+| 2 |  | 2. Randomised Experiments | | |
+| 3 |  | 3. Stats Review: The Most Dangerous Equation | | |
+| 4 |  | 4. Graphical Causal Models | | |
+| 5 |  | 5. The Unreasonable Effectiveness of Linear Regression | | |
+| 6 |  | 6. Grouped and Dummy Regression | | |
+| 7 |  | 7. Beyond Confounders | | |
+| 8 |  | 8. Instrumental Variables | | |
+| 9 |  | 9. Non Compliance and LATE | | |
+| 10 |  | 10. Matching | | |
+| 11 |  | 11. Propensity Score | | |
+| 12 |  | 12. Doubly Robust Estimation | | |
+| 13 | ☑️ | 13. Difference-in-Differences | | |
+| 14 |  | 14. Panel Data and Fixed Effects | | |
+| 15 | ☑️ | 15. Synthetic Control | 2022-09-03 | |
+| 16 |  | 16. Regression Discontinuity Design | | |
+
 
 
 ## Contributors
