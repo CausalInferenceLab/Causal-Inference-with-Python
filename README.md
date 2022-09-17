@@ -51,5 +51,3 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 16 |  | 16. Regression Discontinuity Design | | |
 
 <br>
-
-## Main Contributors
