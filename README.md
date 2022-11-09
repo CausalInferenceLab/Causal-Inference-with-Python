@@ -42,7 +42,7 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 7 |  | 7. Beyond Confounders | | |
 | 8 |  | 8. Instrumental Variables | | |
 | 9 |  | 9. Non Compliance and LATE | | |
-| 10 |  | 10. Matching | | |
+| 10 |  | [10. Matching] (https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
 | 11 |  | 11. Propensity Score | | |
 | 12 |  | 12. Doubly Robust Estimation | | |
 | 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
