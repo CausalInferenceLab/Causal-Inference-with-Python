@@ -35,14 +35,14 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | ------ | -- |----------- |------|------|
 | 1 | ☑️ | [1. Introduction To Causality](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/01-Introduction-To-Causality.ipynb) | 2022-08-20 | [신진수](https://github.com/jsshin2019)
 | 2 |  | 2. Randomised Experiments | | |
-| 3 |  | 3. Stats Review: The Most Dangerous Equation | | |
+| 3 | ☑️ | [3. Stats Review: The Most Dangerous Equation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/03%20-%20Stats%20Review%20The%20Most%20Dangerous%20Equation.ipynb) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
 | 4 |  | 4. Graphical Causal Models | | |
 | 5 |  | 5. The Unreasonable Effectiveness of Linear Regression | | |
 | 6 |  | 6. Grouped and Dummy Regression | | |
 | 7 |  | 7. Beyond Confounders | | |
 | 8 |  | 8. Instrumental Variables | | |
 | 9 |  | 9. Non Compliance and LATE | | |
-| 10 |  | [10. Matching](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
+| 10 | ☑️ | [10. Matching](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
 | 11 |  | 11. Propensity Score | | |
 | 12 |  | 12. Doubly Robust Estimation | | |
 | 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
