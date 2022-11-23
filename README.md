@@ -37,8 +37,8 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 2 |  | 2. Randomised Experiments | | |
 | 3 | ☑️ | [3. Stats Review: The Most Dangerous Equation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/03%20-%20Stats%20Review%20The%20Most%20Dangerous%20Equation.ipynb) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
 | 4 | ☑️ | [4. Graphical Causal Models](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/04-Graphical-Causal-Models.ipynb) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
-| 5 |  | 5. The Unreasonable Effectiveness of Linear Regression | | |
-| 6 |  | 6. Grouped and Dummy Regression | | |
+| 5 | ☑️ | [5. The Unreasonable Effectiveness of Linear Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb) | 2022-11-23 | [남궁민상](https://github.com/wholmesian) |
+| 6 | ☑️ | [6. Grouped and Dummy Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/06-Grouped-and-Dummy-Regression.ipynb) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
 | 7 |  | 7. Beyond Confounders | | |
 | 8 |  | 8. Instrumental Variables | | |
 | 9 |  | 9. Non Compliance and LATE | | |
@@ -48,6 +48,6 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
 | 14 |  | 14. Panel Data and Fixed Effects | | |
 | 15 | ☑️ | [15. Synthetic Control](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
-| 16 |  | 16. Regression Discontinuity Design | | |
+| 16 | ☑️ | [16. Regression Discontinuity Design](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/16-Regression-Discontinuity-Design.ipynb) | 2022-11-22 | [남궁민상](https://github.com/wholmesian) |
 
 <br>
