@@ -36,7 +36,7 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 1 | ☑️ | [1. Introduction To Causality](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/01-Introduction-To-Causality.ipynb) | 2022-08-20 | [신진수](https://github.com/jsshin2019)
 | 2 |  | 2. Randomised Experiments | | |
 | 3 | ☑️ | [3. Stats Review: The Most Dangerous Equation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/03%20-%20Stats%20Review%20The%20Most%20Dangerous%20Equation.ipynb) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
-| 4 |  | 4. Graphical Causal Models | | |
+| 4 | ☑️ | [4. Graphical Causal Models](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/04-Graphical-Causal-Models.ipynb) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
 | 5 |  | 5. The Unreasonable Effectiveness of Linear Regression | | |
 | 6 |  | 6. Grouped and Dummy Regression | | |
 | 7 |  | 7. Beyond Confounders | | |
