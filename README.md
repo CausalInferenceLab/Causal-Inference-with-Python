@@ -41,10 +41,10 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 6 | ☑️ | [6. Grouped and Dummy Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/06-Grouped-and-Dummy-Regression.ipynb) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
 | 7 |  | 7. Beyond Confounders | | |
 | 8 |  | 8. Instrumental Variables | | |
-| 9 |  | 9. Non Compliance and LATE | | |
+| 9 | ☑️ | [9. Non Compliance and LATE](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/09-Non-Compliance-and-LATE.ipynb) | 2022-11-19 | [김성수](https://github.com/fenzhantw) |
 | 10 | ☑️ | [10. Matching](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
-| 11 |  | 11. Propensity Score | | |
-| 12 |  | 12. Doubly Robust Estimation | | |
+| 11 | ☑️ | [11. Propensity Score](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/11-Propensity%20Score.ipynb) | 2022-11-11 | [김성수](https://github.com/fenzhantw) |
+| 12 | ☑️ | [12. Doubly Robust Estimation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/12-Doubly-Robust-Estimation.ipynb) | 2022-10-28 | [홍성철](https://github.com/chulhongsung) |
 | 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
 | 14 |  | 14. Panel Data and Fixed Effects | | |
 | 15 | ☑️ | [15. Synthetic Control](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
