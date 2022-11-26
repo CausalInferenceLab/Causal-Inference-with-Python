@@ -39,7 +39,7 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 4 | ☑️ | [4. Graphical Causal Models](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/04-Graphical-Causal-Models.ipynb) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
 | 5 | ☑️ | [5. The Unreasonable Effectiveness of Linear Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb) | 2022-11-23 | [남궁민상](https://github.com/wholmesian) |
 | 6 | ☑️ | [6. Grouped and Dummy Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/06-Grouped-and-Dummy-Regression.ipynb) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
-| 7 |  | 7. Beyond Confounders | | |
+| 7 | ☑️  | [7. Beyond Confounders](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/07-Beyond-Confounders.ipynb) | 2022-11-26 | [김상돈](https://github.com/SANGDONKIM) |
 | 8 |  | 8. Instrumental Variables | | |
 | 9 | ☑️ | [9. Non Compliance and LATE](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/09-Non-Compliance-and-LATE.ipynb) | 2022-11-19 | [김성수](https://github.com/fenzhantw) |
 | 10 | ☑️ | [10. Matching](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
