@@ -34,19 +34,19 @@ Causal Inference for The Brave and True에 대한 한국어 번역은 아래와 
 | 순서 | 완료여부 | Chapter | 완료일 | 작성자 |
 | ------ | -- |----------- |------|------|
 | 1 | ☑️ | [1. Introduction To Causality](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/01-Introduction-To-Causality.ipynb) | 2022-08-20 | [신진수](https://github.com/jsshin2019)
-| 2 |  | 2. Randomised Experiments | | |
+| 2 | ☑️ | [2. Randomised Experiments](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/02-Randomised-Experiments.ipynb) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
 | 3 | ☑️ | [3. Stats Review: The Most Dangerous Equation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/03%20-%20Stats%20Review%20The%20Most%20Dangerous%20Equation.ipynb) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
 | 4 | ☑️ | [4. Graphical Causal Models](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/04-Graphical-Causal-Models.ipynb) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
 | 5 | ☑️ | [5. The Unreasonable Effectiveness of Linear Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb) | 2022-11-23 | [남궁민상](https://github.com/wholmesian) |
 | 6 | ☑️ | [6. Grouped and Dummy Regression](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/06-Grouped-and-Dummy-Regression.ipynb) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
 | 7 | ☑️  | [7. Beyond Confounders](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/07-Beyond-Confounders.ipynb) | 2022-11-26 | [김상돈](https://github.com/SANGDONKIM) |
-| 8 |  | 8. Instrumental Variables | | |
+| 8 | ☑️ | [8. Instrumental Variables](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/08-Instrumental-variables.ipynb) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
 | 9 | ☑️ | [9. Non Compliance and LATE](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/09-Non-Compliance-and-LATE.ipynb) | 2022-11-19 | [김성수](https://github.com/fenzhantw) |
 | 10 | ☑️ | [10. Matching](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) 
 | 11 | ☑️ | [11. Propensity Score](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/11-Propensity%20Score.ipynb) | 2022-11-11 | [김성수](https://github.com/fenzhantw) |
 | 12 | ☑️ | [12. Doubly Robust Estimation](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/12-Doubly-Robust-Estimation.ipynb) | 2022-10-28 | [홍성철](https://github.com/chulhongsung) |
 | 13 | ☑️ | [13. Difference-in-Differences](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2019) |
-| 14 |  | 14. Panel Data and Fixed Effects | | |
+| 14 | ☑️ | [14. Panel Data and Fixed Effects](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/14-Panel-Data-and-Fixed-Effects.ipynb) | 2022-11-26 | [신진수](https://github.com/jsshin2019) |
 | 15 | ☑️ | [15. Synthetic Control](https://github.com/TeamCausality/Causal-Inference-with-Python/blob/main/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
 | 16 | ☑️ | [16. Regression Discontinuity Design](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/16-Regression-Discontinuity-Design.ipynb) | 2022-11-22 | [남궁민상](https://github.com/wholmesian) |
 
