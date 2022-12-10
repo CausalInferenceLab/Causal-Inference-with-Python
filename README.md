@@ -2,6 +2,7 @@
 
 ## Causal Inference for The Brave and True 책 번역 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCausalInferenceLab%2FCausal-Inference-with-Python&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 
 안녕하세요. 가짜연구소 Causal Inference 팀입니다.   
 <br> 
@@ -13,10 +14,6 @@
 마지막으로, 이 책의 한국어 번역에 동의해 주신 Matheus Facure에게 감사의 말씀을 전합니다.<br>
 그리고, 번역과 실습자료를 만들기 위해 같이 고생해준 Causal Inference 팀 멤버들에게도 진심으로 감사드립니다!   
 <br>
-
-![img](data/img/brave-and-true.png)
-[![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
-
 
 이 책은 Joshua Angrist, Alberto Abadie, Christopher Walters, Miguel Hernan 및 Jamie Robins 등을 포함한 많은 연구자들의 계량 경제학 수업과 바탕으로 하고 있으며, 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔습니다. 이 책을 작성하기 위해 참고한 자료와 서적은 아래와 같습니다.   
 
