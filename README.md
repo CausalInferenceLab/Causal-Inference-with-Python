@@ -4,7 +4,7 @@
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCausalInferenceLab%2FCausal-Inference-with-Python&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-안녕하세요. 가짜연구소 Causal Inference 팀입니다.   
+안녕하세요. [가짜연구소](https://pseudo-lab.com/) Causal Inference 팀입니다.   
 <br> 
 이 책은 Matheus Facure (Nubank Data Scientist)의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)을 한국어로 번역한 자료입니다. 이 책은 인과추론에 대한 기본 개념과 Python 실습, 나아가 최신 사례까지 모두 다루고 있습니다. 인과추론에 대한 이론과 실습자료가 많지 않은 상황에서 이 책은 인과추론 처음 접하거나 인과추론에 대한 이해를 바탕으로 사례를 접하고 싶은 분 모두를 만족시킬 수 있는 책이라고 생각합니다. 한국에서 인과추론을 공부하시는 분들께 많은 도움이 되었으면 좋겠습니다.   
 <br>
