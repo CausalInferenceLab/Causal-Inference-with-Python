@@ -1,0 +1,43 @@
+format: jb-book
+root: landing-page
+parts:
+- caption: 인과추론 Part I 
+  chapters:
+  - file: 01-Introduction-To-Causality.ipynb
+  - file: 02-Randomised-Experiments.ipynb
+  - file: 03-Stats-Review-The-Most-Dangerous-Equation.ipynb
+  - file: 04-Graphical-Causal-Models.ipynb
+  - file: 05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb
+  - file: 06-Grouped-and-Dummy-Regression.ipynb
+  - file: 07-Beyond-Confounders.ipynb
+  - file: 08-Instrumental-Variables.ipynb
+  - file: 09-Non-Compliance-and-LATE.ipynb
+  - file: 10-Matching.ipynb
+  - file: 11-Propensity-Score.ipynb
+  - file: 12-Doubly-Robust-Estimation.ipynb
+  - file: 13-Difference-in-Differences.ipynb
+  - file: 14-Panel-Data-and-Fixed-Effects.ipynb
+  - file: 15-Synthetic-Control.ipynb
+  - file: 16-Regression-Discontinuity-Design.ipynb
+- caption: 인과추론 Part II
+  chapters:
+  #- file: 17-Predictive-Models-101.ipynb
+  #- file: 18-Heterogeneous-Treatment-Effects-and-Personalization.ipynb
+  #- file: 19-Evaluating-Causal-Models.ipynb
+  #- file: 20-Plug-and-Play-Estimators.ipynb
+  #- file: 21-Meta-Learners.ipynb
+  #- file: 22-Debiased-Orthogonal-Machine-Learning.ipynb
+  #- file: 23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.ipynb
+  #- file: 24-The-Diff-in-Diff-Saga.ipynb
+  #- file: 25-Synthetic-Diff-in-Diff.ipynb
+#- caption: Appendix
+#  chapters:
+#  - file: Debiasing-with-Orthogonalization.ipynb
+#  - file: Debiasing-with-Propensity-Score.ipynb
+#  - file: When-Prediction-Fails.ipynb
+#  - file: Prediction-Metrics-For-Causal-Models.ipynb
+#  - file: Conformal-Inference-for-Synthetic-Control.ipynb
+#- caption: Contribute
+#  chapters:
+  - url: https://www.patreon.com/causal_inference_for_the_brave_and_true
+    title: Patreon
