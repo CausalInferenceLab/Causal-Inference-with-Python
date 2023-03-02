@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>06 - Grouped and Dummy Regression &#8212; Causal Inference for the Brave and True</title>
+    <title>06 - Grouped and Dummy Regression &#8212; Python으로 하는 인과추론</title>
   
   
   
@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="07 - Beyond Confounders" href="07-Beyond-Confounders.html" />
     <link rel="prev" title="05 - The Unreasonable Effectiveness of Linear Regression" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="docsearch:language" content="None">
   </head>
   
   
@@ -119,7 +119,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-    <p class="title logo__title">Causal Inference for the Brave and True</p>
+    <p class="title logo__title">Python으로 하는 인과추론</p>
   
 </a>
     
@@ -532,7 +532,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-    <p class="title logo__title">Causal Inference for the Brave and True</p>
+    <p class="title logo__title">Python으로 하는 인과추론</p>
   
 </a>
     </div>
@@ -549,7 +549,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="landing-page.html">
-                    Python으로 하는 인과추론 : 개념부터 실습까지
+                    Causal Inference for The Brave and True
                 </a>
             </li>
         </ul>
@@ -640,10 +640,33 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F06-Grouped-and-Dummy-Regression.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm"
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python" target="_blank"
+   class="btn btn-sm dropdown-item"
    data-toggle="tooltip"
-data-placement="bottom"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F06-Grouped-and-Dummy-Regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
 title="Open an issue"
 >
   
@@ -651,8 +674,12 @@ title="Open an issue"
 <span class="btn__icon-container">
   <i class="fas fa-lightbulb"></i>
   </span>
-
+<span class="btn__text-container">open issue</span>
 </a>
+</a>
+      
+  </ul>
+</div>
 
 
 
@@ -1337,7 +1364,7 @@ wage_i = \beta_0 + \beta_1T_i + \beta_2 IQ_i + e_i
 <p><span class="math notranslate nohighlight">\(
 wage_i = \beta_0 + \beta_1T_i + \beta_2 IQ_i + \beta_3 IQ_i * T_i  + e_i
 \)</span></p>
-<p>상황이 좀 더 복잡해지고 있으므로 이 모델에서 각 매개변수가 의미하는 바를 살펴보겠습니다. 먼저 <span class="math notranslate nohighlight">\(\beta_0\)</span>를 차단해보십시오. 이 나쁜 소년은 특별히 흥미로운 해석을 가지고 있지 않습니다. 처치가 0(12학년을 졸업하지 않은 사람)이고 IQ가 0점일 때 예상되는 임금입니다. IQ가 0일 것으로 예상하지 않기 때문에 이 매개 변수는 그다지 의미가 없습니다. <span class="math notranslate nohighlight">\(\beta_1\)</span>에 대해, 우리는 비슷한 상황을 가지고 있습니다. **이 매개변수는 IQ가 0일 때 **12학년을 마치면 예상되는 임금 인상폭입니다. 다시 한 번 말하지만, IQ는 결코 0이 아니므로, 그것은 특별히 흥미로운 의미가 없습니다. 이제 <span class="math notranslate nohighlight">\(\beta_2\)</span>가 조금 더 흥미롭습니다. **그것은 IQ가 처치받지 않은 사람들의 ** 임금을 얼마나 증가시키는지 알려줍니다. 그래서 우리의 경우 0.11 정도 됩니다. 이것은 IQ 점수 1점당, 12학년을 마치지 못한 사람은 시간당 11센트를 더 얻을 것으로 기대해야 한다는 것을 의미합니다. 마지막으로, 가장 흥미로운 매개 변수는 <span class="math notranslate nohighlight">\(\beta_3\)</span>입니다. 그것은 12학년을 졸업할 때 아이큐가 얼마나 증가하는지 알려줍니다. 우리의 경우, 이 매개변수는 0.024입니다. 즉, IQ 점수가 추가될 때마다 12학년을 졸업하면 2센트가 추가로 주어집니다. 이것은 별거 아닌 것처럼 보이지만 IQ가 60인 사람과 IQ가 140인 사람을 비교해 보십시오. 전자는 1.44달러(60x0.024)의 임금이 인상되는 반면, IQ가 140인 사람은 12학년을 졸업하면 3.36달러(140x0.024)를 추가로 받게 됩니다.</p>
+<p>상황이 좀 더 복잡해지고 있으므로 이 모델에서 각 매개변수가 의미하는 바를 살펴보겠습니다. 먼저 <span class="math notranslate nohighlight">\(\beta_0\)</span>를 차단해보십시오. 이 나쁜 소년은 특별히 흥미로운 해석을 가지고 있지 않습니다. 처치가 0(12학년을 졸업하지 않은 사람)이고 IQ가 0점일 때 예상되는 임금입니다. IQ가 0일 것으로 예상하지 않기 때문에 이 매개 변수는 그다지 의미가 없습니다. <span class="math notranslate nohighlight">\(\beta_1\)</span>에 대해, 우리는 비슷한 상황을 가지고 있습니다. <strong>해당 매개변수는 IQ가 0일 때</strong> 12학년을 마치면 예상되는 임금 인상폭입니다. 다시 한 번 말하지만, IQ는 결코 0이 아니므로, 그것은 특별히 흥미로운 의미가 없습니다. 이제 <span class="math notranslate nohighlight">\(\beta_2\)</span>가 조금 더 흥미롭습니다. **그것은 IQ가 처치받지 않은 사람들의 ** 임금을 얼마나 증가시키는지 알려줍니다. 그래서 우리의 경우 0.11 정도 됩니다. 이것은 IQ 점수 1점당, 12학년을 마치지 못한 사람은 시간당 11센트를 더 얻을 것으로 기대해야 한다는 것을 의미합니다. 마지막으로, 가장 흥미로운 매개 변수는 <span class="math notranslate nohighlight">\(\beta_3\)</span>입니다. 그것은 12학년을 졸업할 때 아이큐가 얼마나 증가하는지 알려줍니다. 우리의 경우, 이 매개변수는 0.024입니다. 즉, IQ 점수가 추가될 때마다 12학년을 졸업하면 2센트가 추가로 주어집니다. 이것은 별거 아닌 것처럼 보이지만 IQ가 60인 사람과 IQ가 140인 사람을 비교해 보십시오. 전자는 1.44달러(60x0.024)의 임금이 인상되는 반면, IQ가 140인 사람은 12학년을 졸업하면 3.36달러(140x0.024)를 추가로 받게 됩니다.</p>
 <p>간단한 모델링 전문 용어에서 이 교호작용 항을 사용하면 처치 효과가 변수 수준별로 변경될 수 있습니다(이 예에서는 IQ만). 결과는 예측 선을 플로팅하면 더 이상 평행하지 않고 12학년을 졸업한 사람들이(T=1) IQ에서 더 높은 기울기를 가지며 낮은 IQ보다 높은 IQ일 때 졸업하면 더 많은 이점을 얻는다는 것을 알 수 있다는 것입니다. 이것은 때때로 효과 수정 또는 이질적인 처치 효과로 언급됩니다.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
