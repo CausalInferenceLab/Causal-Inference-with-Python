@@ -1,0 +1,1309 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>09 - Non Compliance and LATE &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '09-Non-Compliance-and-LATE';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10 - Matching" href="10-Matching.html" />
+    <link rel="prev" title="08 - Instrumental Variables" href="08-Instrumental-Variables.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F09-Non-Compliance-and-LATE.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/09-Non-Compliance-and-LATE.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>09 - Non Compliance and LATE</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heterogeneous">
+   “Heterogeneous”의 세계에 발을 담가봅시다
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#local-average-treatment-effect-late">
+   Local Average Treatment Effect: LATE
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effect-on-engagement">
+   Effect on Engagement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="non-compliance-and-late">
+<h1>09 - Non Compliance and LATE<a class="headerlink" href="#non-compliance-and-late" title="Permalink to this headline">#</a></h1>
+<section id="heterogeneous">
+<h2>“Heterogeneous”의 세계에 발을 담가봅시다<a class="headerlink" href="#heterogeneous" title="Permalink to this headline">#</a></h2>
+<p>이전 챕터에서 전통적인 관점으로부터 도구 변수에 대해 배웠습니다. 도구변수(IV)는 우리가 활용할 수 있는 대표적인 Natural Experiment(*Exogenous shock에 의한 준실험)으로 여겨졌습니다. 한편, IV를 활용한 의학 실험에서 저희는 많은 통찰을 얻을 수 있었습니다. 바로 도구변수에 어떻게 반응하느냐에 따라 4가지 종류의 집단으로 나누는 것입니다.</p>
+<ol class="arabic simple">
+<li><p>Compliers</p></li>
+<li><p>Never Takers</p></li>
+<li><p>Always Takers</p></li>
+<li><p>Defieres</p></li>
+</ol>
+<p>이러한 이름은 약학(Pharmaceutical science)으로 부터 왔습니다. 여러분이 어떤 질병에 대한 신약 효과를 테스트하기 위해 실험을 수행하고 있다고 상상해보세요. 각 피실험자는 진짜 약물 또는 위약을 할당 받습니다. 여기서 Compliers는 할당된 약물 또는 위약을 거부감 없이 복용하는 집단을 말합니다. 만약 Compliers가 진짜 약을 할당 받으면, 거부없이 복용할 것이고 반대도 마찬가지 일 것입니다. Never Takers는 할당 받은 약의 복용(Treatment)을 거부 또는 받지 않는 사람입니다. Never Takers는 어떠한 약을 할당받아도 복용하지 않을 겁니다. 반면에 Always taker는 약 할당과 별개로 항상 진짜 약물을 복용하는 사람들입니다. 마지막으로 Defiers는 통제에 할당되면 Treatment를 받고, Treatment를 할당 받으면 통제를 받는 즉, 할당과 반대로 움직이는 청개구리 아이라고 생각하시면 됩니다. 실제 상황에서는 Defiers는 그렇게 일반적이지 않아서 무시하고 진행합니다.</p>
+<p><img alt="img" src="_images/defiers.png" /></p>
+<p>현대의 IV 실험에서는 활용하는 도구(instrument)를 위에서 분류한 4가지 compliance를 완벽하게 고려하지 않은 준실험 설계로 생각합니다(Compliers 그룹에만 해당하는 인과 효과만을 고려). 즉, 도구변수를 활용한 실험은 내부적으로 유효한 인과 효과와 외부적으로 유효한 인과 효과를 구분시킵니다. 기억하세요! 내부적으로만 유효한 인과효과는 특정 데이터 그리고 특정 실험 세팅에서만 유효합니다. IV 실험에서는 설정한 도구변수를 활용해 Treatment가 변하는 사람들에게 대한 처치효과가 될 것입니다. 반면에 외적 타당도(External validity)는 그 인과적 효과의 예측력과 관련이 있습니다. 이는 우리가 실험한 표본에서 발견한 효과를 다른 모집단에 대해 일반화할 수 있는지에 대한 질문입니다. 예를 들어, 기부에 대한 인센티브가 주어졌을 때 사람들이 얼마나 기부를 할지에 대해 실험을 설계했다고 가정해 보겠습니다. 실험은 잘 설계 되었으며, 실험 대상자로 경제학과 학생들만 참여하도록 합니다. 그렇다면 실험에서 경제학도는 이기주의자(selfish jerks)라는 것을 발견할 것입니다. 이러한 사실은 비록 실험 내적으로 유효한 결론이지만, 해당 데이터 포인트에서만 유효하며 이 실험의 결과를 통해 인류가 이기적이라고 추론할 수 없습니다. 따라서 우리는 해당 실험이 과연 외부적 타당성을 가지고 있는지에 대한 의문을 가질 수 있습니다.</p>
+<p>다시 도구변수로 돌아와서, 여러분은 회사에서 인앱 구매로 측정한 사용자 참여(user engagement) 지표를 높이고 싶다고 가정해봅시다. user engagement를 늘리기 위해 마케팅 부서에 engagement를 늘리는 push 마케팅을 요청할 수 있겠죠. 마케팅팀에서 push 디자인과 설계를 잘해서 10000명의 무작위 고객을 선택하여 각 50%의 확률로 push를 할당합니다. 하지만 이러한 테스트를 진행할 때, 일부 고객이 Push를 거부하여 받지 못할 수 있습니다. 또는 고객의 스마트폰이 구형 스마트폰일 수도 있구요.
+처음에는 이러한 차이가 별거 아니라고 생각할 수 있지만, 인과 추론의 문제에서 그렇게 간단한 문제는 아닙니다. 실험을 설계할 때 설정한 처지 변수(Treatment variable)를 활용하는 것 대신 받은 처치(treatment received) 활용하면 됩니다. 이는 인과 그래프로 표현하면 다음과 같습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">from</span> <span class="nn">linearmodels.iv</span> <span class="kn">import</span> <span class="n">IV2SLS</span>
+<span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gr</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;push assigned&quot;</span><span class="p">,</span> <span class="s2">&quot;push delivered&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;push delivered&quot;</span><span class="p">,</span> <span class="s2">&quot;in app purchase&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;in app purchase&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;push delivered&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/7ab2b0edfc8120591bd094eb4eb50ba1fcf14e9937936b06be71aaa560cdc939.svg" src="_images/7ab2b0edfc8120591bd094eb4eb50ba1fcf14e9937936b06be71aaa560cdc939.svg" /></div>
+</div>
+<p>위의 인과관계 그래프에서 마케팅 Push에 대한 할당이 있습니다. 이러한 Push Assigned는 무작위 할당이기 때문에, 다른 영향을 받지 않습니다. 이후 마케팅 Push의 전달 여부에 대한 노드가 있습니다. Push를 받도록 할당된 모든 사람이 Push를 받은건 아니기 때문에 이 마케팅 실험에서는 Compliance를 완벽하게 고려하지 못합니다. 좀 더 구체적으로 말하면, Push 마케팅을 진행하여도 절대로 해당 Push를 받지 않는 사람들이 존재합니다(Never takers). 즉, Push를 받도록 할당이 되어도 실험의 Treatment인 Push를 받지 못하는 사람들이 있습니다. 또한 이는 단순한 우연이 아닙니다. 예를 들어, 오래된 스마트폰을 가진 사람들은 Push를 받지 못하며, 이러한 사람들의 수입은 최신 스마트폰을 가진 사람들과 다르게 Push 메세지의 전달에 영향을 줄 수 있습니다. 마지막으로 Outcome variable 노드로 인앱 구매(in app purchase)가 있습니다. 기억하세요! 위 인과 그래프에서 우리는 Push를 할당 받는 사람들의 소득을 모르기 때문에, 이러한 변수를 통제할 수 없습니다.</p>
+<p>개인의 소득(Income)을 통제할 수 없다는 것을 엳무에 두고 단순히 Push assigned을 처치(Treatment)로 두고 인앱 구매에 대한 인과 관계를 추정해보겠습니다.
+첫 번째의 경우에는 아래와 같이 평균 차이로 인과 관계를 추정합니다.</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = E[Y | pushAssigned=1] - E[Y | pushAssigned=0]
+\)</span></p>
+<p>우리가 앞에서 배운것과 같이 만약 <span class="math notranslate nohighlight">\(E[Y_0|pushAssigned=0] - E[Y_0|pushAssigned=1]\)</span> 에 대한 Bias가 0이라면  <span class="math notranslate nohighlight">\(E[Y_1] - E[Y_0]\)</span> 가 Unbiased estimator 입니다. <code class="docutils literal notranslate"><span class="pre">pushAssigned</span></code> 가 랜덤이기 때문에 Bias는 0가 됩니다. 과연 이것으로 충분할까요? 정답은 아닙니다. 만약 이렇게 한다면 우리가 실제로 의도한 것과 다른 질문에 대한 답을 한것입니다. 우리가 찾은 것은 Treatment 자체의 효과가 아니라 Treatment 할당에 대한 인과적 효과를 찾은 것입니다. 그럼 과연 우리가 ATE에 대한 Treatment 할당의 인과적 영향을 추정할 수 있는가? 다른 말로 Treatment 할당의 인과 효과가 우리가 구하고자 하는 ATE의 편향되지 않은 추정치라고 말할 수 있을까요?</p>
+<p>결과적으로 그렇지 않습니다. non-Compliance 때문에 Treatment에 할당된 사람들에 대한 결과는 Control에 배정된 사람들의 결과로 편향되어 추정될 것입니다. 이렇게 Non Compliance는 의도하지 않게 Treatment에 대한 결과를 뒤집고 Treatment와 Control에 대한 추정량을 유사하게 만듭니다. 이것을 변수(Variable)에 대한 유사성과 혼동하면 안됩니다. 왜냐하면 변수에 대해 Treatment와 Control이 유사하여야, Comparable 가정을 만족할 수 있으니까요. 우리가 원하지 않는 결과는 실제로는 Treatment 효과가 있지만, Outcome에 대한 효과가 비슷해지는 것입니다</p>
+<p>이를 확인하기 위해 먼저 Always taker가 있다고 가정합니다. 그들 중 일부는 우연히 Control에 할당됩니다. 하지만 Always taker는 할당과 상관 없이 Treatment를 받을 것입니다. 이러한 행동은 이 그룹을 Contorl 그룹과 효과가 섞인 Treatment 그룹으로 만듭니다. 이러한 혼합의 결과로 우리는 non-compliance를 가지고 있을때 인과 효과를 찾기가 더욱 어려워 집니다.</p>
+<p><img alt="img" src="_images/always_takers.png" /></p>
+<p>같은 논리로, Never Taker는 Treatment에 배정되더라도 Treatment를 받지 않기 때문에 Treatment에 배정된 사람들이 실제로 Treatment를 받지 않은것 처럼 만들 것입니다. 이러한 의미에서 non-compliance가 인과의 효과를 감소시켜 Treatment 할당의 인과효과는 0으로 편향됩니다. 극단적인 예를 가정하여 이러한 편향을 볼 수도 있습니다. 실험에서 non compliance의 비율이 높다고 생각한다면, non compliance가 Treatment 할당을 받으면 그들은 Treatment의 효과에 대해 아무런 반응이 없을 것입니다. 이러한 경우 할당받은 Treatment는 완전히 랜덤입니다. IV의 관점에서, 우리는 매우 약간 1st stage를 가지고 있다고 말할 수 있습니다. ‘Z’를 활용해 Treatment를 표현하면 다음과 같이 표현할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y|Z=1] - E[Y|Z=0] = 0
+\)</span></p>
+<p>그림에서 볼 수 있듯, Treatment 인과 관계는 더 이상 존재하지 않으며, 여기서 ‘Z’는 의미 없는 무작위 변수일 뿐입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;push assigned&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;push delivered&quot;</span><span class="p">,</span> <span class="s2">&quot;in app purchase&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;in app purchase&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;push delivered&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/441beabf606d7a6be1006303de3df02074895c1137fde7b1639b57f2fb6b965d.svg" src="_images/441beabf606d7a6be1006303de3df02074895c1137fde7b1639b57f2fb6b965d.svg" /></div>
+</div>
+<p>그래서 우리는 Treatment의 인과적 효과를 추정하는 방법으로 Push assigned에 대한 인과적 효과를 제거했습니다. 그렇다면 Push delivered에 대한 Treatemnt를 활용해보는건 어떨까요?</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = E[Y | push=1] - E[Y | push=0]
+\)</span></p>
+<p>다시 한 번 우리는 이것이 편향된 것인지, 아니면
+<span class="math notranslate nohighlight">\(E[Y_0|push=0] = E[Y_0|push=1]\)</span> 인지 생각해볼 필요가 있습니다.
+여기서는 측정되지 않은 Confounder 수입(income)이 분명히 인과추론을 어렵게 할 수 있습니다. 앞서 말했듯이, Push 전달의 실패는 구형 스마트폰을 가진 고객들에 의해 발생한다는 것을 알고 있습니다. 즉,  <span class="math notranslate nohighlight">\(E[Y_0|push=0] &lt; E[Y_0|push=1]\)</span> 가 존재할 수 있습니다. 비교적 적은 수입(income)을 가진 고객들은 구형 스마트폰을 가지고 있기 때문에 <span class="math notranslate nohighlight">\(push=0\)</span> 로 이어지고, 인앱 구매 <span class="math notranslate nohighlight">\(Y_0\)</span> 의 가능성도 낮습니다.</p>
+<p>따라서 Treatment나 Treatment를 받지 않는 사람을 이용해서 ATE를 추정할수 없습니다.</p>
+<p>하지만 다행이 도구변수를 활용할 수 있습니다. 여기서 Treatment에 대한 할당 여부는 완벽한 도구변수로 활용할 수 있습니다. 이는 랜덤과 같으며 Treatment으로 인해 앱 내 구매만을 유도합니다.</p>
+</section>
+<section id="local-average-treatment-effect-late">
+<h2>Local Average Treatment Effect: LATE<a class="headerlink" href="#local-average-treatment-effect-late" title="Permalink to this headline">#</a></h2>
+<p>Local average treatment effect는 인과 관계를 추정할 수 있는 모집단을 명시적으로 만듭니다. LATE는 IV를 바라보는 또 다른 관점으로 새로운 직관을 제공해줍니다. IV에서 우리는 도구변수를 인과 사슬(causal chain)의 시작점으로 봅니다. 즉, Z는 Y를 일으키는 T를 유발합니다. 이러한 관점에서 Z가 T에 대한 영향을 주지 않는 한 Z가 Y의 인과가 아닌것을 의미합니다. 1단계에서는 T에 대한 Z의 인과효과로 볼 수 있습니다. 또한 이중 인덱스 표기법(double indexing notation)으로 Potential outcomes를 다시 작성하는데, 여기서 첫 번째 인덱스는 도구변수에 대한 반사실성을 나타내며 두 번째 인덱스는 Treatment에 대한 반사실성을 나타냅니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\text{Potential Outcome}=\begin{cases}
+Y_i(1, 1) \ \text{if } T_i=1, \ Z_i=1\\
+Y_i(1, 0) \ \text{if } T_i=1, \ Z_i=0\\
+Y_i(0, 1) \ \text{if } T_i=0, \ Z_i=1\\
+Y_i(0, 0) \ \text{if } T_i=0, \ Z_i=0\\
+\end{cases}
+\)</span></p>
+<p>이러한 점에서 볼 때, Treatment는 첫 번째 단계에서 Outcome이 됩니다. 이것은 우리가 아래와 같이 Potential outcome framework로 작성할 수 있다는 것을 의미합니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\text{Potential Treatment}=\begin{cases}
+T_0 \ \text{if } Z_i=0 \\
+T_1 \ \text{if } Z_i=1
+\end{cases}
+\)</span></p>
+<p><img alt="img" src="_images/double_index.png" /></p>
+<p>이제 Instrumental Variable 가정을 아래와 같이 다시 작성할 수 있습니다.</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(T_{0i}, T_{1i} \perp Z_i \)</span> and <span class="math notranslate nohighlight">\(Y_i(T_{1i},1), Y_i(T_{0i},0) \perp Z_i \)</span>. 이는 독립성 가정(independence Assumption) 입니다. 즉, 도구가 무작위로 할당된 것과 같다는 의미입니다. 다시 말해, 도구변수 Z는 잠재적인 Treatment와 상관관계가 없으며, 이는 다른 도구변수 그룹에 속한 사람과 비교가능(Comparable)하다는 것을 말합니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_i(1, 0)=Y_i(1, 1)=Y_{i1}\)</span> and <span class="math notranslate nohighlight">\(Y_i(0, 0)=Y_i(0, 1)=Y_{i0}\)</span>. 이 수식은 배제 제약(exclusion restriction)입니다. Treatment에 대한 잠재적인 결과는 두 도구 변수 그룹 모두 동일하다는 것입니다. 즉, 도구 변수는 잠재적인 결과에 영향을 미치지 않으며, 이는 도구 변수가 Treatment를 통해서만 결과에 영향을 미친다는 것과 같습니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[T_{1i}-T_{0i}] \neq 0\)</span>. 이는 1단계의 잠재 결과, 즉 잠재적인 Treatment가 같지 않다는 것을 의미합니다. 또 다른 표현으로는 도구 변수가 Treatment에 영향을 미친다는 것입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{i1} &gt; T_{i0}\)</span>. 이는 도구 변수의 단조성 가정 (monotonicity)입니다. 모든 그룹에서 도구 변수를 활용한다면, Treatment가 꺼진 경우보다 Treatment에 대한 level이 더 높아 진다는 것을 의미합니다.</p></li>
+</ol>
+<p>이제, Wald 추정기를 통해 IV에 대한 추가적인 직관을 얻어봅시다.</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = \dfrac{E[Y|Z=1]-E[Y|Z=0]}{E[T|Z=1]-E[T|Z=0]}
+\)</span></p>
+<p>첫번재 부분인 <span class="math notranslate nohighlight">\(E[Y|Z=1]\)</span> 을 우선 살펴보겠습니다. 배제 제약(exclusion restriction)을 활용해 Potential outcome Framework의 관점에서 Y를 다시 작성할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y_i|Z_i=1]=E[Y_{i0} + T_{i1}(Y_{i1} - Y_{i0})|Z=1]
+\)</span></p>
+<p>그리고 독립성 가정(independence Assumption)을 이용하여 Z에 대한 조건화를 제거할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y_i|Z_i=1]=E[Y_{i0} + T_{i1}(Y_{i1} - Y_{i0})]
+\)</span></p>
+<p>비슷하게, 우리는 아래와 같은 식을 얻을 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y_i|Z_i=0]=E[Y_{i0} + T_{i0}(Y_{i1} - Y_{i0})]
+\)</span></p>
+<p>Wald 추정기의 분자를 다음과 같이 다시 써봅시다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y|Z=1]-E[Y|Z=0] = E[(Y_{i1}-Y_{i0})(T_{i1}-T_{i0})]
+\)</span></p>
+<p>도구변수의 단조성 가정을 활용한다면, <span class="math notranslate nohighlight">\(T_{i1}-T_{i0}\)</span> 이 0 또는 1이라는 것을 알 수 있습니다. 따라서,</p>
+<p><span class="math notranslate nohighlight">\(
+E[(Y_{i1}-Y_{i0})(T_{i1}-T_{i0})] = E[(Y_{i1}-Y_{i0})|T_{i1}&gt;T_{i0}]P(T_{i1}&gt;T_{i0})
+\)</span></p>
+<p>이제 분모를 처리하기 위해 비슷한 방법으로, 아래와 같은 식을 얻을 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[T|Z=1]-E[T|Z=0]=E[T_{i1}-T_{i0}]=P(T_{i1}&gt;T_{i0})
+\)</span></p>
+<p>즉, 위의 과정을 통해 다음과 같이 Wald 추정기를 확인할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = \dfrac{E[(Y_{i1}-Y_{i0})|T_{i1}&gt;T_{i0}]P(T_{i1}&gt;T_{i0})}{P(T_{i1}&gt;T_{i0})}=E[(Y_{i1}-Y_{i0})|T_{i1}&gt;T_{i0}]
+\)</span></p>
+<p>즉, IV에 의해 추정된 ATE는 <span class="math notranslate nohighlight">\(T_{i1}&gt;T_{i0}\)</span> 인 부분 모집단의 ATE입니다. 그리고 compliance에 대해서 생각해보면, 어떠한 집단이 이에 해당할까요? 이 집단은 도구 변수를 설정한 사용자가 도구 변수를 해제한 경우보다 Treatment에 대한 수준이 높은 모집단입니다. 즉, Complier 입니다.</p>
+<ol class="arabic simple">
+<li><p>Compilers <span class="math notranslate nohighlight">\(T_{i1}&gt;T_{i0}\)</span></p></li>
+<li><p>Never Takers <span class="math notranslate nohighlight">\(T_{i1}=T_{i0}=0\)</span></p></li>
+<li><p>Always Takers <span class="math notranslate nohighlight">\(T_{i1}=T_{i0}=1\)</span></p></li>
+</ol>
+<p>결론은, IV는 Never Taker, Always Takers 또는 defiers에 미치는 영향에 대해서는 말을 해주지 않는다는 것입니다. 왜냐하면 그들의 Treatment가 변화되지 않으니깐요. 즉, IV는 Comilers에 대한 Treatment 효과를 찾아줍니다.</p>
+</section>
+<section id="effect-on-engagement">
+<h2>Effect on Engagement<a class="headerlink" href="#effect-on-engagement" title="Permalink to this headline">#</a></h2>
+<p>다시 돌아와서, 앱 내 구매에 대한 Push 효과를 추정하는 사례에서 위에서 배운 것이 어떻게 진행되는지 알아보겠습니다.</p>
+<p>인과 그래프는 위에서 본것과 동일하기 때문에 여기서 반복하지는 않겠습니다. 우리가 가지고 있는 데이터는 Push 할당과 Push 전달에 대한 Treatment 변수 그리고 in app의 구매에 대한 정보입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/app_engagement_push.csv&quot;</span><span class="p">)</span>
+    
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>in_app_purchase</th>
+      <th>push_assigned</th>
+      <th>push_delivered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>47</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>43</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>51</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>49</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>79</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>첫 번째로, OLS가 어떠한 결과가 나오는지 확인해보죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;in_app_purchase ~ 1 + push_assigned + push_delivered&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ols</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Parameter Estimates</caption>
+<tr>
+         <td></td>        <th>Parameter</th> <th>Std. Err.</th> <th>T-stat</th>  <th>P-value</th> <th>Lower CI</th> <th>Upper CI</th>
+</tr>
+<tr>
+  <th>Intercept</th>       <td>69.292</td>    <td>0.3624</td>   <td>191.22</td>  <td>0.0000</td>   <td>68.581</td>   <td>70.002</td> 
+</tr>
+<tr>
+  <th>push_assigned</th>   <td>-17.441</td>   <td>0.5702</td>   <td>-30.590</td> <td>0.0000</td>   <td>-18.559</td>  <td>-16.324</td>
+</tr>
+<tr>
+  <th>push_delivered</th>  <td>27.600</td>    <td>0.6124</td>   <td>45.069</td>  <td>0.0000</td>   <td>26.399</td>   <td>28.800</td> 
+</tr>
+</table></div></div>
+</div>
+<p>OLS에서 Treatment 효과 BRL(bias-reduced linearization)는 27.60이며, 이는 Push 마케팅을 진행하면 인앱 구매가 27.6 만큼 오른다는 것을 의미합니다. 그러나 우리는 이것이 편향된 추정치라고 믿을만한 근거가 있습니다. 앞선 설명과 같이 옛날 스마트폰이 Push 메세지를 받기에 어려움을 겪고 있다는 것이죠. 그래서 비교적 부유한 고객들이 바로 새로운 전화기를 가진 Compiler일 것입니다. 즉, Treatment 받는 사람들은 더 많은 수입이 있기 때문에 우리는 이러한 편향이 Positive일 것이며, 실제 인과 효과는 더 낮다고 생각할 수 있습니다. 수식으로 표현해보면, <span class="math notranslate nohighlight">\(E[Y_0|T=0] &lt; E[Y_0|T=1]\)</span> 이 존재할 수 있습니다.</p>
+<p>이제, 도구변수를 활용해서 해당 효과를 추정해 보겠습니다. 먼저 첫번째 Stage를 진행해보겠습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_stage</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;push_delivered ~ 1 + push_assigned&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">first_stage</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Parameter Estimates</caption>
+<tr>
+        <td></td>        <th>Parameter</th> <th>Std. Err.</th>  <th>T-stat</th>   <th>P-value</th>  <th>Lower CI</th>  <th>Upper CI</th> 
+</tr>
+<tr>
+  <th>Intercept</th>     <td>2.22e-16</td>  <td>4.09e-10</td>  <td>5.429e-07</td> <td>1.0000</td>  <td>-8.016e-10</td> <td>8.016e-10</td>
+</tr>
+<tr>
+  <th>push_assigned</th>  <td>0.7176</td>    <td>0.0064</td>    <td>112.07</td>   <td>0.0000</td>    <td>0.7050</td>    <td>0.7301</td>  
+</tr>
+</table></div></div>
+</div>
+<p>Push를 받도록 할당된 사람들은 71.8%의 확률로 Push를 받습니다. 이것은 Never takers가 28%가 된다는 것을 의미합니다. 또한 intercept의 Parameter가 0으로 추정되기 때문에 always takers는 없다고 판단할 수 있습니다. 이것은 실제로 Treatment를 할당하지 않은 경우에는 아무도 Push를 받지 못한다는 것을 의미하며, 실험 설계를 고려할 때 예상할 수 있습니다.</p>
+<p>다음으로 push_delivered 제거된 식으로 회귀 분석을 진행해보도록 하겠습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduced_form</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;in_app_purchase ~ 1 + push_assigned&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">reduced_form</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Parameter Estimates</caption>
+<tr>
+        <td></td>        <th>Parameter</th> <th>Std. Err.</th> <th>T-stat</th> <th>P-value</th> <th>Lower CI</th> <th>Upper CI</th>
+</tr>
+<tr>
+  <th>Intercept</th>      <td>69.292</td>    <td>0.3624</td>   <td>191.22</td> <td>0.0000</td>   <td>68.581</td>   <td>70.002</td> 
+</tr>
+<tr>
+  <th>push_assigned</th>  <td>2.3636</td>    <td>0.5209</td>   <td>4.5376</td> <td>0.0000</td>   <td>1.3427</td>   <td>3.3845</td> 
+</tr>
+</table></div></div>
+</div>
+<p>축소된 형식으로 Treatment 할당에 대한 인과 효과는 2.36임을 보여줍니다. 이는 Push를 받을 누군가를 지정하면 인앱 구매가 2.36 만큼 증가한다는 것을 의미합니다.</p>
+<p>축소된 형태를 첫 번째 단계로 나누고, instrument의 효과를 Treatment의 단위로 스케일링하면 <span class="math notranslate nohighlight">\(2.3636/0.7176=3.29\)</span> 를 얻을 수 있습니다. 2SLS를 실행하면 표준 오차와 함께 이와 동일한 추정치를 얻을 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iv</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;in_app_purchase ~ 1 + [push_delivered ~ push_assigned]&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">iv</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Parameter Estimates</caption>
+<tr>
+         <td></td>        <th>Parameter</th> <th>Std. Err.</th> <th>T-stat</th> <th>P-value</th> <th>Lower CI</th> <th>Upper CI</th>
+</tr>
+<tr>
+  <th>Intercept</th>       <td>69.292</td>    <td>0.3624</td>   <td>191.22</td> <td>0.0000</td>   <td>68.581</td>   <td>70.002</td> 
+</tr>
+<tr>
+  <th>push_delivered</th>  <td>3.2938</td>    <td>0.7165</td>   <td>4.5974</td> <td>0.0000</td>   <td>1.8896</td>   <td>4.6981</td> 
+</tr>
+</table></div></div>
+</div>
+<p>이를 통해 2SLS의 결과가 OLS의 27.6보다 훨씬 낮다는 것을 확인할 수 있습니다. OLS로 추정된 인과 효과는 긍정적으로 편향되어 있으므로 이러한 결과는 타당해 보입니다. 또한 LATE에 대해서도 기억해야 합니다. 3.29는 Complier에 대한 ATE 입니다. 안타깝게도, Never taker에 대해서는 해당 효과를 알 수 없습니다. 다시 말해, 최신 스마트폰을 가지고 있는 그룹에 대하여 해당 Push 마케팅이 미치는 결과를 추정하고 있음을 의미합니다.</p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>여기서 우리는 Instrumental Variables에 대한 보다 현대적인 관점을 알아봤습니다. 우리는 본 챕터에서 어떻게 IV가 결과를 초래하는 Treatment를 유발하는 인과적 사슬로 볼 수 있는지 살펴보았습니다. 이러한 관점에서 우리는 IV 추정에서 ATE를 이해하기 위해 compliance를 살펴보았으며, 이것이 compiler에 대한 LATE라는 것을 알아보았습니다.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막으로 제가 참고한 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>본문의 앞쪽의 맥주 비유는 JL Colins의 <a class="reference external" href="https://jlcollinsnh.com/2012/04/15/stocks-part-1-theres-a-major-market-crash-coming-and-dr-lo">주식 시리즈</a>에서 가져왔습니다. 이 시리즈는 돈을 생산적으로 투자하는 방법을 배우려는 모든 분들께서 반드시 읽어야할 자료입니다.</p>
+<p><img alt="img" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="08-Instrumental-Variables.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">08 - Instrumental Variables</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="10-Matching.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">10 - Matching</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heterogeneous">
+   “Heterogeneous”의 세계에 발을 담가봅시다
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#local-average-treatment-effect-late">
+   Local Average Treatment Effect: LATE
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effect-on-engagement">
+   Effect on Engagement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

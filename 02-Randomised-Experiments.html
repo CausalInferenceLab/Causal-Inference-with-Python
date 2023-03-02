@@ -1,0 +1,1216 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>02 - Randomised Experiments &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '02-Randomised-Experiments';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="03 - Stats Review: The Most Dangerous Equation" href="03-Stats-Review-The-Most-Dangerous-Equation.html" />
+    <link rel="prev" title="01 - Introduction To Causality" href="01-Introduction-To-Causality.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F02-Randomised-Experiments.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/02-Randomised-Experiments.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>02 - Randomised Experiments</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-golden-standard">
+   The Golden Standard
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-a-school-far-far-away">
+   In a School Far, Far Away
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-ideal-experiment">
+   The Ideal Experiment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-assignment-mechanism">
+   The Assignment Mechanism
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="randomised-experiments">
+<h1>02 - Randomised Experiments<a class="headerlink" href="#randomised-experiments" title="Permalink to this headline">#</a></h1>
+<section id="the-golden-standard">
+<h2>The Golden Standard<a class="headerlink" href="#the-golden-standard" title="Permalink to this headline">#</a></h2>
+<p>이전 세션에서, 우리는 연관성(association)이 어떻게 인과성(causation)과 다른지 살펴보았습니다. 우리는 또한 연관성(association)을 인과성(causation)으로 만드는 데 필요한 것들이 무엇인지도 살펴보았습니다.</p>
+<p><span class="math notranslate nohighlight">\(E[Y|T=1] - E[Y|T=0] = \underbrace{E[Y_1 - Y_0|T=1]}_{ATT} + \underbrace{\{ E[Y_0|T=1] - E[Y_0|T=0] \}}_{BIAS}\)</span></p>
+<p>다시 떠올려보자면, 연관성은 편향이 존재하지 않을때 비로소 인과성이 될 수 있습니다. <span class="math notranslate nohighlight">\(E[Y_0|T=0]=E[Y_0|T=1]\)</span>를 만족할 때 편향은 없을 것이라고 말할 수 있습니다. 즉, 타겟군과 대조군이 처치를 받은 것을 제외하고 타겟군과 대조군이 동등하거나 유사하다면 연과성은 인과관계가 될 것입니다. 혹은 더 전문적인 표현을 사용하자면, 처치를 받지 않은 군의 결과가 처치를 받은 군의 반사실적 결과와 동등할때 연관성이 인과관계가 되는 것이 성립됩니다. 이러한 반사실적 결과가 처치를 받지 않은 타겟군의 결과와 같다는 것을 기억해야할 것입니다.</p>
+<p>제가 생각하기에 우리는 수식을 통해 어떻게 연관성이 인과성이 되는지 비교적 잘 설명한 것 같습니다. 그러나 이는 이론에만 국한됩니다. 이제 우리는 이러한 편향을 없앨 수 있는 첫번째 툴, <strong>무작위 실험(Randomised Experiments)</strong> 에 대해서 살펴볼 것입니다. 무작위 실험은 타겟군(Treatment Group)과 대조군(Control group)에 개개인을 랜덤으로 분배하는 방식입니다. 처치를 받는 타겟군의 비율이 꼭 50%일 필요는 없습니다. 여러분의 표본(samples)의 10%만이 처치를 받는 실험을 진행할 수도 있습니다.</p>
+<p>랜덤 분배는 잠재적 결과(potential outcomes)를 처치(treatment)로부터 독립적으로 만듦으로써 편향을 제거합니다.</p>
+<p><span class="math notranslate nohighlight">\((Y_0, Y_1) \perp\!\!\!\perp T\)</span></p>
+<p>물론 처음에는 혼란스러울 수 있습니다. (저도 혼란스러웠습니다.) 하지만 걱정하지 마세요. 제가 더 친절히 설명하겠습니다! 도출된 결과(Outcome Y)가 처치로부터 독립적이라면, 이는 처치가 전혀 효과가 없었다는 것을 암시하는 것이 아닐까요? 맞습니다. 하지만 제가 결과에 대해 말하고 있는 것이 아님을 명심하세요. 대신, 저는 <strong>잠재적</strong> 결과(<strong>potential</strong> outcomes) 에 대해서 말할거에요. 잠재적 결과(potential outcomes)란, 결과가 만약 처치(<span class="math notranslate nohighlight">\(Y_1\)</span>)와 대조(<span class="math notranslate nohighlight">\(Y_0\)</span>)의 영향 아래 있었다면 어땠을까를 가정하는 것입니다. 무작위 시도에서는, <strong>처치가 결과의 원인</strong>이 된다고 생각하기 때문에 결과가 처치로부터 <strong>독립적</strong>이길 바라지 않습니다.</p>
+<p><img alt="indep" src="_images/indep.png" /></p>
+<p>잠재적 결과(potential outcomes)가 처치로부터 무관하다는 것은 기대대로라면 처치군(Treatment group; 처치를 받은 그룹)이나 대조군(Control group; 처치를 받지 않은 그룹)에서도 같은 결과가 나와야한다는 것을 의미합니다. 더 간단히 말해보면, 처치군(타겟군)과 대조군은 비교가 가능하다는 것입니다! 또한 이 말은 처치군이 실험자에게 처치 이전의 결과에 대해 그 어떤 정보도 주지 않는다는 것을 의미하기도 합니다. 결과적으로 <span class="math notranslate nohighlight">\((Y_0, Y_1) \bot T\)</span> 수식은 ‘가한 처치(treatment)’가 처치군의 결과와 대조군의 결과 사이에서 발생한 유일한 차이라는 것을 의미합니다. 이것을 확인하기 위해 독립성이 아래와 같은 내용을 내포하고 있다는 것을 알아야 합니다.</p>
+<p><span class="math notranslate nohighlight">\(E[Y_0|T=0] = E[Y_0|T=1] = E[Y0]\)</span></p>
+<p>이미 우리가 확인한대로 이렇게도 만들어볼 수 있겠죠.</p>
+<p><span class="math notranslate nohighlight">\(E[Y|T = 1] - E[Y|T = 0] = E[Y_1 - Y_0] = ATE\)</span></p>
+<p>따라서, 랜덤 분배(Randomization)는 처치 효과(Treatment effect)라고 하는 타겟군과 대조군 간의 작은 차이를 만들 수 있는 것입니다.</p>
+</section>
+<section id="in-a-school-far-far-away">
+<h2>In a School Far, Far Away<a class="headerlink" href="#in-a-school-far-far-away" title="Permalink to this headline">#</a></h2>
+<p>2020년에 코로나 바이러스의 전세계적인 유행으로 인해 기업들은 사회적 거리두기에 적응해야만 했습니다. 배달 서비스가 확산되었고, 대기업들은 원격 근무 전략으로 전환했습니다. 학교도 다르지 않았습니다. 많은 학교들이 온라인 학습 환경 구축을 시작했습니다.</p>
+<p>위기가 시작된지 4개월이 지난 지금, 많은 사람들은 이러한 변화들이 지속될 수 있을지 의문을 가집니다. 온라인 학습 환경이 차별화된 장점을 가지고 있다는 것엔 의심의 여지가 없습니다. 우선 부동산과 교통의 측면에서 절약을 할 수 있다는 점에서 저렴합니다. 또한 정해진 선생들로부터만 교육을 제공받는 것이 아닌 조금 더 디지털적으로, 즉, 전세계의 세계적인 수준의 학습 콘텐츠를 활용할 수 있다는 것입니다. 이러한 장점들에도 불구하고 우리는 온라인 수업이 학생들의 학습 퍼포먼스에 부정적인 영향을 미치는지 긍정적인 영향을 미치는지 여전히 궁금해합니다.</p>
+<p>이에 대한 한 가지 답으로, 주로 온라인 수업을 진행하는 수업의 학생들과 오프라인 수업 장소에서 강의를 듣는 학생들을 비교하는 것입니다. 우리가 알고 있는 대로 이것은 최고의 접근 방식은 아니긴 합니다. 온라인 수업이 실제 오프라인 수업이었어도 평균적인 학생들보다 더 잘하는 훈련된 학생들만을 끌어들일 수도 있기 때문입니다. 이러한 경우에선 처치를 받은 집단이 학업적으로 처치를 받지 않은 그룹보다 좋은 결과를 보여주는 긍정 편항(positive bias)을 발견할 수 있습니다: <span class="math notranslate nohighlight">\(E[Y_0|T=1] &gt; E[Y_0|T=0]\)</span></p>
+<p>또한 반대 상황을 생각해보자면, 온라인 수업이 더 저렴하여 공부 외에 다른 일들을 해야하는 부유하지 않은 학생들로 구성되어 있을 수도 있습니다. 이런 경우에는 이 학생들이 오프라인을 수업을 듣는다할지라도 실제 오프라인 수업을 듣는 학생들보다 좋은 학업 퍼포먼스를 보여주지 못할 수도 있습니다. 이런 상황이 발생할 경우, 우린 처치를 받은 그룹이 처치를 받지 않은 그룹보다 학업적 성과가 나쁘다는 다른 측면의 편향: 부정 편향(negative bias)을 가질 수 있습니다: <span class="math notranslate nohighlight">\(E[Y_0|T=1] &lt; E[Y_0|T=0]\)</span></p>
+<p>그러므로 우리가 이런 간단한 비교를 하더라도, 이런 비교들은 설득력이 없을 것이라는 것입니다. 어떤 방식으로 하든지 우리는 우리가 발견하고자 하는 인과 효과( causal effect)를 가리고 있는 여러 편향(bias)들이 없다고 절대 확신할 수 없습니다.</p>
+<p><img alt="lurking_bias" src="_images/lurking_bias.png" /></p>
+<p>이를 해결하기 위해, 우리는 처치군과 처치를 진행하지 않은 군을 비교가능하게 만들어야 합니다. <span class="math notranslate nohighlight">\(E[Y_0|T=1] = E[Y_0|T=0]\)</span> 학생들을 온라인 수업과 현 방식의 수업(대면 수업)에 무작위로 배정하는 것이 하나의 방법이 될 수 있겠네요. 만약 우리가 그렇게 한다면, 처치를 받은 그룹과 받지 않은 그룹은 그들이 받은 처치를 제외하고는 평균적으로 같아야 할 것입니다.</p>
+<p>놀랍게도 한 경제학자들은 우리를 위해 이 작업을 미리 해두었습니다. 그들은 첫번째 그룹의 학생들은 대면 강의를, 두번째 학생들은 온라인 수업을, 세번째 그룹의 학생들에게는 혼합형 수업을 듣도록 랜덤 배정을 진행하였습니다. 또한 학기 말에 진행한 시험에 대한 데이터를 모았죠.</p>
+<p>데이터는 아래와 같습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./online_classroom.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(323, 10)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gender</th>
+      <th>asian</th>
+      <th>black</th>
+      <th>hawaiian</th>
+      <th>hispanic</th>
+      <th>unknown</th>
+      <th>white</th>
+      <th>format_ol</th>
+      <th>format_blended</th>
+      <th>falsexam</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>63.29997</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>79.96000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>83.37000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>90.01994</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>83.30000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>우리는 323개의 샘플들을 볼 수 있습니다. 큰 데이터는 아니지만, 우리가 무언갈 해볼 순 있겠습니다. 인과 효과를 추정하기 우해 우리는 각 처치 그룹의 평균 점수를 내볼 수 있겠네요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">data</span>
+ <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">class_format</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+     <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;format_ol&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;format_blended&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)],</span>
+     <span class="p">[</span><span class="s2">&quot;online&quot;</span><span class="p">,</span> <span class="s2">&quot;blended&quot;</span><span class="p">],</span>
+     <span class="n">default</span><span class="o">=</span><span class="s2">&quot;face_to_face&quot;</span>
+ <span class="p">))</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;class_format&quot;</span><span class="p">])</span>
+ <span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gender</th>
+      <th>asian</th>
+      <th>black</th>
+      <th>hawaiian</th>
+      <th>hispanic</th>
+      <th>unknown</th>
+      <th>white</th>
+      <th>format_ol</th>
+      <th>format_blended</th>
+      <th>falsexam</th>
+    </tr>
+    <tr>
+      <th>class_format</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>blended</th>
+      <td>0.550459</td>
+      <td>0.217949</td>
+      <td>0.102564</td>
+      <td>0.025641</td>
+      <td>0.012821</td>
+      <td>0.012821</td>
+      <td>0.628205</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>77.093731</td>
+    </tr>
+    <tr>
+      <th>face_to_face</th>
+      <td>0.633333</td>
+      <td>0.202020</td>
+      <td>0.070707</td>
+      <td>0.000000</td>
+      <td>0.010101</td>
+      <td>0.000000</td>
+      <td>0.717172</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>78.547485</td>
+    </tr>
+    <tr>
+      <th>online</th>
+      <td>0.542553</td>
+      <td>0.228571</td>
+      <td>0.028571</td>
+      <td>0.014286</td>
+      <td>0.028571</td>
+      <td>0.000000</td>
+      <td>0.700000</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>73.635263</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>너무 간단하죠? 우리는 대면 수업(face_to_face)이 평균 약 78.55점인에 반해, 온라인 수업(online)의 경우 평균 73.63점을 보여주고 있습니다. 온라인 수업을 지지자들에게 좋은 소식은 아니겠네요. 고로 온라인 수업의 <span class="math notranslate nohighlight">\(ATE\)</span>는 약 -4.91겠네요. 이는 온라인 수업을 듣는 학생들은 평균적으로 약 5점 낮은 점수를 받는다는 것을 의미합니다. 바로 이거죠. 여러분은 대면 수업을 받을 형편이 되지 않는 가난한 학생들이 온라인 수업을 수강할 것이라고 걱정할 필요가 없습니다. 그러므로 여러분은 다른 처치를 받은 학생들이 그들이 받은 처치가 그 외 다른 처치들과는 다를 것이라고 걱정할 필요는 없다는 것이죠.(어떤 그룹이 편향된 특성을 가지고 있을 것이라고 걱정할 필요가 없다는 것이죠.) 무작위 실험은 바로 이런 차이들을 제거하기 위해 설계되었습니다.</p>
+<p>이러한 이유들로 인해 랜덤화(randomisation)가 잘 이루어졌는지(또는 올바른 데이터를 살펴보고 있는지) 확인하는 방법은 처치를 받은 것이 전처리 변수에서 처치를 받지 않은 것과 동일한지를 확인하는 것입니다. 현재 우리가 보고 있는 데이터는 성별과 민족에 대한 정보 또한 가지고 있어 그룹 간에 유사한 패턴이 나타나는지를 볼 수 있습니다. 우리는 <code class="docutils literal notranslate"><span class="pre">gender</span></code>, <code class="docutils literal notranslate"><span class="pre">asian</span></code>, <code class="docutils literal notranslate"><span class="pre">hispanic</span></code> , <code class="docutils literal notranslate"><span class="pre">white</span></code> 변수에서는 비교적 비슷한 결과가 나오는 것을 알 수 있습니다. 하지만 <code class="docutils literal notranslate"><span class="pre">black</span></code> 변수에서는 다른 경향이 보이네요. 이러한 경향은 작은 데이터셋에서 어떤 일이 일어나는지 확인할 수 있게끔 합니다. 무작위 실험을 한다 할지라도, 우연히 한 그룹의 경향성이 다른 그룹과는 다를 수 있습니다. 큰 표본에서는 이러한 차이가 사라지는 편이죠.</p>
+</section>
+<section id="the-ideal-experiment">
+<h2>The Ideal Experiment<a class="headerlink" href="#the-ideal-experiment" title="Permalink to this headline">#</a></h2>
+<p>무작위 실험(Randomised experiments), 무작위 통제 실험(Randomised Controlled Trials: RCT)이 인과 효과(causal effect)를 확인할 수 있는 가장 신뢰할만한 방법입니다. 또한 인과 관계를 가장 직접적으로 확인할 수 있는 기술이며, 엄청난 설득력을 갖추고 있죠. 그렇기 때문에 많은 국가들이 신약의 효과성을 보여주고자 할 때 필수적으로 활용하고 있죠. 조금 더 끔찍한 비유를 하자면, RCT를 아바타(Avatar: The Last Airbender, 아바타: 아앙의 전설, 미국 니켈로디언에서 2005년부터 방영한 애니메이션)의 Aang으로 생각할 수 있습니다. RCT를 제외한 다른 기술들은 Sokka에 더 가깝습니다. Sokka는 매우 멋지고 여기저기서 멋진 묘기를 부릴 수 있지만 Aang은 네 가지 요소(물, 흙, 불, 공기)를 구부려 영적 세계와 연결시킬 수 있습니다. 이렇게 생각해 볼까요? 만약 우리가 할 수 있다면, RCT는 인과 관계를 알아내기 위해 우리가 할 수 있는 모든 것이 될 것입니다. 잘 설계된 RCT는 모든 과학자들의 꿈이라고 할 수 있죠.</p>
+<p><img alt="science_dream" src="_images/science_dream.png" /></p>
+<p>안타깝게도, RCT 방법론은 비용이 매우 많이 들어간다든지 비윤리성을 가지고 있다든지 하는 한계가 있습니다. 때로는 실험자가 처치를 진행하는 매커니즘을 쉽게 통제하지 못할 때도 있죠. 이렇게 생각해볼까요? 임신 중 흡연이 출산 뒤 아이의 체중에 어떤 영향을 미치는지 측정해보고자 한다고 해봅시다. 우리가 의사라 할지라도 우리는 몇 명의 임산부를 무작위로 선정해 임신 중에 흡연을 하게끔 절대 강요할 수 없을 거에요. 또다른 예시를 들어보자면 여러분이 큰 은행에서 일하고 있고, 신용 한도가 고객의 이탈에 어떠한 영향을 미치는지 추정할 필요가 있다고 해봅시다. 우리의 고객들에게 무작위로 신용 한도를 주는 것에는 너무 큰 비용이 들어갈꺼에요. 또 최저임금 인상이 실업률에 미치는 영향을 조사하고 싶다고요? 우리는 개별 국가들에게 최저 임금을 조정하라고 할 수 없을 거에요. 이제 여러분이 이해하셨을 거라 생각합니다.</p>
+<p>이런 방법도 있을 거에요. 우리가 차후에 조건부 무작위 실험을 진행한다 하고 완전 무작위 실험 비용을 낮추는 방법 또한 고려할 수 있겠지만, 비윤리적이거나 실현이 불가능한 실험들에 대해서는 할 수 있는게 여전히 없을 꺼에요. 그럼에도 불구하고, 우리가 인과적인 질문을 던질 때마다, 어떤 것이 <strong>이상적인 실험인가</strong>에 대해 생각하는 것은 여전히 가치 있을 거에요. 항상 스스로에게 질문을 던져보세요. <strong>인과적인 관계를 밝혀낼 때 어떤 것이 완벽한 실험이 될 수 있을 건가에 대해서요.</strong> 그럼으로써 우리는 이상적인 실험 없이도 어떻게 우리가 인과 효과를 발견할 수 있을지에 다가가는 하나의 방법이 될 것입니다.</p>
+</section>
+<section id="the-assignment-mechanism">
+<h2>The Assignment Mechanism<a class="headerlink" href="#the-assignment-mechanism" title="Permalink to this headline">#</a></h2>
+<p>완전 무작위 실험(Randomised Experiment)에서 누구에게 처치를 진행할 것인가는 완전 랜덤입니다. 다음 아티클들을 통해서도 알게 되겠지만, 모든 인과 추론 기술들은 누구에게 처치를 진행하는지를 알고 싶어 하죠. 만약 우리가 이 매커니즘(Assignment Mechanism)을 잘 이해하게 된다면, 처치가 랜덤이 아니라 할지라도 인과 추론은 더 신뢰할만 할 것입니다. <em>(assignment mechanism: 측정 가능한 공변량 X가 충분히 주어진다면 처치(Treatment)는 Y(결과)와 관계 없이 랜덤하게 주어진다는 가정)</em></p>
+<p>안타깝게도 처치가 가해지는 방식(Assignment Mechanism)은 데이터를 살펴본다고 해서 쉽게 발견하긴 어려운 것이죠. 예를 들어 우리가 고등 교육과 부의 상관관계에 대한 데이터를 가지고 있다 하더라도, 데이터를 통해 어떤 것이 원인에 있는지를 쉽게 알긴 어렵습니다. 우리는 우리의 도메인(예를 들어 세상이 어떻게 흘러가는지에 대한 지식)을 활용하여 그럴듯해 보이는 주장을 해야할 것입니다. 이런 주장을 할 수 있겠네요. 학교가 사람들을 교육하고, 그래서 그들을 더 생산적으로 만든다면, 결국 그들을 더 높은 임금을 받는 직업으로 이끄는 것일까? 아니면 여러분이 교육에 대해 비관적이라면, 학교는 생산성을 높이기 위해 그 어떤 것도 하지 않는다고 말할 수도 있겠네요. 그리고 이건 사실 있어보이기만 한 상관관계죠. 왜냐하면 부유한 가정들에서만 그들의 자식들을 높은 학위를 받게하기 위한 교육을 할 여유가 있기 때문이죠.</p>
+<p>인과적 질문에서는 우리는 두 가지의 논쟁을 하게 될 것이죠. ‘X가 Y의 원인’이라고 하거나, ‘제 3의 변수인 Z가 X와 Y의 원인이기 때문에 X와 Y의 상관 관계는 거짓이다’와 같은 것들이요. 이러한 이유들로 인해 우리가 Assignment Mechanism에 대해 잘 알게 된다면, 우리는 훨씬 더 설득력 있는 인과적 답변을 할 수 있을 것입니다. 바로 이런 것들이 인과 추론을 더더욱 재미있게 만드는 것이죠! 머신 러닝은 적절한 순서에 따라 버튼들을 누르는 것에 불과하지만, 인과 추론은 데이터가 생산되는 과정에 대해 진지한 사고를 요하는 것이죠.</p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>우리는 지금까지 무작위 실험(Randomised Experiments)이 왜 인과적 영향을 추론하는 가장 간단하고 가장 효과적인 방법인지를 살펴보았습니다. 바로 처치군(T-group)과 대조군(C-group)을 비교 가능하게끔 하는 것이죠. 슬프게도 우리는 무작위 실험을 항상 할 순 없지만, 우리가 할 수 있는 이상적인 실험이 무엇인지를 생각하는 것은 여전히 도움이 됩니다.</p>
+<p>통계에 익숙한 누군가는 지금 제가 인과 관계의 추정치에 대해 살펴보지 않았다고 항의하고 있을 수도 있습니다. 4.91점의 하락이 우연에 의해 일어난 것이 아니라는 것을 어떻게 알 수 있나요? 그 차이가 통계적으로 유의한지 어떻게 알 수 있나요? 그리고 이 질문들은 옳습니다. 걱정하지 마세요. 곧 통계적 개념들에 대해 다룰 예정이니까요!</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 놀라운 계량경제학 수업에 대한 찬사로 생각하고 싶습니다. 여기 있는 대부분의 아이디어들은 미국 경제 협회의 수업에서 따온 것들입니다. 그들을 보는 것이 2020년의 힘든 한 해 동안 제 정신을 유지하는 것입니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>저는 또한 Angrist의 놀라운 책들을 참고하고 있습니다. 그들은 저에게 계량경제학이 매우 유용할 뿐만 아니라 매우 재미있다는 것을 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막 참고 문헌은 Miguel Hernan와 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 가장 골치 아픈 인과적 질문에 대한 저의 신뢰할 수 있는 동반자였습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>Alpert, William T., Kenneth A. Couch, and Oskar R. Harmon. 2016의 연구 데이터를 활용하였습니다.  “<a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/aer.p20161057">A Randomized Assessment of Online Learning</a>” American Economic Review, 106(5): 378-82입니다.</p>
+<p><img alt="poetry" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요. 여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요. 만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, 이 책의 <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="01-Introduction-To-Causality.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">01 - Introduction To Causality</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="03-Stats-Review-The-Most-Dangerous-Equation.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">03 - Stats Review: The Most Dangerous Equation</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-golden-standard">
+   The Golden Standard
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-a-school-far-far-away">
+   In a School Far, Far Away
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-ideal-experiment">
+   The Ideal Experiment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-assignment-mechanism">
+   The Assignment Mechanism
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

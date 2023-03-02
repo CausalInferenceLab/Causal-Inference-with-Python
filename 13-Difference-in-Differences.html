@@ -1,0 +1,1249 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>13 - Difference-in-Differences &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '13-Difference-in-Differences';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="14 - Panel Data and Fixed Effects" href="14-Panel-Data-and-Fixed-Effects.html" />
+    <link rel="prev" title="12 - Doubly Robust Estimation" href="12-Doubly-Robust-Estimation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F13-Difference-in-Differences.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/13-Difference-in-Differences.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>13 - Difference-in-Differences</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#three-billboards-in-the-south-of-brazil">
+   Three Billboards in the South of Brazil
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#did-did-estimator">
+   DID 추정량 (DID Estimator)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-parallel-trends">
+   평행하지 않은 추세 (Non Parallel Trends)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="difference-in-differences">
+<h1>13 - Difference-in-Differences<a class="headerlink" href="#difference-in-differences" title="Permalink to this headline">#</a></h1>
+<section id="three-billboards-in-the-south-of-brazil">
+<h2>Three Billboards in the South of Brazil<a class="headerlink" href="#three-billboards-in-the-south-of-brazil" title="Permalink to this headline">#</a></h2>
+<p>제가 마케팅 일을 했을 때, 인터넷 광고가 가장 좋은 방법이었던 걸로 기억해요. 인터넷 광고가 매우 효율적이여서가 아니라(효율적이기도 하지만), 마케팅이 얼마나 효과적인지 아닌지를 파악하기가 매우 쉽기 때문입니다. 온라인 마케팅을 사용하면, 어떤 고객이 광고를 보았는지 알 수 있으며 쿠키를 사용하여 고객이 방문 페이지에 도달했는지 또는 다운로드 버튼을 클릭했는지 확인할 수 있습니다. 또한 머신러닝을 이용해서 여러분의 고객과 매우 유사한 잠재 고객을 찾고 해당 고객에게만 광고를 노출시킬 수 있습니다. 이러한 의미에서 온라인 마케팅은 매우 정확해요: 원하는 대상만 타겟팅하면, 여러분이 원하는 대로 반응하는지 확인할 수 있습니다.</p>
+<p>그러나 모든 사람이 온라인 마케팅에 취약한 것은 아닙니다. TV 캠페인이나 거리에 광고판을 설치하는 것과 같이 덜 정확한 기술에 의존해야 할 때도 있어요. 대개 마케팅 채널의 다양성은 마케팅 부서에서 추구합니다. 그러나 온라인 마케팅이 특정 종류의 참치를 잡는 전문 낚싯대라면 광고판과 TV는 물고기 떼에 던지는 거대한 그물이라고 볼 수 있고, 적어도 그 중에서 몇 마리는 잡기를 희망합니다. 광고판과 TV 광고의 또 다른 문제는 마케팅이 얼마나 효과적인지 알기가 훨씬 더 어렵다는 것입니다. 물론, 광고판을 어딘가에 배치하기 전후의 구매량 또는 여러분이 추진하고 어떤 것이든 측정할 수 는 있어요. 지표의 증가가 있으면 마케팅이 효과적이라는 증거가 있습니다만, 이러한 증가가 마케팅한 제품 인지도의 자연스러운 추세가 아닌지 어떻게 알 수 있을까요? 즉, 애초에 광고판을 설치하지 않았다면, 어떻게 되었을지 counterfactual인 <span class="math notranslate nohighlight">\(Y_0\)</span>를 어떻게 알 수 있나요?</p>
+<p><img alt="img" src="_images/secrets.png" /></p>
+<p>이러한 유형의 질문에 답하는 한 가지 방법은 이중차분법(DID, Difference-in-Difference)입니다. DID는 일반적으로 거시적 개입(macro interventations)의 효과를 평가하는 데 사용되는데요, 예를 들어 이민이 실업에 미치는 영향, 범죄율에 대한 총기법 변경의 영향 또는 단순히 마케팅 캠페인으로 인한 유저 참여 차이를 추정하는데 사용됩니다. DID는 모든 경우에 개입 전후에 기간이 있으며, 일반적인 추세에서 개입의 영향을 파악하고자 하는 방법입니다. 위에서 설명한 예시처럼, 제가 이전에 대답해야 했던 것과 비슷한 질문에 대해 같이 한 번 살펴보시죠.</p>
+<p>광고판이 마케팅 채널로 얼마나 좋은지 알아보기 위해, 히우그란지두술(Rio Grande do Sul) 주도인 포르투 알레그리(Porto Alegre)에 3개의 광고판을 설치했습니다. 이 실험을 통해 광고판 설치가 적금 계좌로 예금을 늘리는지 확인하고 싶었어요. 브라질 지리에 익숙하지 않은 분들께 참고로 말씀드리자면, Rio Grande do Sul은 브라질 남부에 있으며, 가장 발전된 지역 중 하나입니다.</p>
+<p>이를 염두에 두고, 브라질 남쪽의 다른 수도인 산타 카타리나(Santa Catarina) 주의 주도인 플로리아노폴리스(Florianopolis)의 데이터도 살펴보기로 했습니다. Florianopolis를 대조군으로 사용해서, Porto Alegre와 비교 시 counterfactual <span class="math notranslate nohighlight">\(Y_0\)</span>를 추정해볼 수 있다는 것입니다. (참고로 이 부분은 기밀인 실제 실험이 아니지만 대조군 설정의 아이디어는 매우 유사해요). 우리는 6월 한 달 동안 Porto Alegre에 광고판을 배치했습니다. 실험을 통한 데이터는 다음과 같습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/billboard_impact.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>deposits</th>
+      <th>poa</th>
+      <th>jul</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>42</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>52</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>119</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>21</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>예금(deposits)은 이 실험의 결과 변수이며 광고판을 통해 늘리려고 하는 변수라는 것을 기억해주세요. POA는 Porto Alegre 시 여부인지에 대한 더미변수(Dummy variable)입니다. 0이면 Florianopolis에서 가져온 데이터를 의미해요. 7월은 7월 또는 사후 개입 기간(post intervention period)에 대한 더미변수이며, 값이 0이면 개입 전 기간(pre-intervention period)인 5월의 데이터를 나타냅니다.</p>
+</section>
+<section id="did-did-estimator">
+<h2>DID 추정량 (DID Estimator)<a class="headerlink" href="#did-did-estimator" title="Permalink to this headline">#</a></h2>
+<p>시간과 Treatment 사이의 혼동을 피하기 위해, 이제부터 D를 사용하여 Treatment를 나타내고 T를 사용하여 시간을 표현하겠습니다. <span class="math notranslate nohighlight">\(Y_D(T)\)</span>를 기간 T의 처치 D에 대한 잠재적 결과라고 정의한다면, 우리가 반사실을 관찰할 수 있는 이상적인 세계에서 다음과 같은 방식으로 개입에 대한 처치 효과를 추정할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = E[Y_1(1) - Y_0(1)|D=1]
+\)</span></p>
+<p>즉, 인과 효과는 개입 후 기간의 처치를 받은 대상의 결과에서 개입 후 기간의 처치를 받지않은 대상의 결과를 뺀 값입니다. 물론 <span class="math notranslate nohighlight">\(Y_0(1)\)</span>는 counterfactual 이기 때문에 관측할 수 없습니다.</p>
+<p>이렇게 DID에서 인과추론의 근본적인 문제가 존재하게 되는데요. 이 문제를 해결하는 한 가지 방법은 전후 비교입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = E[Y(1)|D=1] - E[Y(0)|D=1]
+\)</span></p>
+<p>위 예시에서는 광고판을 배치하기 전과 후에 POA의 평균 예금액을 비교할 수 있을 거에요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poa_before</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;poa==1 &amp; jul==0&quot;</span><span class="p">)[</span><span class="s2">&quot;deposits&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">poa_after</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;poa==1 &amp; jul==1&quot;</span><span class="p">)[</span><span class="s2">&quot;deposits&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">poa_after</span> <span class="o">-</span> <span class="n">poa_before</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41.04775
+</pre></div>
+</div>
+</div>
+</div>
+<p>이 DID 추정량에 따르면, 개입 후 예금이 R$ 41.04 증가할 것으로 예상됩니다. 그런데 여러분 이 수치를 믿을 수 있을까요?</p>
+<p><span class="math notranslate nohighlight">\(E[Y(0)|D=1]=E[Y_0(0)|D=1]\)</span> 식에 주목해주세요. 즉, <strong>개입 전</strong> 처치된 대상에 대해 관찰된 결과는 개입 이전에도 처치된 대상에 대한 반사실 결과와 동일해요. 이 식을 사용해서 <strong>개입 후</strong> counterfactual <span class="math notranslate nohighlight">\(E[Y_0(1)|D=1]\)</span>를 추정하기 때문에, 이 추정은 <span class="math notranslate nohighlight">\(E[Y_0(1)|D=1] = E[ Y_0(0)|D=1]\)</span>를 가정합니다.</p>
+<p>개입이 없을 경우, 후반 기간의 결과는 시작 기간의 결과와 같을 거에요. 결과 변수가 어떤 종류의 추세를 따른다면, 위의 식은 맞지 않을 겁니다. 예를 들어, POA에서 예금이 증가한다면, <span class="math notranslate nohighlight">\(E[Y_0(1)|D=1] &gt; E[Y_0(0)|D=1]\)</span>, 즉, 개입이 없더라도 후반 기간의 결과는 시작 기간의 결과보다 클 거에요.
+비슷하게 반대의 경우를 살펴보면, 예금이 POA에서 감소추세라면, <span class="math notranslate nohighlight">\(E[Y_0(1)|D=1] &lt; E[Y_0(0)|D=1]\)</span> 가 됩니다. 이것은 전후에 대한 부분이 좋은 추정량이 아니라는 것을 보여줍니다.</p>
+<p>또 다른 방법은 처치를 받은 그룹과 개입을 받지 않은 미처치 그룹을 비교하는 것 입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = E[Y(1)|D=1] - E[Y(1)|D=0]
+\)</span></p>
+<p>해당 예시에서는 개입 후 기간에 POA의 예금을 Florianopolis의 예금과 비교하고 있어요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fl_after</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;poa==0 &amp; jul==1&quot;</span><span class="p">)[</span><span class="s2">&quot;deposits&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">poa_after</span> <span class="o">-</span> <span class="n">fl_after</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-119.10175000000001
+</pre></div>
+</div>
+</div>
+</div>
+<p>해당 추정량은 캠페인이 긍정적인 효과를 가져오지 못하고, 소비자들의 예금은 R$ 119.10 감소할 것이라고 이야기하고 있어요.</p>
+<p><span class="math notranslate nohighlight">\(E[Y(1)|D=0]=E[Y_0(1)|D=0]\)</span>이라는 점을 주목해주세요. 그리고 <span class="math notranslate nohighlight">\(E[Y(1)|D=0]\)</span>를 사용해서 개입 후 처치에 대한 counterfactual을 추정하기 때문에, 누락된 counterfactual을 다음과 같이 대체할 수 있다고 가정해볼게요. <span class="math notranslate nohighlight">\(E[Y_0(1)|D =0] = E[Y_0(1)|D=1]\)</span>. 그런데, 이 식은 두 그룹의 수준이 매우 유사한 경우에만 해당됩니다. 예를 들어, Florianopolis가 Porto Alegre보다 예금이 훨씬 많다면 <span class="math notranslate nohighlight">\(E[Y_0(1)|D=0] &gt; E[Y_0(1)|D=1]\)</span>이기 때문에 위 식은 맞지 않게 됩니다. 반대로, Florianopolis의 예금 수준이 Porto Alegre보다 낮으면 <span class="math notranslate nohighlight">\(E[Y_0(1)|D=0] &lt; E[Y_0(1)|D=1]\)</span>가 되겠죠?</p>
+<p>거듭 말씀드리지만, 이건 좋은 생각이 아니에요. 이 부분을 해결하기 위해, 공간(space) 비교와 시간(time) 비교를 모두 사용할 수 있습니다. 이게 바로 DID에 대한 기본적인 아이디어입니다. 아래와 같이 같이 관측할 수 없는 counterfactual을 대체해 효과를 추정할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y_0(1)|D=1] = E[Y_1(0)|D=1] + (E[Y_0(1)|D=0] - E[Y_0(0)|D=0])
+\)</span></p>
+<p>위 식은 <strong>개입 전</strong> 처치된 그룹에 추세 구성 요소를 추가된 것을 보여주고 있어요. 대조군 $E[Y_0(1)|D=0] - E[Y_0(0)|D=0 을 사용하여 추정합니다. 다시 말해, <strong>개입 후</strong> 실험군이 만약 처치를 받지 않았다면, <strong>처치 전</strong> 실험군에 대조군의 성장과 동일한 성장 요소를 더한 것처럼 보일 것입니다.</p>
+<p>실험군과 대조군의 추세(trend)는 같다고 가정한다는 점은 주목할 필요가 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y_0(1) − Y_0(0)|D=1] = E[Y_0(1) − Y_0(0)|D=0]
+\)</span></p>
+<p>여기서 왼쪽 부분은 counterfactual에 대한 추세입니다. 이제 처치 효과 정의 <span class="math notranslate nohighlight">\(E[Y_1(1)|D=1] - E[Y_0(1)|D=1]\)</span>에서 추정된 counterfactual에을 대체할 수 있게 됩니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = E[Y(1)|D=1] - (E[Y(0)|D=1] + (E[Y(1)|D=0] - E[Y(0)|D=0])
+\)</span></p>
+<p>이 식을 재정리하면, 아래처럼 DID 추정량을 얻습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = (E[Y(1)|D=1] - E[Y(1)|D=0]) - (E[Y(0)|D=1] - E[Y(0)|D=0])
+\)</span></p>
+<p>처치 후와 처치 전의 대조군과 실험군 처치의 차이를 따서 붙여진 이름입니다.</p>
+<p>아래 코드를 한 번 보시죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fl_before</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;poa==0 &amp; jul==0&quot;</span><span class="p">)[</span><span class="s2">&quot;deposits&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">diff_in_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">poa_after</span><span class="o">-</span><span class="n">poa_before</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">fl_after</span><span class="o">-</span><span class="n">fl_before</span><span class="p">)</span>
+<span class="n">diff_in_diff</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.524557692307688
+</pre></div>
+</div>
+</div>
+</div>
+<p>위 식을 통해 추정된 DID는 예금이 고객 당 R$ 6.52만큼 증가할 것이라고 예상하고 있습니다. DID가 만드는 가정은 앞서 이야기한 다른 2개의 추정량보다 훨씬 더 그럴듯하지 않나요? 여기서는 두 도시 간의 성장 패턴이 동일하다고 가정합니다. 그러나 동일한 수준을 가질 필요도 없고 추세가 0일 필요도 없습니다.</p>
+<p>DID에 대해 시각화하기 위해, 처치되지 않은 그룹에서 처치된 그룹으로의 성장 추세를 투영하여 반사실, 즉 개입이 없는 경우 예상해야 하는 예금수를 볼 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">fl_before</span><span class="p">,</span> <span class="n">fl_after</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;FL&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">poa_before</span><span class="p">,</span> <span class="n">poa_after</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POA&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">poa_before</span><span class="p">,</span> <span class="n">poa_before</span><span class="o">+</span><span class="p">(</span><span class="n">fl_after</span><span class="o">-</span><span class="n">fl_before</span><span class="p">)],</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Counterfactual&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C2&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/d20f8626d04583087554e0a7cb4dfbe9ce453ba15902cbfd9e311656e765dd9a.png" src="_images/d20f8626d04583087554e0a7cb4dfbe9ce453ba15902cbfd9e311656e765dd9a.png" />
+</div>
+</div>
+<p>빨간색 선과 노란색 점선 사이의 작은 차이가 보이시나요? 만약 여러분이 이 차이에 정말 주목하신다면, Porto Alegre에 대한 작은 처치 효과를 확인하실 수 있습니다.</p>
+<p><img alt="img" src="_images/cant-read.png" /></p>
+<p>이제, 여러분이 스스로에게 이렇게 물어볼 수 있을 거에요. “과연 내가 추정량을 얼마나 신뢰할 수 있을까요? 해당 추정량에 대한 표준오차를 갖는 건 내 권리에요!”. 표준 오차가 없는 추정량은 어리석게 보일 수 있기 때문에 의미가 있어요. 이 부분을 해결하기 위해, 회귀(regression)를 사용하는 깔끔한 방법을 사용해보려고 합니다. 구체적으로는 다음 선형 모델을 추정합니다.</p>
+<p><span class="math notranslate nohighlight">\(
+Y_i = \beta_0 + \beta_1 POA_i + \beta_2 Jul_i + \beta_3 POA_i*Jul_i + e_i
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(\beta_0\)</span>는 대조군에 대한 기준선이며, 이 경우에는 5월 Florianopolis의 예금 수준을 나타냅니다. 처치된 도시의 더미변수가 1인 경우를 보면, <span class="math notranslate nohighlight">\(\beta_1\)</span>를 얻게 됩니다. 따라서 <span class="math notranslate nohighlight">\(\beta_0 + \beta_1\)</span>는 개입 전 5월의 Porto Alegre 기준선이고 <span class="math notranslate nohighlight">\(\beta_1\)</span>는 Florianopolis 위의 Porto Alegre 기준선의 증가분입니다. POA 더미변수가 0이고 7월 더미변수가 1인 경우를 고려한다면, 개입 기간 후 7월 Florianópolis 수준인 <span class="math notranslate nohighlight">\(\beta_0 + \beta_2\)</span>를 얻습니다. <span class="math notranslate nohighlight">\(\beta_2\)</span>는 대조군의 추세를 나타냅니다. 왜냐하면 개입 후, 기간에 통제 수준을 얻기 위해 기준선 위에 추가하기 때문입니다.
+요약하자면, <span class="math notranslate nohighlight">\(\beta_1\)</span>은 대조군에서 처치된 그룹으로 이동해 얻을 수 있는 증분이고, <span class="math notranslate nohighlight">\(\beta_2\)</span>는 개입 전 기간에서 개입 후 기간으로 이동하여 얻는 증분입니다. 마지막으로 두 더미변수가 모두 1이라면, <span class="math notranslate nohighlight">\(\beta_3\)</span>가 나타나게 됩니다. <span class="math notranslate nohighlight">\(\beta_0 + \beta_1 + \beta_2 + \beta_3\)</span>는 개입 후 Porto Alegre의 수준입니다. 따라서 <span class="math notranslate nohighlight">\(\beta_3\)</span>는 5월에서 7월로, Florianopolis에서 Porto Alegre 이동할 때의 증분 영향입니다. 즉, 이 부분은 DID 추정량이 됩니다.</p>
+<p>믿기 힘드시다면, 직접 확인해 보세요. 위에서 얻은 것과 수치를 얻어야 해요. 또한 앞서 추가적으로 알고 싶었던 표준 오차를 얻는 방법에 주목해주세요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;deposits ~ poa*jul&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>  171.6423</td> <td>    2.363</td> <td>   72.625</td> <td> 0.000</td> <td>  167.009</td> <td>  176.276</td>
+</tr>
+<tr>
+  <th>poa</th>       <td> -125.6263</td> <td>    4.484</td> <td>  -28.015</td> <td> 0.000</td> <td> -134.418</td> <td> -116.835</td>
+</tr>
+<tr>
+  <th>jul</th>       <td>   34.5232</td> <td>    3.036</td> <td>   11.372</td> <td> 0.000</td> <td>   28.571</td> <td>   40.475</td>
+</tr>
+<tr>
+  <th>poa:jul</th>   <td>    6.5246</td> <td>    5.729</td> <td>    1.139</td> <td> 0.255</td> <td>   -4.706</td> <td>   17.755</td>
+</tr>
+</table></div></div>
+</div>
+</section>
+<section id="non-parallel-trends">
+<h2>평행하지 않은 추세 (Non Parallel Trends)<a class="headerlink" href="#non-parallel-trends" title="Permalink to this headline">#</a></h2>
+<p>DID의 한 가지 분명한 문제는 평행 추세 가정을 만족하기가 쉽지 않다는 것입니다. 처치를 받은 그룹의 증가 추세가 대조군의 경향과 다르면 DID는 편향될 거에요. 특정 지역에 처치를 하는 결정이 처치에 잘 반응할 가능성을 기반으로 하거나, 처치가 잘 수행되지 않는 지역을 대상으로 하는 경우 무작위가 아닌 데이터에서 나타날 수 있는 일반적인 문제입니다. 우리가 다루고 있는 마케팅 사례를 살펴보시죠. 광고판의 전반적인 효과를 확인하기 위해서가 아닌 Porto Alegre에서 광고판을 테스트하기로 했습니다. 그 이유는 단순히 판매 실적이 좋지 않기 때문입니다. 아마도 온라인 마케팅이 작동하지 않을 거에요. 이 경우 광고판이 없는 Porto Alegre에서 볼 수 있는 성장은 다른 도시에서 관찰한 성장보다 낮게 관찰될 수 있겠죠? 이는 Porto Alegre에 있는 광고판의 효과를 과소평가하게 만들 수 있을 거에요.</p>
+<p>이러한 평행 추세가 아닌 경우가 발생하는지 확인하는 한 가지 방법은 과거 기간을 이용해 추세를 그려보는 거에요. 예를 들어, Porto Alegre는 약간의 감소 추세를 보였지만 Florianopolis는 가파른 상승세를 보였다고 가정해 보겠습니다. 이 경우, 이전의 기간을 표시하면 아래 그림과 같이 추세가 나타날 것이고, 우리가 구한 DID 추정량이 신뢰할 수 있는 값이 아님을 알 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Jan&quot;</span><span class="p">,</span> <span class="s2">&quot;Mar&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="n">fl_before</span><span class="p">,</span>  <span class="n">fl_after</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;FL&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">poa_before</span><span class="p">,</span> <span class="n">poa_after</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POA&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">poa_before</span><span class="p">,</span> <span class="n">poa_before</span><span class="o">+</span><span class="p">(</span><span class="n">fl_after</span><span class="o">-</span><span class="n">fl_before</span><span class="p">)],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Counterfactual&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C2&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/66db8a3238208915f27baf80f671aef5514779e3389234a174dfbae17ac496f6.png" src="_images/66db8a3238208915f27baf80f671aef5514779e3389234a174dfbae17ac496f6.png" />
+</div>
+</div>
+<p>Chapter 15에서 Synthetic control이라는 방법을 통해 이 문제를 해결하는 방법을 살펴볼 예정입니다. Synthetic control을 사용해, 여러분이 관심이 있는 도시의 추세를 밀접하게 따르는 인위적인 도시를 생성하는 방법론입니다. 그러나 이번 챕터에서는 DID를 적용할 때, 평행 추세가 있는지 항상 확인해야 한다는 것을 기억해주세요.</p>
+<p><img alt="img" src="_images/non-parallel.png" /></p>
+<p>마지막으로 언급할 문제는 집계된 데이터만 있는 경우, DID 추정량에 신뢰 구간을 둘 수 없다는 점입니다. 예를 들어 Florianópolis 또는 Porto Alegre의 각 고객들에 대한 데이터가 없다고 가정해 보겠습니다. 대신에 두 도시의 개입 전후의 평균 예금에 대해 집계된 데이터가 있습니다. 이 경우 DID로 인과 효과를 추정할 수는 있으나 추정량에 대한 분산은 알 수 없습니다. 데이터의 모든 변동성이 집계를 통해 제거되었기 때문입니다.</p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>이번 챕터에서 더 많은 거시적 단체/그룹(학교, 도시, 주, 국가 등)에서 인과 관계를 추정할 때 널리 적용되는 DID 방법론에 대해 탐구했습니다. DID는 실험군에 대해 처치 전과 후의 결과를 파악하고 대조군 추세와 비교합니다. 이번 장에서는 도시별 마케팅 캠페인의 효과를 추정할 때, DID가 어떻게 적용될 수 있는지 살펴보았습니다.</p>
+<p>마지막으로 처치된 그룹과 대조군의 추세가 동일하지 않을 때, DID가 제대로 작동하지 않는 경우에 대해 살펴보았습니다. 또한 집계된 데이터만 있는 경우 DID가 얼마나 문제가 되는지도 확인해볼 수 있었어요.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>제가 참고한 또다른 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>마지막으로, Scott Cunningham과 인과 추론과 Mixtape 형태를을 결합한 그의 훌륭한 작업에도 찬사를 보냅니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.scunning.com/mixtape.html">Causal Inference: The Mixtape</a></p></li>
+</ul>
+<p><img alt="img" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="12-Doubly-Robust-Estimation.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">12 - Doubly Robust Estimation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="14-Panel-Data-and-Fixed-Effects.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">14 - Panel Data and Fixed Effects</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#three-billboards-in-the-south-of-brazil">
+   Three Billboards in the South of Brazil
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#did-did-estimator">
+   DID 추정량 (DID Estimator)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-parallel-trends">
+   평행하지 않은 추세 (Non Parallel Trends)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

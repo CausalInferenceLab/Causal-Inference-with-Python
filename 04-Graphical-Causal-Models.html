@@ -1,0 +1,1339 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>04 - Graphical Causal Models &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04-Graphical-Causal-Models';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="05 - The Unreasonable Effectiveness of Linear Regression" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html" />
+    <link rel="prev" title="03 - Stats Review: The Most Dangerous Equation" href="03-Stats-Review-The-Most-Dangerous-Equation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F04-Graphical-Causal-Models.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/04-Graphical-Causal-Models.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>04 - Graphical Causal Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   인과에 대해 생각해보기
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   그래프 모델에 대한 단기 특강
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   교란 편향
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   선택 편향
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="graphical-causal-models">
+<h1>04 - Graphical Causal Models<a class="headerlink" href="#graphical-causal-models" title="Permalink to this headline">#</a></h1>
+<section id="id1">
+<h2>인과에 대해 생각해보기<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>유튜브 영상에 나오는 요리사들이 얼마나 완벽하게 음식을 묘사하는지 알아차린 적 있나요?
+“소스가 벨벳 같은 농도가 될 때까지 졸이세요”. 당신이 막 요리를 배우는 중이라면, 이게 뭘 의미하는지 알 수도 없을 겁니다. 잠시 이걸 스토브 위에 둘 시간을 주세요.
+인과성에도 마찬가지입니다. 당신이 바(bar)로 걸어 들어가서 사람들이 인과성에 대해 이야기하는 걸 듣는다고 가정해봅시다(아마 경제학과 옆에 있는 바겠죠). 그 경우, 당신은 아마 그들이 수입의 교란 효과가 이민 효과를 규명하는 것을 어떻게 어렵게 만들었고, 그래서 그들이 도구 변수를 사용해야만 했는지 듣게 될 겁니다. 그리고 지금 당신은 그들이 뭐라고 하는지 알아듣지 못할 겁니다. 그러나 제가 이 중 최소한 몇 개의 문제는 당장 해결해 줄 수 있어요.</p>
+<p>그래프 모델은 인과성의 언어입니다. 이것을 다른 용감하고 진실한 인과성의 팬들과 이야기할 때 사용할 수도 있지만 당신이 자신의 생각을 더 투명하게 만드는 데에도 사용할 수 있죠.</p>
+<p>시작점으로서, 예를 들어 잠재적 결과의 조건부 독립을 가정해봅시다.
+이것은 우리가 인과 추론을 할 때 참으로 만들어야 하는 주요한 가정 중 하나입니다.</p>
+<p><span class="math notranslate nohighlight">\( (Y_0, Y_1) \perp T | X \)</span></p>
+<p>조건부 독립은 결과에 있어서 다른 숨어있는 변수들이 아닌 오직 처치에 의한 효과를 측정할 수 있게 만들어줍니다. 이에 대한 고전적인 예시는 아픈 환자에 대한 약의 효과입니다. 오로지 심각하게 아픈 환자들만 약을 먹는다면, 약을 처방하는 것이 환자의 건강을 악화시키는 것으로 보일 수도 있습니다. 그 이유는 병의 심각성이 약의 효과와 섞여버리기 때문이죠. 우리가 환자들을 심각한 케이스와 덜 심각한 케이스로 나누고 각 하위그룹에서의 약의 효과를 분석한다면, 우리는 실제 효과에 대한 더 명확한 그림을 얻을 것입니다. 모집단을 피쳐에 따라 나누는 것을 우리는 ‘X에 대한 통제’ 혹은 ‘X에 대한 조건화(conditioning)’라고 부릅니다. 심각한 케이스에 대해 조건화함으로써, 처치 메커니즘이 무작위에 가까워집니다. 심각한 그룹에 속한 환자들은 이 차원에 대해 똑같기 때문에 더 이상 병증의 심각성에 따라서가 아니라 오직 우연에 의해 약을 받거나 받지 않게 됩니다. 그리고 처치가 그룹 내에서 무작위로 할당되면, 처치는 잠재적 결과와 조건부 독립이 됩니다.</p>
+<p>독립과 조건부 독립은 인과 추론의 핵심입니다. 그것을 이해기는 꽤 어려울 수 있습니다. 하지만 이러한 어려움은 우리가 문제를 묘사할 적절한 언어를 이용하면 해결할 수 있습니다. 여기가 바로 <strong>인과 그래프 모형</strong>이 필요한 지점입니다. 인과 그래프 모형은 무엇이 무엇을 유발하는지로 인과성이 작동하는 방식을 표현하는 방식입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gr</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;medicine&quot;</span><span class="p">,</span> <span class="s2">&quot;survived&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;severeness&quot;</span><span class="p">,</span> <span class="s2">&quot;survived&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;severeness&quot;</span><span class="p">,</span> <span class="s2">&quot;medicine&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/151fe32043c576fb26479b60a3ddc4212618ed34bd984a8858ab9f9820e5e487.svg" src="_images/151fe32043c576fb26479b60a3ddc4212618ed34bd984a8858ab9f9820e5e487.svg" /></div>
+</div>
+<p>각 노드는 랜덤 변수입니다. 우리는 화살표, 또는 엣지를 사용해서 하나의 변수가 다른 것의 원인임을 나타냅니다. 위에서 첫 번째 그래프 모형은 Z가 X를 유발했고 U가 X와 Y를 유발했다고 말하고 있습니다. 더 확실한 예제로, 환자의 생존에 대한 약의 효과에 관한 우리의 생각을 번역해서 두 번째 그래프와 같이 나타낼 수 있습니다. 병의 심각성은 약과 생존 모두의 원인이 되고, 약은 생존의 원인이 됩니다. 앞으로 우리가 보게 될 것처럼, 인과 그래프 모형 언어는 우리가 인과성에 대해 더 분명하게 이해하도록 돕고, 세상이 어떻게 작동하는지에 대한 우리의 믿음도 명확하게 만들 것입니다.</p>
+</section>
+<section id="id2">
+<h2>그래프 모델에 대한 단기 특강<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://www.coursera.org/specializations/probabilistic-graphical-models">그래프 모형에 대해서만 다루는 한 학기짜리 강좌</a>도 있습니다. 그러나 우리의 목적에서는 그래프 모형이 수반하는 독립성과 조건부 독립성 가정이 무엇인지에 대해 이해하는 것이 (매우) 중요합니다. 우리가 보게될 것처럼, 물이 개울을 따라 흐르는 것처럼 독립성은 그래프 모형을 따라 흐릅니다. 우리는 우리가 그 안에 속한 변수를 어떻게 다루느냐에 따라 이 흐름을 멈추거나 계속되게 만들 수 있습니다. 이를 이해하기 위해, 몇 개의 흔한 그래프 구조와 예시를 살펴볼 것입니다. 그들은 매우 직관적이지만, 그래프 모형의 독립과 조건부 독립에 대한 이해를 쌓아 올리기에는 충분할 것입니다.</p>
+<p>먼저, 이 매우 단순한 그래프를 봅시다. A가 B의 원인이고, B가 C의 원인이 됩니다. 혹은 Z의 원인인 Y의 원인이 X입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;causal knowledge&quot;</span><span class="p">,</span> <span class="s2">&quot;solve problems&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;solve problems&quot;</span><span class="p">,</span> <span class="s2">&quot;job promotion&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/4192dcddab779d7301ed56cabe78bf7bee45a81d673e7ec3a21a3f85feaaafea.svg" src="_images/4192dcddab779d7301ed56cabe78bf7bee45a81d673e7ec3a21a3f85feaaafea.svg" /></div>
+</div>
+<p>첫 번째 그래프에서, 의존성이 화살표의 방향을 따라서 흐릅니다. 직관적이지는 않지만, 의존성이 대칭적인 것을 눈여겨보세요. 더 확실한 예제로, 우리가 비즈니스 문제를 풀기 위한 유일한 방법이 인과 추론이고, 이 문제들을 푸는 게 승진하는 유일한 길이라고 해봅시다. 즉 인과 지식(을 가지고 있는 것)이 승진에 영향을 미치는 문제를 푸는 것을 함축합니다. 인과적 전문성이 클수록 당신이 승진할 가능성은 더 커집니다. 또한, 당신의 승진 가능성이 클수록 당신이 인과 지식을 가지고 있을 가능성도 큽니다. 그렇지 않으면 승진하기 어렵습니다.</p>
+<p>이제 제가 매개 변수에 대해 조건화를 한다고 해보죠. 이 경우, 그 의존성이 차단됩니다(blocked). 즉 X와 Z는 Y가 주어졌을 때 서로 독립입니다. 위의 그래프에서 빨간색은 Y가 조건화된 변수임을 가리킵니다. 같은 이유로 우리의 예시에서 제가 당신이 문제를 푸는 데 능숙하다는 것을 안다면 당신이 인과 추론에 대해 안다는 것은 더 이상 당신의 승진 가능성에 대해 추가적인 정보를 주지 않습니다. 수학적인 용어로는
+<span class="math notranslate nohighlight">\( E[Promotion| Solve \ problems, Causal \ knowledge] = E[Promotion|Solve \ problems]\)</span> 라고 할 수 있고, 이것의 역도 참입니다; 제가 당신이 문제를 얼마나 잘 푸는지 안다면, 당신의 승진 상태에 대해 아는 것은 제게 당신이 인과 추론에 대해 알 가능성에 대한 추가적인 정보를 주지 않습니다.</p>
+<p>일반적인 규칙으로서, 우리가 매개변수 B를 조건화하면 A에서 C로 향하는 직선에 흐르는 의존성이 차단됩니다. 이는</p>
+<p><span class="math notranslate nohighlight">\(A \not \perp C \)</span></p>
+<p>그리고</p>
+<p><span class="math notranslate nohighlight">\( A \perp C|B \)</span> 로 표현할 수 있습니다.</p>
+<p>이제, fork 구조에 대해 생각해봅시다. 그래프에서 같은 변수가 두 개의 다른 변수의 원인이 되고 있습니다. 이 경우, 의존성은 화살표의 역방향으로 흐르고, 우리는 <strong>backdoor path</strong>를 가지게 됩니다. 우리는 공통의 원인에 대해 조건화함으로써 backdoor path를 막고 의존성을 제거할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span> <span class="s2">&quot;causal inference&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span> <span class="s2">&quot;machine learning&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/065fcfdc80bf30bd1f09219aa82ea09f4b15863efdb1e95e1023508392c95a7b.svg" src="_images/065fcfdc80bf30bd1f09219aa82ea09f4b15863efdb1e95e1023508392c95a7b.svg" /></div>
+</div>
+<p>예를 들어, 통계학에 대한 당신의 지식이 당신이 인과추론과 기계학습에 대해 더 잘 알게 하는 원인이 된다고 합시다. 만약 제가 당신의 통계학 지식의 수준에 대해 알지 못한다면, 당신이 인과 추론에 능하다는 것을 안다면 당신이 기계학습에도 능할 가능성도 높다고 여길 것입니다. 이는 내가 당신의 통계학 지식수준을 모르더라도 당신의 인과추론 지식을 통해 그것을 추론할 수 있기 때문입니다. 만약 당신이 인과추론을 잘 안다면, 당신은 아마도 통계학도 잘 알 것이고,그럼 당신이 기계학습도 잘 알 가능성도 높을 것입니다.</p>
+<p>이제 만약 내가 당신의 통계학에 관한 지식을 조건화하면, 당신이 기계학습에 대해 얼마나 아는지는 당신이 인과추론에 대해 얼마나 아는지와 독립이 됩니다. 당신의 통계학 수준에 대해 아는 것이 저에게 당신의 기계학습 스킬 수준에 대해 추론하기 위해 필요한 모든 정보를 다 주었기 때문이죠. 당신의 인과추론 수준을 아는 것이 이 경우엔 추가적인 정보를 주지 않는다는 걸 알겠죠?</p>
+<p>일반적인 규칙으로서, 하나의 공통된 원인을 갖는 두 변수는 의존이지만, 우리가 공통의 원인을 조건화하면 독립이 됩니다. 혹은</p>
+<p><span class="math notranslate nohighlight">\(A \not \perp B\)</span></p>
+<p>그리고</p>
+<p><span class="math notranslate nohighlight">\( A \perp B|C \)</span></p>
+<p>로 나타낼 수 있습니다.</p>
+<p>아직 다루지 않은 구조 하나는 collider입니다. collider는 두 개의 화살표가 하나의 변수에서 충돌하는 경우입니다. 이 경우 우리는 두 변수가 같은 효과를 공유한다고 말할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span> <span class="s2">&quot;job promotion&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;flatter&quot;</span><span class="p">,</span> <span class="s2">&quot;job promotion&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/793e383cc12cf301f318524f03d70e57a018baa7f8e1aeb2c70cb958e063eb30.svg" src="_images/793e383cc12cf301f318524f03d70e57a018baa7f8e1aeb2c70cb958e063eb30.svg" /></div>
+</div>
+<p>예를 들어, 우리가 승진하기 위한 두 개의 길이 있다고 칩시다. 통계학을 잘하거나 상사한테 아첨하는 것입니다. 만약 승진에 대해 조건화하지 않는다면, 당신이 승진할지 아닐지 전혀 알 수 없고, 당신의 통계학 수준과 아첨하는 것은 서로 독립이 됩니다. 다시 말해, 당신이 얼마나 통계학에 능한지를 아는 것은 당신이 상사한테 아첨을 얼마나 잘하는지 알려주는 바가 없습니다. 다른 한 편으로, 당신이 만약 승진했다면 갑자기 당신의 통계학 수준에 대해 아는 것이 당신의 아첨 수준에 대해서도 말해줍니다. 당신이 통계를 잘 못하는데 승진했다면, 당신은 아첨을 잘하는 사람일 것입니다. 그렇지 않았으면 승진하지 못했을 테니까요. 반대로 당신이 아첨을 잘 못한다면 당신은 통계를 잘할 것입니다. 이런 현상을 가끔 <strong>잘 설명한다(explaining away)</strong> 고 부르는데, 왜냐하면 하나의 원인이 이미 효과에 대해 설명함으로써 다른 원인의 가능성을 줄이기 때문입니다.</p>
+<p>일반적인 규칙으로, collider에 대해 조건화하는 것은 의존 경로(dependence path)를 열어줍니다. 조건화하지 않는 것은 닫힌 채로 두는 것이고요. 이는</p>
+<p><span class="math notranslate nohighlight">\(A \perp B\)</span></p>
+<p>그리고</p>
+<p><span class="math notranslate nohighlight">\(A \not \perp B | C\)</span></p>
+<p>로 나타낼 수 있습니다.</p>
+<p>이 세 구조에 대해 앎으로써, 우리는 더 일반적인 규칙을 도출해낼 수 있습니다. 다음과 같은 경우에만 경로가 차단(blocked)된다고 할 수 있습니다:</p>
+<ol class="arabic simple">
+<li><p>경로에 조건화된 non collider가 포함된다</p></li>
+<li><p>경로에 아직 조건화되지 않은 collider가 포함되고 조건화된 후손(descendants)을 가지지 않는다.</p></li>
+</ol>
+<p>여기에 어떻게 그래프에서 의존성이 흐르는지에 대한 커닝 페이퍼가 있습니다. 이는 Mark Paskin의 <a class="reference external" href="http://ai.stanford.edu/~paskin/gm-short-course/lec2.pdf">Stanford 발표</a>에서 가져왔습니다. 끝부분에 선이 그어진 화살표는 독립을 의미하고, 끝에 선이 없는 화살표는 의존을 의미합니다.</p>
+<p><img alt="img" src="_images/graph-flow.png" /></p>
+<p>마지막 예시로서, 다음의 인과 그래프에서 독립성과 의존성 관계를 찾아보세요.</p>
+<ol class="arabic simple">
+<li><p>Is <span class="math notranslate nohighlight">\(D \perp C \)</span>?</p></li>
+<li><p>Is <span class="math notranslate nohighlight">\(D \perp C|A \)</span>?</p></li>
+<li><p>Is <span class="math notranslate nohighlight">\(D \perp C|G \)</span>?</p></li>
+<li><p>Is <span class="math notranslate nohighlight">\(A \perp F \)</span>?</p></li>
+<li><p>Is <span class="math notranslate nohighlight">\(A \perp F|E \)</span>?</p></li>
+<li><p>Is <span class="math notranslate nohighlight">\(A \perp F|E, C \)</span>?</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/691bc84977c2503632fc3e7cfb15af743c6d3d4db58e77583f3496137aa8df32.svg" src="_images/691bc84977c2503632fc3e7cfb15af743c6d3d4db58e77583f3496137aa8df32.svg" /></div>
+</div>
+<p><strong>정답:</strong></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(D \perp C \)</span> 입니다. 조건화 되지 <strong>않은</strong> collider를 가지고 있기 때문입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D \not \perp C|A \)</span> 입니다. 조건화된 collider를 가지고 있기 때문입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D \not \perp C|G \)</span> 입니다. 조건화된 collider의 후손을 포함하고 있기 때문입니다. G를 A에 대한 일종의 proxy라고 볼 수 있습니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A \perp F \)</span> 입니다. 조건화되지 <strong>않은</strong> collider인 B-&gt;E&lt;-F를 포함하기 때문입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A \not \perp F|E \)</span> 입니다. 조건화된 collider은 B-&gt;E&lt;-F를 포함하기 때문입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(A \perp F|E, C \)</span> 입니다. 조건화된 collider은 B-&gt;E&lt;-F를 포함하지만 조건화된 non collider도 포함하기 때문입니다. E에 대해 조건화 하는 것은 경로를 열어주지만, C에 대해 조건화하는 것은 이를 다시 닫아버립니다.</p></li>
+</ol>
+<p>인과 그래프 모형에 대해 아는 것은 인과 추론에서 발생하는 문제를 이해하게 해줍니다. 우리가 앞서 봤듯이, 문제는 항상 편향(bias)으로 귀결됩니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y|T=1] - E[Y|T=0] = \underbrace{E[Y_1 - Y_0|T=1]}_{ATET} + \underbrace{\{ E[Y_0|T=1] - E[Y_0|T=0] \}}_{BIAS}
+\)</span></p>
+<p>그래프 모형은 우리가 어떤 편향을 다루고 있는지, 그것을 바로잡으려면 어떤 도구가 필요한지 진단하게 해줍니다.</p>
+</section>
+<section id="id3">
+<h2>교란 편향<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p><img alt="img" src="_images/both_crap.png" /></p>
+<p>편향의 첫 번째 중요한 원인은 교란변수입니다. 이것은 처치와 결과가 같은 원인을 공유할 때 발생합니다. 예를 들어, 처치가 ‘교육’이고 결과가 ‘소득’이라고 해봅시다. 교육이 임금에 미치는 인과적 효과를 추정하기 어려운데, 이는 두 가지가 공통의 원인인 ‘지능’을 가지고 있기 때문입니다. 우리는 더 교육받은 사람들이 그저 더 똑똑하기 때문에 더 많은 돈을 버는 것이지, 교육을 더 받았기 때문이 아니라고 주장할 수 있습니다. 우리가 인과 효과를 규명하려면 처치와 결과 사이의 모든 backdoor path를 막아야 합니다. 만약 그렇게 하면, 남는 것은 오직 T -&gt; Y의 직접적인 효과뿐일 것입니다. 우리의 예시에서, 우리가 지능 수준을 통제할 수 있다면(즉 동일 수준의 지능을 가지지만 교육 수준이 다른 사람들을 비교한다면) 모두 지능은 똑같기 때문에 결과의 차이는 오직 교육 수준의 차이에 의해 결정될 것입니다. 교란 변수를 제거하기 위해서 우리는 처치와 결과의 모든 공통된 원인을 통제해야 합니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;Educ&quot;</span><span class="p">),</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">),</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/1643d742c1f93c501e0585a9af4f7310b32be6ba22b97569200ddcdc720eb4c3.svg" src="_images/1643d742c1f93c501e0585a9af4f7310b32be6ba22b97569200ddcdc720eb4c3.svg" /></div>
+</div>
+<p>불행하게도, 모든 공통 원인을 항상 다 통제할 수는 없습니다. 가끔 알려지지 않은 원인이나 알고 있지만 우리가 측정할 수 없는 원인도 있습니다. 지능의 경우에는 후자에 해당합니다. 많은 노력에도 불구하고 과학자들은 지능을 잘 측정할 방법을 밝혀내지 못했습니다. 이제 저는 ‘U’를 측정되지 않는 변수를 가리킬 때 사용하겠습니다. 이제 잠시 지능이 당신의 교육 수준에 직접적인 영향은 미치지 못한다고 가정해봅시다. 지능은 당신이 SAT 시험에서 얼마나 좋은 점수를 받을지에는 영향을 주지만, SAT는 좋은 대학에 갈 가능성을 열어서 교육 수준을 결정합니다. 우리가 측정 불가능한 지능을 통제할 수 없어도, 우리는 SAT 점수는 통제할 수 있고 backdoor path를 막을 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X1&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X2&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X1&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;X2&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Family Income&quot;</span><span class="p">,</span> <span class="s2">&quot;Educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;SAT&quot;</span><span class="p">,</span> <span class="s2">&quot;Educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Family Income&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;SAT&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/2586335772132c7db04046f235f7519ca35cd0d14544e4b2e26debdf3fc5eac5.svg" src="_images/2586335772132c7db04046f235f7519ca35cd0d14544e4b2e26debdf3fc5eac5.svg" /></div>
+</div>
+<p>다음 그래프에서, X1과 X2 혹은 SAT와 가족의 소득수준에 대해 조건화하는 것은 처치와 결과 사이의 모든 backdoor path를 막기에 충분합니다. 다시 말해, <span class="math notranslate nohighlight">\((Y_0, Y_1) \perp T|X1, X2\)</span> 입니다. 따라서 모든 공통의 원인을 다 측정하지 못한다고 하더라도 측정 불가능한 변수들이 처치에 미치는 영향을 매개하는 측정할 수 있는 변수들을 통제해서 여전히 조건부 독립을 달성할 수 있습니다. 빠르게 짚고 가면, 우리는 <span class="math notranslate nohighlight">\((Y_0, Y_1) \perp T|X1, U\)</span>도 가지고 있지만 U를 관측할 수 없기 때문에 이에 대해서는 조건화할 수 없습니다.</p>
+<p>하지만 그런 경우가 아니라면? 만약 측정 불가한 변수가 처치와 결과의 직접적인 원인이 된다면 어떨까요? 다음에 올 예시에서, 지능은 교육과 소득의 원인이 됩니다. 따라서 처치인 교육과 결과인 임금의 관계 사이에 교란이 있는 것이죠. 이 경우 우리는 교란 변수가 측정할 수 없기 때문에 통제할 수도 없습니다. 그러나, 우리는 교란변수의 프록시가 되는 다른 측정된 변수를 가지고 있습니다. 그 변수들은 backdoor path에 있지 않지만, 그것들을 통제하는 것이 편향을 줄이는 데 도움이 됩니다(하지만 아예 제거할 수는 없습니다). 그 변수들을 때로는 대리 교란 변수라고도 부릅니다.</p>
+<p>우리의 예시에서, 우리는 지능을 측정할 수 없지만, 그것의 몇 가지 원인이 되는 부모님의 교육 수준이나 지능이 효과를 미치는 IQ나 SAT 점수 같은 것들을 측정할 수 있습니다. 대리 변수들을 통제하는 것은 편향을 아예 제거하는 데에는 충분하지 않지만 도움은 됩니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;U&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;IQ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;SAT&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Father&#39;s Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Intelligence&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Mother&#39;s Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Intelligence&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;Educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Intelligence&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/a7d06cbe66d5a5a1c9bd6f2e0334e4f432e68edbb29ef095d8e9bc2625709f81.svg" src="_images/a7d06cbe66d5a5a1c9bd6f2e0334e4f432e68edbb29ef095d8e9bc2625709f81.svg" /></div>
+</div>
+</section>
+<section id="id4">
+<h2>선택 편향<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<p>어쩌면 당신은 교란 편향(confounding bias)을 제거하기 위해 측정할 수 있는 모든 것들을 당신의 모델에 추가하는 게 좋은 아이디어라고 생각할 수도 있습니다. 글쎄요, 다시 생각해보죠.</p>
+<p><img alt="image.png" src="_images/selection_bias.png" /></p>
+<p>편향의 두 번째 중요한 원천은 우리가 ‘선택 편향’이라고 부를 것입니다. 여기서 저는 그것과 교란 편향의 구분이 구조적이라고 생각하기 때문에 그것을 고수할 것입니다. 교란 편향이 우리가 공통의 원인을 통제하지 않을 때 발생한다면, 선택 편향은 그것의 효과와 더 관련이 있습니다. 여기서 미리 주의를 주자면, 경제학자들은 모든 종류의 편향을 다 선택 편향이라고 부르는 경향이 있습니다.</p>
+<p>자주, 선택 편향은 우리가 통제해야 하는 것보다 더 많은 변수를 통제할 때 발생합니다. 처치와 잠재적 결과가 주변적 독립(marginally independet)이지만 collider에 대해 조건화하면 의존이 되는 것도 하나의 케이스입니다.</p>
+<p>우리가 어떤 기적의 도움을 받아서 교육이 임금에 미치는 영향을 측정할 수 있게 무작위화가 가능해졌다고 상상해봅시다. 교란이 없음을 확신하기 위해서 당신은 여러 변수를 통제합니다. 그중에서 당신은 ‘투자’도 통제합니다. 하지만 투자는 교육과 임금의 공통 원인이 아닙니다. 대신 그것은 둘 모두의 결과에 가깝습니다. 또한 더 많이 버는 사람은 투자도 더 많이 합니다. 투자가 collider이기 때문에, 이에 대해 조건화함으로써 당신은 처치와 결과 사이에 두 번째 경로를 열게 되고, 이에 따라 직접적인 결과를 측정하기는 더 어려워집니다.
+이에 대해 생각하는 한 가지 방법은 투자를 통제함으로써 투자가 동일한 인구의 작은 그룹을 살펴본 다음 해당 그룹에 대한 교육의 효과를 찾는 것입니다. 그러나 그렇게 함으로써 당신은 또한 간접적으로 그리고 부주의하게 임금이 많이 변하지 않도록 만들고 있습니다. 결과적으로 임금이 원래 상태처럼 변화하는 것을 허용하지 않기 때문에 교육이 임금을 어떻게 변화시키는지 알 수 없게 됩니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Investments&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="s2">&quot;Investments&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/2b5f83161cef73aa24ef32fb90d9f028b6fc02701184495a64eba0320da917ba.svg" src="_images/2b5f83161cef73aa24ef32fb90d9f028b6fc02701184495a64eba0320da917ba.svg" /></div>
+</div>
+<p>왜 이런 일이 발생하는지 이해하기 위해 투자와 교육이 오직 2가지 값만 취한다고 상상해봅시다. 사람들이 투자를 하는지, 안 하는지입니다. 그들은 교육받거나, 받지 않았습니다. 초기에 우리가 투자를 통제하지 않았을 때 편향 항은 0입니다: <span class="math notranslate nohighlight">\( E[Y_0|T=1] - E[Y_0|T=0] = 0 \)</span> 왜냐하면 교육이 무작위화 되었기 때문입니다. 이는 사람들이 만약 교육받지 않았더라면 받았을 임금인 <span class="math notranslate nohighlight">\(Wage_0\)</span>가 당신이 교육이라는 처치를 받든 받지 않든 똑같다는 의미입니다. 하지만 우리가 투자를 조건화한다면 무슨 일이 발생할까요?</p>
+<p>투자를 한 사람들은, 다음과 같이 나타낼 수 있습니다. <span class="math notranslate nohighlight">\(E[Y_0|T=0, I=1] &gt; E[Y_0|T=1, I=1]\)</span>. 즉 투자하는 사람들 중 교육 없이도 투자하는 사람들이 높은 수입을 얻기 위해 교육에 대해 더 독립적입니다. 이러한 이유로, 그 사람들이 받는 임금인 <span class="math notranslate nohighlight">\(Wage_0|T=0\)</span>은 교육받은 그룹이 교육받지 않았더라면 받았을 임금 <span class="math notranslate nohighlight">\(Wage_0|T=1\)</span>보다 더 높을 것입니다. 비슷한 추론을 투자를 하지 않는 사람들에 대해서도 적용할 수 있는데, <span class="math notranslate nohighlight">\( E[Y_0|T=0, I=0] &gt; E[Y_0|T=1,I=0]\)</span>와 같습니다. 교육을 받고도 투자하지 않은 사람들은 그들이 교육받지 않았더라면 교육받지 않고 투자하지 않은 사람들보다 더 낮은 임금을 받았을 가능성이 높습니다.</p>
+<p>순수하게 그래프적 주장을 사용하면, 누군가 투자를 한다면 그가 높은 학력을 가진 것을 아는 것이 두 번째 원인인 임금을 잘 설명하게 됩니다. 투자에 대해 조건화했을 때, 교육 수준이 높은 것은 낮은 임금과 연관되어 있고, 우리는 음수 편향 <span class="math notranslate nohighlight">\(E[Y_0|T=0, I=i] &gt; E[Y_0|T=1, I=i]\)</span>를 갖게 되죠.</p>
+<p>부가적인 설명으로써, 지금까지 우리가 논의한 모든 것들은 우리가 공통의 효과의 아무 후손(descendent)에 대해 조건화할 경우 모두 참이 됩니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/fef83cfb8269aac6a25c2829dd1af42cf63b5776849f648185ea94ff6a132df8.svg" src="_images/fef83cfb8269aac6a25c2829dd1af42cf63b5776849f648185ea94ff6a132df8.svg" /></div>
+</div>
+<p>비슷한 일이 우리가 처치에 대한 매개변수(mediator)를 조건화할 때에도 발생합니다. 매개변수란, 처치와 결과 사이에 존재하는 변수입니다. 그것은 인과적 효과를 매개합니다. 예를 들어 다시 우리가 교육 수준을 무작위화 할 수 있다고 합시다. 그러나 당신은 어떤 사람이 화이트칼라 직업을 가졌는지 아닌지만 통제하기로 했습니다. 다시 한번 이러한 조건화는 인과 효과 추정에 편향을 만듭니다. 이번에는, 그것이 collider에 대해 front door path를 열어서가 아니라 처치가 작용하는 채널 중 하나를 막아버리기 때문입니다. 우리의 예시에서, 화이트칼라 직업을 가지는 것은 교육이 더 높은 임금으로 가는 길에 있습니다. 이를 통제함으로써, 우리는 이 채널을 막고 교육이 임금에 미치는 직접적인 효과만을 열린 채로 둘 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;educ&quot;</span><span class="p">,</span> <span class="s2">&quot;white collar&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;educ&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;white collar&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/b4992617a596308a246aec363157d7495fc4d8a7b604181dc9000f70b647d829.svg" src="_images/b4992617a596308a246aec363157d7495fc4d8a7b604181dc9000f70b647d829.svg" /></div>
+</div>
+<p>잠재적 결과 주장을 하자면, 우리는 무작위화 때문에 편향이 0이 된다는 것을 알고 있습니다. <span class="math notranslate nohighlight">\(E[Y_0|T=0] - E[Y_0|T=1] = 0\)</span>. 그러나, 만약 우리가 화이트칼라 직업을 가진 개인에 대해 조건화한다면, <span class="math notranslate nohighlight">\(E[Y_0|T=0, WC=1] &gt; E[Y_0|T=1, WC=1]\)</span> 이렇게 됩니다. 이것은 교육 없이도 화이트칼라 직업을 얻을 수 있는 사람은 똑같은 직업을 얻기 위해 교육의 도움을 필요로하는 사람보다 더 열심히 일하는 사람일 가능성이 높기 때문입니다. 같은 방식으로 추론하면, <span class="math notranslate nohighlight">\(E[Y_0|T=0, WC=0] &gt; E[Y_0|T=1, WC=0]\)</span> 인데 이는 교육을 받고도 화이트칼라 직업을 얻지 못한 사람은 교육을 받지 않고 화이트칼라 직업을 얻지 못한 사람보다 덜 열심히 일하는 사람일 가능성이 높기 때문입니다.</p>
+<p>우리의 경우, 매개변수에 대해 조건화하는 것은 음수 편향을 유발합니다. 이는 교육의 효과를 실제보다 더 작아 보이게 만듭니다. 왜냐하면 인과 효과가 양수이기 때문입니다. 만약 효과가 음인 경우 매개변수에 대한 조건화는 양의 편향을 가질 것입니다. 모든 경우에 이러한 종류의 조건화는 효과를 실제보다 약해 보이게 만듭니다.</p>
+<p>좀 더 단조롭게 표현해서 회사에서 두 명의 후보자 중 한 명을 선택해야 한다고 가정해 보겠습니다. 둘 다 똑같이 인상적인 직업적 성취를 가지고 있지만, 하나는 더 높은 교육 학위를 가지고 있지 않습니다. 당신은 어느 쪽을 선택해야 할까요? 당연히 고등 교육을 받지 못한 사람을 선택해야 합니다. 왜냐하면 그는 다른 사람과 같은 일을 달성했지만 그에게 불리한 확률이 있었기 때문입니다.</p>
+<p><img alt="image.png" src="_images/three_bias.png" /></p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>우리는 인과적 아이디어를 더 잘 이해하고 표현하기 위한 언어로서 그래프 모델들을 공부했습니다. 우리는 그래프에서의 조건부 확률의 규칙에 대해 빠르게 요약해봤고, 편향으로 이어질 수 있는 세 가지 구조에 대해 탐색할 수 있었습니다.</p>
+<p>첫 번째는 교란(confounding)인데, 처치와 결과가 우리가 계산하거나 통제할 수 없는 공통의 원인을 가지고 있을 때 발생합니다. 두 번쨰는 선택 편향(selection bias)인데, 동일한 효과에 대한 조건화로 인해 발생합니다. 세 번째 구조는 선택 편향의 한 형태인데, 이번에는 매개 변수에 대한 과도한 통제로 발생합니다. 이런 과도한 통제로 발생한 편향은 처치가 무작위로 할당된다고 하더라도 발생할 수 있습니다. 선택 편향은 종종 그저 아무것도 하지 않음으로써 고칠 수도 있지만, 우리는 행동에 편향되어 있기 때문에 사물을 통제하는 아이디어가 득보다 실이 많을 때도 그것을 영리하다고 보는 경향이 있습니다.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 놀라운 계량경제학 수업에 대한 찬사로 생각하고 싶습니다. 여기 있는 대부분의 아이디어들은 미국 경제 협회의 수업에서 따온 것들입니다. 그들을 보는 것이 2020년의 힘든 한 해 동안 제 정신을 유지하는 것입니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>저는 또한 Angrist의 놀라운 책들을 참고하고 있습니다. 그들은 저에게 계량경제학이 매우 유용할 뿐만 아니라 매우 재미있다는 것을 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막 참고 문헌은 Miguel Hernan와 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 가장 골치 아픈 인과적 질문에 대한 저의 신뢰할 수 있는 동반자였습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요. 여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요. 만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, 이 책의 <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="03-Stats-Review-The-Most-Dangerous-Equation.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">03 - Stats Review: The Most Dangerous Equation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">05 - The Unreasonable Effectiveness of Linear Regression</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   인과에 대해 생각해보기
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   그래프 모델에 대한 단기 특강
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   교란 편향
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   선택 편향
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

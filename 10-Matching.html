@@ -1,0 +1,2164 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>10 - Matching &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '10-Matching';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11 - Propensity Score" href="11-Propensity-Score.html" />
+    <link rel="prev" title="09 - Non Compliance and LATE" href="09-Non-Compliance-and-LATE.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F10-Matching.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/10-Matching.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>10 - Matching</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-regression-doing-after-all">
+   What is Regression Doing After All?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-subclassification-estimator">
+   The Subclassification Estimator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matching-estimator">
+   Matching Estimator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matching-bias">
+   Matching Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-curse-of-dimensionality">
+   The Curse of Dimensionality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="matching">
+<h1>10 - Matching<a class="headerlink" href="#matching" title="Permalink to this headline">#</a></h1>
+<section id="what-is-regression-doing-after-all">
+<h2>What is Regression Doing After All?<a class="headerlink" href="#what-is-regression-doing-after-all" title="Permalink to this headline">#</a></h2>
+<p>지금까지 살펴본 것처럼 회귀는 실험군과 대조군 비교를 할 때, 추가적인 변수들을 제어하는데 놀라운 역할을 합니다. 조건부독립 가정을 만족한다면(<span class="math notranslate nohighlight">\((Y_0, Y_1)\perp T | X\)</span>), 회귀는 X를 통제함으로써 ATE를 식별할 수 있습니다. 회귀는 일종의 마법과 같습니다. 이에 대한 몇 가지 직관을 얻기 위해 모든 변수 X가 더미 변수인 경우를 상기해보겠습니다. 이 경우 회귀는 데이터를 더미 셀로 분할하고 실험군과 통제군 간의 평균 차이를 계산합니다. 이 평균 차이는 X 더미의 고정 셀에서 수행하기 때문에 X를 일정하게 유지합니다. 마치 우리가 해왔던 것처럼 <span class="math notranslate nohighlight">\(E[Y|T=1] - E[Y|T=0] | X=x\)</span>로 구할 수 있으며, <span class="math notranslate nohighlight">\(x\)</span>는 더미 셀을 의미합니다(예를 들어 모든 더미는 1로 고정된 경우). 그런 다음 회귀는 각 셀의 추정치를 결합하여 최종 ATE를 생성합니다. 이것를 수행하는 방법은 해당 그룹의 처리 분산에 비례하여 셀에 가중치를 적용하는 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+
+<span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gr</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>예를 들어, 남자 6명과 여상 4명이 있을 때, 약물의 효과를 추정하려고 합니다. 반응변수는 입원 일수이고, 약을 섭취했을 때 입원 일수가 낮아질 것으로 기대합니다. 남성의 경우 실제 인과효과가 -3입니다. 즉, 약물을 투여했을 때 입원 일수를 3일 단축시킵니다. 여성의 경우 -2입니다. 다만 남성은 질병에 영향을 훨씬 더 많이 받고 병원에 더 오래 머무르는 경향이 있으며, 훨씬 많은 약을 섭취합니다(6명 중 1명만 약물 섭취). 반면 여성은 질병에 내성이 있기 때문에 병원에 오래 머무르지 않는 경향이 있습니다. 또한 여성의 50%가 약을 섭취합니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+    <span class="n">sex</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">,</span><span class="s2">&quot;W&quot;</span><span class="p">,</span><span class="s2">&quot;W&quot;</span><span class="p">,</span><span class="s2">&quot;W&quot;</span><span class="p">],</span>
+    <span class="n">drug</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">days</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>실험군과 대조군의 단순한 비교는 부정적으로 편향되어 있습니다. 즉, 약이 실제보다 덜 효과적인 것처럼 보입니다. 이것은 우리가 성별이라는 교란요인을 생략했기 때문에 발생하는 것으로 보입니다. 이 경우 남성이 더 많은 약물을 복용하고 질병의 영향을 더 많이 받기 때문에 추정된 ATE는 실제보다 작습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drug_example</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;drug==1&quot;</span><span class="p">)[</span><span class="s2">&quot;days&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">drug_example</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;drug==0&quot;</span><span class="p">)[</span><span class="s2">&quot;days&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.1904761904761898
+</pre></div>
+</div>
+</div>
+</div>
+<p>남성에 대한 실제 효과는 -3이고 여성에 대한 실제 효과는 -2이므로 ATE는 다음과 같아야 합니다.
+<span class="math notranslate nohighlight">\(
+ATE=\dfrac{(-3*6) + (-2*4)}{10}=-2.6
+\)</span></p>
+<p>이 추정치는 1) 데이터를 교란요인 셀(이 경우 남성과 여성)로 분할하고, 2) 각 셀에 대한 효과를 추정하고, 3) 추정치를 가중 평균하여 계산됩니다. 여기서 가중치는 셀 또는 공변량 그룹의 표본 크기입니다. 데이터에 정확히 같은 크기의 남성과 여성이 있는 경우 ATE 추정치는 두 그룹의 ATE의 중간인 -2.5가 됩니다. 데이터에는 여성보다 남성이 더 많기 때문에 ATE 추정치는 남성의 ATE에 조금 더 가깝습니다. 이것은 데이터가 어떻게 생성되었는지에 대한 가정을 하지 않기 때문에 비모수 추정이라고 합니다.</p>
+<p>회귀를 사용하여 성별을 통제하는 ​​경우 선형성 가정을 추가합니다. 회귀는 데이터를 남성과 여성으로 분할하고 이 두 그룹에 대한 효과를 추정합니다. 지금까지는 그런대로 잘되었습니다. 그러나 각 그룹에 대한 효과를 결합할 때 표본 크기로 가중치를 두지 않습니다. 대신 회귀는 해당 그룹에서 treatment 분산에 비례하여 가중치를 설정합니다. 이 예시의 경우 남성의 treatment 분산은 여성보다 작습니다. 왜냐하면 대조군에는 남성이 한 명뿐이기 때문입니다. 정확하게 남성에 대한 <span class="math notranslate nohighlight">\(T\)</span>의 분산은 <span class="math notranslate nohighlight">\(0.139=1/6*(1 - 1/6)\)</span>이고, 여성의 경우 <span class="math notranslate nohighlight">\(0.25=2/4*(1 - 2/4)\)</span> 입니다. 따라서 회귀는 이 예시에서 여성에게 더 높은 가중치를 부여하고 ATE는 실제 효과 -2의 여성에 대한 ATE에 약간 더 가깝습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;days ~ drug + C(sex)&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">drug_example</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td></td>          <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>   <td>    7.5455</td> <td>    0.188</td> <td>   40.093</td> <td> 0.000</td> <td>    7.100</td> <td>    7.990</td>
+</tr>
+<tr>
+  <th>C(sex)[T.W]</th> <td>   -3.3182</td> <td>    0.176</td> <td>  -18.849</td> <td> 0.000</td> <td>   -3.734</td> <td>   -2.902</td>
+</tr>
+<tr>
+  <th>drug</th>        <td>   -2.4545</td> <td>    0.188</td> <td>  -13.042</td> <td> 0.000</td> <td>   -2.900</td> <td>   -2.010</td>
+</tr>
+</table></div></div>
+</div>
+<p>이 결과는 더미 변수에 대해 더 직관적이지만, 그 자체로는 이상한 방식으로, 회귀는 효과를 추정하면서 연속 변수를 일정하게 유지합니다. 또한 연속 변수의 경우 ATE는 공변량이 더 많은 분산을 갖는 방향을 가리킵니다.</p>
+<p>따라서 우리는 회귀에 고유한 특징이 있음을 보았습니다. 선형적이며 매개변수적이며, 분산이 큰 특성을 좋아합니다… 이것은 문맥에 따라 좋거나 나쁠 수 있습니다. 이에 따라 교란요인를 통제하는​​데 사용할 수 있는 다른 기술들을 알고 있는 것이 중요합니다. 그것들은 인과 분석 도구들 중 하나이지만 교란요인를 처리하는 다양한 방법을 이해하면 문제에 대한 이해가 확장됩니다. 이러한 이유로 이제 Subclassification Estimator를 소개합니다!</p>
+</section>
+<section id="the-subclassification-estimator">
+<h2>The Subclassification Estimator<a class="headerlink" href="#the-subclassification-estimator" title="Permalink to this headline">#</a></h2>
+<p><img alt="img" src="_images/explain.png" /></p>
+<p>직업 훈련이 개인의 소득에 미치는 영향과 같이 추정하고 싶은 인과효과가 있지만, treatment가 무작위로 할당되지 않은 경우 교란요인을 주의해야 합니다. 더 동기가 부여된 사람들만이 훈련을 하고 훈련에 관계없이 더 높은 소득을 얻을 수 있습니다. 우리는 동기부여 수준과 우리가 가질 수 있는 다른 교란요인이 대략적으로 동일한 소그룹 내에서 훈련 프로그램의 효과를 추정할 필요가 있습니다.</p>
+<p>더 일반적으로, 추정하고자 하는 인과효과가 있지만, 교란요인 X 때문에 추정이 어려운 경우, 교란요인의 효과가 동일한 소그룹 내에서 실험군과 대조군 비교를 해야합니다. 조건부 독립 가정을 만족한다면(<span class="math notranslate nohighlight">\((Y_0, Y_1)\perp T | X\)</span>), ATE는 다음과 같이 계산할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = \int(E[Y|X, T=1] - E[Y|X, T=0])dP(x)
+\)</span></p>
+<p>이 적분은 특성 <span class="math notranslate nohighlight">\(X\)</span> 분포의 모든 공간을 통과하고 모든 작은 공간에 대한 평균의 차이를 계산하고, ATE에 결합합니다. 이것을 해석하는 또 다른 방법은 변수의 이산 집합에 대해 생각하는 것입니다. 이 경우, 변수 <span class="math notranslate nohighlight">\(X\)</span>가 <span class="math notranslate nohighlight">\(K\)</span>개의 서로 다른 셀<span class="math notranslate nohighlight">\(\{X_1, X_2, ..., X_k\}\)</span>을 취한다고 말할 수 있으며, 각 셀의 treatment 효과를 계산하고 이를 ATE로 결합하는 것입니다. 이산 케이스의 경우 적분을 합으로 변환하면 하위 분류 추정기를 유도할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATE} = \sum^K_{i=0}(\bar{Y}_{k1} - \bar{Y}_{k0}) * \dfrac{N_k}{N}
+\)</span></p>
+<p>여기서 막대는 셀 <span class="math notranslate nohighlight">\(K\)</span>에서 treatment 그룹의 평균(<span class="math notranslate nohighlight">\(Y_{k1}\)</span>), 통제 그룹의 평균(<span class="math notranslate nohighlight">\(Y_{k0}\)</span>)을 나타내며, <span class="math notranslate nohighlight">\(N_{k}\)</span>는 같은 셀에서의 관측치 수를 나타냅니다. 보시다시피, 우리는 각 셀에 대한 local ATE를 계산하고 가중치가 셀의 표본 크기인 가중 평균을 사용하여 결합합니다. 위의 약물 예시에서 이것은 첫 번째 추정치가 되어 -2.6을 얻었습니다.</p>
+</section>
+<section id="matching-estimator">
+<h2>Matching Estimator<a class="headerlink" href="#matching-estimator" title="Permalink to this headline">#</a></h2>
+<p><img alt="img" src="_images/its-a-match.png" /></p>
+<p>subclassification estimator는 실제로 많이 사용되지는 않지만(우리는 그것이 차원의 저주 때문이라는 것을 곧 알게 될 것입니다) 인과 추론 추정기가 무엇을 하는지, 교란요인을 어떻게 제어하는지에 대한 좋은 직관을 제공합니다. 이를 통해 Matching Estimator와 같은 다른 종류의 추정기를 탐색할 수 있습니다.</p>
+<p>아이디어는 매우 비슷합니다. 일종의 교란요인 X가 처치그룹과 통제그룹을 비교할 수 없도록 만들기 때문에, 각 처치그룹의 값을 유사한 통제그룹의 값과 일치시켜 비교할 수 있습니다. 처치를 받을 때마다 처치를 받지 않은 쌍둥이를 찾는 것과 같습니다. 이러한 비교를 통해 처치된 것과 처치되지 않은 것을 다시 비교할 수 있게 됩니다.</p>
+<p>예를 들어, 연수 프로그램이 수입에 미치는 영향을 추정하려고 한다고 가정해 보겠습니다. 연수를 받은 경우 데이터는 다음과 같습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainee</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/trainees.csv&quot;</span><span class="p">)</span>
+<span class="n">trainee</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>unit</th>
+      <th>trainees</th>
+      <th>age</th>
+      <th>earnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>28</td>
+      <td>17700</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>34</td>
+      <td>10200</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>29</td>
+      <td>14400</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>25</td>
+      <td>20800</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>1</td>
+      <td>29</td>
+      <td>6100</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>1</td>
+      <td>23</td>
+      <td>28600</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>1</td>
+      <td>33</td>
+      <td>21900</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>1</td>
+      <td>27</td>
+      <td>28800</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>1</td>
+      <td>31</td>
+      <td>20300</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>1</td>
+      <td>26</td>
+      <td>28100</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>1</td>
+      <td>25</td>
+      <td>9400</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>1</td>
+      <td>27</td>
+      <td>14300</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>1</td>
+      <td>29</td>
+      <td>12500</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>1</td>
+      <td>24</td>
+      <td>19700</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>1</td>
+      <td>25</td>
+      <td>10100</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>1</td>
+      <td>43</td>
+      <td>10700</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>1</td>
+      <td>28</td>
+      <td>11500</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>1</td>
+      <td>27</td>
+      <td>10700</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>1</td>
+      <td>28</td>
+      <td>16300</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>연수를 받지 않은 경우는 다음과 같습니다:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainee</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>unit</th>
+      <th>trainees</th>
+      <th>age</th>
+      <th>earnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>0</td>
+      <td>43</td>
+      <td>20900</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>0</td>
+      <td>50</td>
+      <td>31000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>0</td>
+      <td>30</td>
+      <td>21000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>23</td>
+      <td>0</td>
+      <td>27</td>
+      <td>9300</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>24</td>
+      <td>0</td>
+      <td>54</td>
+      <td>41100</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>25</td>
+      <td>0</td>
+      <td>48</td>
+      <td>29800</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>26</td>
+      <td>0</td>
+      <td>39</td>
+      <td>42000</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>27</td>
+      <td>0</td>
+      <td>28</td>
+      <td>8800</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>28</td>
+      <td>0</td>
+      <td>24</td>
+      <td>25500</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>29</td>
+      <td>0</td>
+      <td>33</td>
+      <td>15500</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>31</td>
+      <td>0</td>
+      <td>26</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>32</td>
+      <td>0</td>
+      <td>31</td>
+      <td>26600</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>33</td>
+      <td>0</td>
+      <td>26</td>
+      <td>16500</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>34</td>
+      <td>0</td>
+      <td>34</td>
+      <td>24200</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>35</td>
+      <td>0</td>
+      <td>25</td>
+      <td>23300</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>36</td>
+      <td>0</td>
+      <td>24</td>
+      <td>9700</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>37</td>
+      <td>0</td>
+      <td>29</td>
+      <td>6200</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>38</td>
+      <td>0</td>
+      <td>35</td>
+      <td>30200</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>39</td>
+      <td>0</td>
+      <td>32</td>
+      <td>17800</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>40</td>
+      <td>0</td>
+      <td>23</td>
+      <td>9500</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>41</td>
+      <td>0</td>
+      <td>32</td>
+      <td>25900</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>평균적으로 단순 비교를 해보면 연수생이 연수를 받지 않은 사람보다 돈을 덜 번다는 것을 알 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainee</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==1&quot;</span><span class="p">)[</span><span class="s2">&quot;earnings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">trainee</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==0&quot;</span><span class="p">)[</span><span class="s2">&quot;earnings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4297.49373433584
+</pre></div>
+</div>
+</div>
+</div>
+<p>그러나 위의 표를 보면 연수생이 연수생이 아닌 사람보다 훨씬 어리다는 것을 알 수 있습니다. 이를 반영하기 위해 나이를 일치시킵니다. 둘 다 28세이므로 처치 그룹에서 unit 1을 가져와 unit 27과 짝지을 것입니다. unit 2는 unit 34와, unit 3은 unit 37, unit 4는 unit 35와 짝을 지을 것입니다… unit 5는 통제그룹에서 29세의 사람을 찾아야 하지만 이미, unit 1은 unit 37과 짝을 이뤘습니다. 하지만 같은 단위를 여러 번 사용할 수 있으므로 문제가 되지 않습니다. 1개 이상의 unit이 일치하는 경우, 우리는 그것들 중에서 무작위로 선택할 수 있습니다.</p>
+<p>다음은 처음 7개 unit에 대해 일치하는 데이터 세트의 형태입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make dataset where no one has the same age</span>
+<span class="n">unique_on_age</span> <span class="o">=</span> <span class="p">(</span><span class="n">trainee</span>
+                 <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==0&quot;</span><span class="p">)</span>
+                 <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">))</span>
+
+<span class="n">matches</span> <span class="o">=</span> <span class="p">(</span><span class="n">trainee</span>
+           <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;trainees==1&quot;</span><span class="p">)</span>
+           <span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">unique_on_age</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;_t_1&quot;</span><span class="p">,</span> <span class="s2">&quot;_t_0&quot;</span><span class="p">))</span>
+           <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">t1_minuts_t0</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;earnings_t_1&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;earnings_t_0&quot;</span><span class="p">]))</span>
+
+<span class="n">matches</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>unit_t_1</th>
+      <th>trainees_t_1</th>
+      <th>age</th>
+      <th>earnings_t_1</th>
+      <th>unit_t_0</th>
+      <th>trainees_t_0</th>
+      <th>earnings_t_0</th>
+      <th>t1_minuts_t0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>28</td>
+      <td>17700</td>
+      <td>27</td>
+      <td>0</td>
+      <td>8800</td>
+      <td>8900</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>34</td>
+      <td>10200</td>
+      <td>34</td>
+      <td>0</td>
+      <td>24200</td>
+      <td>-14000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>29</td>
+      <td>14400</td>
+      <td>37</td>
+      <td>0</td>
+      <td>6200</td>
+      <td>8200</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>25</td>
+      <td>20800</td>
+      <td>35</td>
+      <td>0</td>
+      <td>23300</td>
+      <td>-2500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>1</td>
+      <td>29</td>
+      <td>6100</td>
+      <td>37</td>
+      <td>0</td>
+      <td>6200</td>
+      <td>-100</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>1</td>
+      <td>23</td>
+      <td>28600</td>
+      <td>40</td>
+      <td>0</td>
+      <td>9500</td>
+      <td>19100</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>1</td>
+      <td>33</td>
+      <td>21900</td>
+      <td>29</td>
+      <td>0</td>
+      <td>15500</td>
+      <td>6400</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>마지막 열에 처치 unit과 일치하는 통제 unit 간의 수입 차이가 어떻게 되는지 주목하십시오. 마지막 열의 평균을 취하면 연령을 통제하면서 ATET 추정치를 얻을 수 있습니다. 단순 평균 차이를 사용한 이전 추정치와 비교하여 추정치가 이제 매우 긍정적인 점에 주목해주세요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matches</span><span class="p">[</span><span class="s2">&quot;t1_minuts_t0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2457.8947368421054
+</pre></div>
+</div>
+</div>
+</div>
+<p>그러나 이것은 매칭을 도입하기 위해 매우 인위적인 예였습니다. 실제로 우리는 일반적으로 하나 이상의 변수를 가지고 있으며 유닛이 완벽하게 일치하지 않습니다. 이 경우 유닛이 서로 얼마나 가까운지를 비교하기 위해 근접한지를  측정할 수 있어야 합니다. 이에 대한 하나의 일반적인 메트릭은 유클리디안 거리입니다(<span class="math notranslate nohighlight">\(||X_i - X_j||\)</span>). 그러나 이 차이는 변수의 스케일에 따라 변하지 않습니다. 이것은 십 단위인 나이와 수백 단위인 수입을 이용해서 유클리디안 거리를 계산할 경우 나이 변수는 훨씬 덜 중요하다게 인식됩니다. 이에 따라 유클리디안 거리를 계산하기 전에 변수가 대략 같은 스케일이 되도록 조정해야 합니다.</p>
+<p>거리 측도를 정의했으므로 이제 가장 가까운 이웃으로 매칭을 정의할 수 있습니다. 수학 용어로 일치 추정기를 다음과 같이 작성할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATE} = \frac{1}{N} \sum^N_{i=0} (2T_i - 1)\big(Y_i - Y_{jm}(i)\big)
+\)</span></p>
+<p>여기서 <span class="math notranslate nohighlight">\(Y_{jm}(i)\)</span> <span class="math notranslate nohighlight">\(Y_i\)</span>와 가장 유사한 다른 처치그룹의 표본을 의미합니다. 우리는 이것을 <span class="math notranslate nohighlight">\(2T_i - 1\)</span>로 하여 두 가지 방식으로 일치시킵니다:</p>
+<p>이 추정기를 테스트하기 위해 의학 예시를 살펴보겠습니다. 다시 한 번, 우리는 환자가 회복까지 며칠이 걸리는지를 통해 약물의 효과를 알아보고 싶습니다. 불행히도 이 효과는 질병의 심각도, 성별, 연령 등에 따라 왜곡됩니다. 우리는 상태가 더 심각한 환자가 약을 받을 가능성이 더 높다고 믿습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">med</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/medicine_impact_recovery.csv&quot;</span><span class="p">)</span>
+<span class="n">med</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>severity</th>
+      <th>medication</th>
+      <th>recovery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>35.049134</td>
+      <td>0.887658</td>
+      <td>1</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>41.580323</td>
+      <td>0.899784</td>
+      <td>1</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>28.127491</td>
+      <td>0.486349</td>
+      <td>0</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>36.375033</td>
+      <td>0.323091</td>
+      <td>0</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>25.091717</td>
+      <td>0.209006</td>
+      <td>0</td>
+      <td>15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>단순히 평균 차이를 계산한다면(<span class="math notranslate nohighlight">\(E[Y|T=1]-E[Y|T=0]\)</span>), 약물을 투약한 환자가 약물을 투약하지 않은 환자에 비해 회복하는 데 평균 16.9일이 더 걸린다는 결과를 도출합니다. 약이 환자에게 해를 끼치는 것이기 때문에 이 결과는 아마도 교란요인으로 때문일 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">med</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;medication==1&quot;</span><span class="p">)[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">med</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;medication==0&quot;</span><span class="p">)[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16.895799546498726
+</pre></div>
+</div>
+</div>
+</div>
+<p>이 편향을 보정하기 위해 매칭을 통해 X를 통제합니다. 먼저 변수의 스케일을 조정해야 한다는 것을 기억해야 합니다. 그렇지 않으면 관측치 사이의 거리를 계산할 때 나이와 같은 변수가 중증도와 같은 변수보다 더 중요하게 여길 것입니다. 이를 해결하기 위해 변수를 표준화할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scale features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;recovery&quot;</span>
+
+<span class="n">med</span> <span class="o">=</span> <span class="n">med</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="n">med</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">-</span> <span class="n">med</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">med</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">X</span><span class="p">})</span>
+<span class="n">med</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>severity</th>
+      <th>medication</th>
+      <th>recovery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.996980</td>
+      <td>0.280787</td>
+      <td>1.459800</td>
+      <td>1</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.002979</td>
+      <td>0.865375</td>
+      <td>1.502164</td>
+      <td>1</td>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.002979</td>
+      <td>-0.338749</td>
+      <td>0.057796</td>
+      <td>0</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.002979</td>
+      <td>0.399465</td>
+      <td>-0.512557</td>
+      <td>0</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.996980</td>
+      <td>-0.610473</td>
+      <td>-0.911125</td>
+      <td>0</td>
+      <td>15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>매칭함수를 직접 코딩하는 것 대신에 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html">Sklearn</a>의 k-nearest-neighbor 알고리즘을 이용합니다. 이 알고리즘은 훈련 데이터셋에서 가장 가까운 데이터 포인트를 찾아 예측을 수행합니다.</p>
+<p>매칭을 위해서는 그 중 2개가 필요합니다. <code class="docutils literal notranslate"><span class="pre">mt0</span></code>는 처치되지 않은 관측치를 저장하고, 처치되지 않은 관측치와 일치하는 관측치를 찾습니다. <code class="docutils literal notranslate"><span class="pre">mt1</span></code>는 처치된 관측치를 저장하고 처치된 관측치 중에서 일치하는 관측치을 찾습니다. 이 적합단계 후에 우리는 이 KNN 모델을 사용하여 매칭에 대해 예측을 할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+
+<span class="n">treated</span> <span class="o">=</span> <span class="n">med</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;medication==1&quot;</span><span class="p">)</span>
+<span class="n">untreated</span> <span class="o">=</span> <span class="n">med</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;medication==0&quot;</span><span class="p">)</span>
+
+<span class="n">mt0</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">untreated</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+<span class="n">mt1</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">treated</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="c1"># find matches for the treated looking at the untreated knn model</span>
+    <span class="n">treated</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="n">mt0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">])),</span>
+    
+    <span class="c1"># find matches for the untreated looking at the treated knn model</span>
+    <span class="n">untreated</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="n">mt1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">]))</span>
+<span class="p">])</span>
+
+<span class="n">predicted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>severity</th>
+      <th>medication</th>
+      <th>recovery</th>
+      <th>match</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.996980</td>
+      <td>0.280787</td>
+      <td>1.459800</td>
+      <td>1</td>
+      <td>31</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.002979</td>
+      <td>0.865375</td>
+      <td>1.502164</td>
+      <td>1</td>
+      <td>49</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>-0.996980</td>
+      <td>1.495134</td>
+      <td>1.268540</td>
+      <td>1</td>
+      <td>38</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.002979</td>
+      <td>-0.106534</td>
+      <td>0.545911</td>
+      <td>1</td>
+      <td>34</td>
+      <td>45.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>-0.996980</td>
+      <td>0.043034</td>
+      <td>1.428732</td>
+      <td>1</td>
+      <td>30</td>
+      <td>39.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>매칭을 통해 이제 매칭 추정기 공식을 적용할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATE} = \frac{1}{N} \sum^N_{i=0} (2T_i - 1)\big(Y_i - Y_{jm}(i)\big)
+\)</span></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;medication&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;match&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.9954
+</pre></div>
+</div>
+</div>
+</div>
+<p>매칭을 통해 약의 효과가 더 이상 긍정적이지 않음을 알 수 있습니다. 이는 X를 통제할 때 약이 평균적으로 약 1일 정도 회복 시간을 단축한다는 것을 의미합니다. 이는 회복 시간이 16.9 증가할 것으로 예측한 편향된 추정치보다 이미 큰 개선 사항입니다.</p>
+<p>그러나 우리는 여전히 더 개선할 수 있습니다.</p>
+</section>
+<section id="matching-bias">
+<h2>Matching Bias<a class="headerlink" href="#matching-bias" title="Permalink to this headline">#</a></h2>
+<p>위에서 설계한 매칭추정기가 편향된 것으로 나타났습니다. 이것을 보기 위해 ATE 대신 ATET estimator를 고려해보겠습니다. 작성하기 더 간단하기 때문입니다. 직관은 ATE에도 동일하게 적용될 것입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = \frac{1}{N_1}\sum (Y_i - Y_j(i))
+\)</span></p>
+<p>여기서 <span class="math notranslate nohighlight">\(N_1\)</span> 처치된 관측치의 수이며, <span class="math notranslate nohighlight">\(Y_j(i)\)</span> 처치된 unit i에 매칭되는 처치되지 않은 unit입니다. 편향을 확인하기 위해 우리가 하는 일은 중심극한정리를 활용하여 평균이 <span class="math notranslate nohighlight">\(0\)</span>인 정규분포에 수렴하도록 하는 것입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\sqrt{N_1}(\hat{ATET} - ATET)
+\)</span></p>
+<p>그러나 이것이 항상 유도되는 것은 아닙니다. 주어진 X에 대한 처리되지 않은 그룹의 평균을 정의하면(<span class="math notranslate nohighlight">\(\mu_0(x)=E[Y|X=x, T=0]\)</span>), 우리는 이것을 계산할 수 있습니다.(여기서는 요점을 약간 벗어나기 때문에 증명을 생략했습니다).</p>
+<p><span class="math notranslate nohighlight">\(
+E[\sqrt{N_1}(\hat{ATET} - ATET)] = E[\sqrt{N_1}(\mu_0(X_i) - \mu_0(X_j(i)))]
+\)</span></p>
+<p>지금, <span class="math notranslate nohighlight">\(\mu_0(X_i) - \mu_0(X_j(i))\)</span> 이해하기 쉽지 않기 떄문에, 더 자세하게 살펴보겠습니다. <span class="math notranslate nohighlight">\(\mu_0(X_i)\)</span>는 처치된 유닛 <span class="math notranslate nohighlight">\(i\)</span>가 처치되지 않았더라면 계산될 Y 값입니다. 그래서 이것은 반사실적 결과입니다(unit i에 대한 <span class="math notranslate nohighlight">\(Y_0\)</span>). <span class="math notranslate nohighlight">\(\mu_0(X_j(i))\)</span>는 관측치 <span class="math notranslate nohighlight">\(i\)</span>에 매칭된 처치되지 않은 관측치 <span class="math notranslate nohighlight">\(j\)</span>의 결과입니다. 그래서 이것은 또한 <span class="math notranslate nohighlight">\(Y_0\)</span>이지만 지금은 관측치 <span class="math notranslate nohighlight">\(j\)</span>입니다. 이번에야말로, <span class="math notranslate nohighlight">\(j\)</span>는 처치되지 않은 그룹의 관측치이기 때문에 사실적인 결과입니다. 지금, <span class="math notranslate nohighlight">\(j\)</span>와 <span class="math notranslate nohighlight">\(i\)</span>는 유사하지만, 정확히 같지는 않기 때문에 0은 아닐 것입니다(즉, <span class="math notranslate nohighlight">\(X_i \approx X_j \)</span>, <span class="math notranslate nohighlight">\(Y_{0i} \approx Y_{0j}\)</span>).</p>
+<p>표본크기가 증가하면 매칭되는 관측치가 많아지므로, <span class="math notranslate nohighlight">\(i\)</span>와 <span class="math notranslate nohighlight">\(j\)</span> 관측치의 차이는 더 작아집니다. 하지만 이 차이는 느리게 <span class="math notranslate nohighlight">\(0\)</span>으로 수렴할 것입니다. 결과적으로 <span class="math notranslate nohighlight">\(E[\sqrt{N_1}(\mu_0(X_i) - \mu_0(X_j(i)))]\)</span> <span class="math notranslate nohighlight">\(0\)</span>으로 수렴하지 않을 것입니다. 왜냐하면 <span class="math notranslate nohighlight">\((\mu_0(X_i) - \mu_0(X_j(i)))\)</span>가 감소하는 속도에 비해 <span class="math notranslate nohighlight">\(\sqrt{N_1}\)</span> <span class="math notranslate nohighlight">\((\mu_0(X_i) - \mu_0(X_j(i)))\)</span>가 더 빠르게 증가할 것이기 때문입니다.</p>
+<p>매칭 불일치의 정도가 클 때 편향이 발생합니다. 다행히도 우리는 이것을 수정하는 방법을 알고 있습니다. 각 관측치는 <span class="math notranslate nohighlight">\((\mu_0(X_i) - \mu_0(X_j(i)))\)</span>에 기여하므로, 추정기의 매칭되는 비교에서 이 양을 직접 빼면 됩니다. 이것을 하기 위해, 우리는 <span class="math notranslate nohighlight">\(\mu_0(X_j(i))\)</span>를 선형회귀와 같은 모델로 얻을 수 있는 <span class="math notranslate nohighlight">\(\hat{\mu_0}(X_j(i))\)</span>로 대체할 수 있습니다. 이것은 ATET 추정기를 다음 방정식으로 업데이트합니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{ATET} = \frac{1}{N_1}\sum \big((Y_i - Y_{j(i)}) - (\hat{\mu_0}(X_i) - \hat{\mu_0}(X_{j(i)}))\big)
+\)</span></p>
+<p>여기서 <span class="math notranslate nohighlight">\(\hat{\mu_0}(x)\)</span>는 <span class="math notranslate nohighlight">\(E[Y|X, T=0]\)</span>로, 처치되지 않은 샘플에 피팅한 선형회귀와 같습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># fit the linear regression model to estimate mu_0(x)</span>
+<span class="n">ols0</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">untreated</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+<span class="n">ols1</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">treated</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+
+<span class="c1"># find the units that match to the treated</span>
+<span class="n">treated_match_index</span> <span class="o">=</span> <span class="n">mt0</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># find the units that match to the untreatd</span>
+<span class="n">untreated_match_index</span> <span class="o">=</span> <span class="n">mt1</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">],</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="p">(</span><span class="n">treated</span>
+     <span class="c1"># find the Y match on the other group</span>
+     <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="n">mt0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">]))</span> 
+     
+     <span class="c1"># build the bias correction term</span>
+     <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">bias_correct</span><span class="o">=</span><span class="n">ols0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">treated</span><span class="p">[</span><span class="n">X</span><span class="p">])</span> <span class="o">-</span> <span class="n">ols0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">untreated</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">treated_match_index</span><span class="p">][</span><span class="n">X</span><span class="p">]))),</span>
+    <span class="p">(</span><span class="n">untreated</span>
+     <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="n">mt1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">]))</span>
+     <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">bias_correct</span><span class="o">=</span><span class="n">ols1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">untreated</span><span class="p">[</span><span class="n">X</span><span class="p">])</span> <span class="o">-</span> <span class="n">ols1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">treated</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">untreated_match_index</span><span class="p">][</span><span class="n">X</span><span class="p">])))</span>
+<span class="p">])</span>
+
+<span class="n">predicted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>severity</th>
+      <th>medication</th>
+      <th>recovery</th>
+      <th>match</th>
+      <th>bias_correct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.996980</td>
+      <td>0.280787</td>
+      <td>1.459800</td>
+      <td>1</td>
+      <td>31</td>
+      <td>39.0</td>
+      <td>4.404034</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.002979</td>
+      <td>0.865375</td>
+      <td>1.502164</td>
+      <td>1</td>
+      <td>49</td>
+      <td>52.0</td>
+      <td>12.915348</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>-0.996980</td>
+      <td>1.495134</td>
+      <td>1.268540</td>
+      <td>1</td>
+      <td>38</td>
+      <td>46.0</td>
+      <td>1.871428</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1.002979</td>
+      <td>-0.106534</td>
+      <td>0.545911</td>
+      <td>1</td>
+      <td>34</td>
+      <td>45.0</td>
+      <td>-0.496970</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>-0.996980</td>
+      <td>0.043034</td>
+      <td>1.428732</td>
+      <td>1</td>
+      <td>30</td>
+      <td>39.0</td>
+      <td>2.610159</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>한 가지 곧바로 할 수 있는 질문은 다음과 같습니다. 이것이 매칭의 요점을 무너뜨리지 않나요? 어쨌든 선형회귀를 실행해야 할 경우 이 복잡한 모델 대신 해당 모형만 사용하는 것이 좋습니다. 이것은 합당한 지적이므로 답변하는 데 시간이 필요합니다.</p>
+<p><img alt="img" src="_images/ubiquitous-ols.png" /></p>
+<p>우선, 우리가 맞추는 이 선형회귀는 처치 효과를 얻기 위해 처치 차원을 외삽하지 않습니다. 대신, 목적은 편향을 수정하는 것입니다. 여기서 선형회귀는 처치되지 않은 것처럼 보이는 경우 처치된 방법을 확인하려고 시도하지 않는다는 점에서 국소적입니다. 이것은 외삽을 하지 않습니다. 이것은 매칭되는 부분에 맡깁니다. 추정기의 핵심은 여전히 ​​매칭되는 구성 요소입니다. 여기서 말하고 싶은 요점은 OLS가 이 추정기에 부차적인 요소라는 것입니다.</p>
+<p>두 번째 요점은 매칭이 비모수적 추정량이라는 것입니다. 선형성이나 어떤 종류의 매개변수 모델도 가정하지 않습니다. 따라서 선형회귀보다 더 유연하며 선형회귀가 아닌 상황, 즉 비선형성이 매우 강한 상황에서 작동할 수 있습니다.</p>
+<p>이것은 매칭만 사용해야 한다는 것을 의미합니까? 글쎄요, 그건 어려운 질문입니다. 알베르토 아바디(Alberto Abadie)는 그렇다고 주장합니다. 더 유연하고 일단 코드가 있으면 똑같이 간단하게 실행할 수 있습니다. 나는 이것에 대해 완전히 확신하지 못합니다. 예를 들어, Abadie는 추정기를 연구하고 개발하는 데 많은 시간을 보냈습니다(예, 그는 매칭에 기여하는 과학자 중 한 명입니다). 따라서 그는 분명히 이 방법에 개인적으로 시간을 투자했습니다. 둘째, 선형 회귀의 단순성에 대해 매칭에서 볼 수 없는 무언가가 있습니다. “다른 모든 것을 일정하게 유지”하는 편도함수 수식은 매칭보다 선형 회귀로 파악하는 것이 훨씬 쉽습니다. 하지만 그건 내 취향일 뿐입니다. 솔직히 말해서 이 질문에 대한 명확한 답은 없습니다. 어쨌든, 우리의 예로 돌아갑니다.</p>
+<p>편향 보정 공식을 사용하면 다음과 같은 ATE 추정을 얻을 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;medication&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;match&quot;</span><span class="p">])</span><span class="o">-</span><span class="n">predicted</span><span class="p">[</span><span class="s2">&quot;bias_correct&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-7.36266090614141
+</pre></div>
+</div>
+</div>
+</div>
+<p>물론, 우리는 또한 이 값 주위에 신뢰 구간을 배치해야 하지만, 이제 수학 이론으로 충분합니다. 실제로, 우리는 단순히 다른 사람의 코드를 사용하고 매칭 추정기를 가져올 수 있습니다. 다음은 <a class="reference external" href="https://github.com/laurencium/causalinference">causalinference</a> 라이브러리에서 가져온 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causalinference</span> <span class="kn">import</span> <span class="n">CausalModel</span>
+
+<span class="n">cm</span> <span class="o">=</span> <span class="n">CausalModel</span><span class="p">(</span>
+    <span class="n">Y</span><span class="o">=</span><span class="n">med</span><span class="p">[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+    <span class="n">D</span><span class="o">=</span><span class="n">med</span><span class="p">[</span><span class="s2">&quot;medication&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+    <span class="n">X</span><span class="o">=</span><span class="n">med</span><span class="p">[[</span><span class="s2">&quot;severity&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="p">)</span>
+
+<span class="n">cm</span><span class="o">.</span><span class="n">est_via_matching</span><span class="p">(</span><span class="n">matches</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias_adj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">estimates</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Treatment Effect Estimates: Matching
+
+                     Est.       S.e.          z      P&gt;|z|      [95% Conf. int.]
+--------------------------------------------------------------------------------
+           ATE     -7.709      0.609    -12.649      0.000     -8.903     -6.514
+           ATC     -6.665      0.246    -27.047      0.000     -7.148     -6.182
+           ATT     -9.679      1.693     -5.717      0.000    -12.997     -6.361
+</pre></div>
+</div>
+</div>
+</div>
+<p>마지막으로, 우리는 약물이 실제로 환자의 병원 체류 기간을 줄여준다고 자신 있게 말할 수 있습니다. ATE 추정치는 직접 계산한 것보다 약간 낮으므로 아마도 직접 계산한 코드가 완벽하지 않을 것입니다. 따라서 직접 코드를 작성하는 대신 라이브러리 코드를 이용하는 것이 좋습니다.</p>
+<p>이 주제를 닫기 전에 매칭에서 편향의 원인을 조금 더 설명하고 싶었습니다. 우리는 매칭된 관측치들이 유사하지 않을 때 편향된다는 것을 보았습니다. 그러나 무엇이 그들을 그렇게 다르게 만듭니까?</p>
+</section>
+<section id="the-curse-of-dimensionality">
+<h2>The Curse of Dimensionality<a class="headerlink" href="#the-curse-of-dimensionality" title="Permalink to this headline">#</a></h2>
+<p>알고 보면 답은 매우 간단하고 직관적입니다. 성별과 같은 몇 가지 특성이 매칭되는 사람들을 쉽게 찾을 수 있습니다. 그러나 나이, 소득, 출신지 등의 변수를 추가하면 매칭되는 항목을 찾기가 점점 더 어려워집니다. 더 일반적인 용어로, 더 많은 변수를 가질수록 해당 관측치와 매칭되는 관측치 사이의 거리가 더 멀어집니다.</p>
+<p>이것은 매칭 추정기에만 영향을 주는 것이 아닙니다. 이전에 본 subclassification estimator와 다시 연결됩니다. 처음 예시처럼 성별에 따라 subclassification estimator를 구축하는 것은 매우 쉬운 예시입니다. 남성과 여성 <span class="math notranslate nohighlight">\(2\)</span>개의 셀만 있었기 때문입니다. 그러나 우리가 더 많은 변수를 가지고 있다면 어떻게 될까요? 연령 및 소득과 같은 <span class="math notranslate nohighlight">\(2\)</span>개의 연속적인 특성이 있고 각각 <span class="math notranslate nohighlight">\(5\)</span>개의 범주로 이산화할 수 있다고 가정해 보겠습니다. 이것은 우리에게 <span class="math notranslate nohighlight">\(25\)</span>개의 셀을 줄 것입니다(<span class="math notranslate nohighlight">\(5^2\)</span>). 그리고 각각 3개의 범주가 존재하는 10개의 공변량이 있다면 어떻게 될까요? 많지 않은 것 같나요? 이것은 우리에게 <span class="math notranslate nohighlight">\(59049\)</span>개의 셀을 줄 것입니다(<span class="math notranslate nohighlight">\(3^10\)</span>). 이를 통해 어떻게 빠르게 셀이 증가하는지 쉽게 알 수 있습니다. 이것은 <strong>차원의 저주</strong> 라고 불리며, 데이터과학에서는 만연한 현상입니다 !!!</p>
+<p><img alt="img" src="_images/curse-of-dimensionality.jpg" />
+Image Source: <a class="reference external" href="https://deepai.org/machine-learning-glossary-and-terms/curse-of-dimensionality">https://deepai.org/machine-learning-glossary-and-terms/curse-of-dimensionality</a></p>
+<p>무섭고 가식적인 이름에도 불구하고 이것은 변수 공간을 채우는 데 필요한 데이터 관측치의 수가 변수 또는 차원의 수에 따라 기하급수적으로 증가한다는 것을 의미합니다. 예를 들어 3개의 변수로 구성된 공간을 채우는 데 X 데이터 포인트가 필요하면 4개의 기능 공간을 채우는 데 기하급수적으로 더 많은 포인트가 필요합니다.</p>
+<p>subclassification estimator의 맥락에서 차원의 저주는 변수가 많을 경우 문제가 발생한다는 것을 의미합니다. 많은 변수는 X의 여러 셀을 의미합니다. 여러 셀이 있는 경우 일부는 데이터가 거의 없습니다. 그들 중 일부는 처치만 하거나 통제만 했을 수도 있으므로 거기에서 ATE를 추정하는 것이 불가능할 것입니다. 이는 변수 공간이 매우 희소하고 관측치 간 서로 매우 멀리 떨어져 있음을 의미합니다. 이렇게 하면 매칭된 관측치 간의 거리가 늘어나고 편향이 발생합니다.</p>
+<p>선형회귀의 경우 실제로 이 문제를 아주 잘 처리합니다. 선형회귀에서 하는 일은 모든 변수 X를 단일 Y 차원으로 투영하는 것입니다. 그런 다음 해당 투영에 대한 처치 및 통제에 대한 비교를 합니다. 따라서 어떤 면에서 선형 회귀는 일종의 차원 축소를 수행하여 ATE를 추정하는 것으로 볼 수 있습니다. 상당히 고급스럽습니다.</p>
+<p>대부분의 인과 모형은 차원의 저주를 처리하는 방법이 있습니다. 계속 반복하지는 않겠지만 그것들을 볼 때 염두에 두어야 할 사항입니다. 예를 들어 다음 섹션에서 성향점수를 다룰 때 이 문제를 어떻게 해결하는지 살펴보십시오.</p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>선형회귀의 역할과 인과관계를 식별하는데 도움이 되는 방법을 이해하기 위해 이 섹션을 시작했습니다. 즉, 회귀는 데이터를 셀로 분할하고 각 셀에서 ATE를 계산한 다음, 셀의 ATE를 전체 데이터셋에 대한 단일 ATE로 결합하는 것으로 볼 수 있음을 이해했습니다.</p>
+<p>여기서 우리는 subclassification이 있는 매우 일반적인 인과효과 추정기를 도출했습니다. 우리는 그 추정기가 실제로 유용하지 않다는 것을 보았지만 인과효과 추정의 문제를 해결하는 방법에 대한 흥미로운 통찰력을 제공했으며, 우리에게 매칭추정기에 대해 이야기할 기회를 주었습니다.</p>
+<p>각 처치된 관측치를 보고 처치되지 않은 쌍을 찾아 교란요인에 대한 대조군과 매칭시킵니다. 우리는 KNN 알고리즘을 사용하여 이 방법을 구현하는 방법과 회귀를 사용하여 편향을 줄이는 방법을 보았습니다. 마지막으로 매칭과 선형 회귀의 차이점에 대해 논의했습니다. 우리는 선형 회귀가 하는 것처럼 선형성에 의존하지 않는 비모수적 추정기(non-parametric estimator)인 매칭을 보았습니다.</p>
+<p>마지막으로, 우리는 고차원 데이터에서의 문제를 파헤쳤고, 인과추론 방법들이 어떻게 문제를 겪을 수 있는지 보았습니다.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막으로 제가 참고한 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>본문의 앞쪽의 맥주 비유는 JL Colins의 <a class="reference external" href="https://jlcollinsnh.com/2012/04/15/stocks-part-1-theres-a-major-market-crash-coming-and-dr-lo">주식 시리즈</a>에서 가져왔습니다. 이 시리즈는 돈을 생산적으로 투자하는 방법을 배우려는 모든 분들께서 반드시 읽어야할 자료입니다.</p>
+<p><img alt="img" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="09-Non-Compliance-and-LATE.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">09 - Non Compliance and LATE</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="11-Propensity-Score.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">11 - Propensity Score</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-regression-doing-after-all">
+   What is Regression Doing After All?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-subclassification-estimator">
+   The Subclassification Estimator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matching-estimator">
+   Matching Estimator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matching-bias">
+   Matching Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-curse-of-dimensionality">
+   The Curse of Dimensionality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
