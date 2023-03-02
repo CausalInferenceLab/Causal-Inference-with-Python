@@ -1,4 +1,4 @@
-# Python으로 하는 인과추론 : 개념부터 실습까지
+# Causal Inference for The Brave and True
 
 안녕하세요. [가짜연구소](https://pseudo-lab.com/) 빌더 [신진수](https://www.linkedin.com/in/jinsoo-shin-436060162/)입니다. 가짜연구소 인과추론팀은 한국어 자료가 많지 않은 인과추론을 많은 분들이 쉽게 접하실 수 있도록 기여하고자 합니다!
 
