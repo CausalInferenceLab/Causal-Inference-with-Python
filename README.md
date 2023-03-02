@@ -28,7 +28,7 @@
 <br>
 
 ## 자료 이슈 및 관련 질문
-번역 자료에 대한 이슈가 있다면, 해당 Github 저장소의 [이슈 페이지](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)를 방문해주세요. 또한, 관련 질문은 빌더인 [신진수](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/commits?author=jsshin2022)에게 문의 부탁드립니다.
+번역 자료에 대한 이슈가 있다면, 해당 Github 저장소의 [이슈 페이지](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)를 방문해주세요. 또한, 관련 질문은 빌더인 [신진수](https://github.com/jsshin2022)에게 문의 부탁드립니다.
 
 <br>
 

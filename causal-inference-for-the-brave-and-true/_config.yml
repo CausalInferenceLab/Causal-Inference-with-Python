@@ -1,6 +1,10 @@
 # in _config.yml
-title: "Causal Inference for the Brave and True"
+title: "Python으로 하는 인과추론"
 author: Jinsoo Shin
+
+latex:
+  latex_documents:
+    targetname: book.tex
 
 execute:
   execute_notebooks: "off"
@@ -8,11 +12,11 @@ execute:
 repository:
   url: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
 
+
 html:
   use_issues_button: true
+  use_repository_button: true
+  
 
 exclude_patterns: [_build, .DS_Store, "**.ipynb_checkpoints"]
 
-sphinx:
-  config:
-    language: en
