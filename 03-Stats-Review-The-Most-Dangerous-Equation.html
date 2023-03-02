@@ -1,0 +1,1609 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>03 - Stats Review: The Most Dangerous Equation &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03-Stats-Review-The-Most-Dangerous-Equation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="04 - Graphical Causal Models" href="04-Graphical-Causal-Models.html" />
+    <link rel="prev" title="02 - Randomised Experiments" href="02-Randomised-Experiments.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F03-Stats-Review-The-Most-Dangerous-Equation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/03-Stats-Review-The-Most-Dangerous-Equation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>03 - Stats Review: The Most Dangerous Equation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-standard-error-of-our-estimates">
+   The Standard Error of Our Estimates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#confidence-intervals">
+   Confidence Intervals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hypothesis-testing">
+   Hypothesis Testing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#p-values">
+   P-values
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="stats-review-the-most-dangerous-equation">
+<h1>03 - Stats Review: The Most Dangerous Equation<a class="headerlink" href="#stats-review-the-most-dangerous-equation" title="Permalink to this headline">#</a></h1>
+<p>2007년 Howard Wainer는 매우 위험한 공식에 관하여 적었습니다.
+“어떤 공식들은 알고 있으면 위험하고, 어떤 공식들은 모르고 있으면 위험합니다. 첫째는 경계 내의 비밀에 끔찍한 위험이 내재되어 있기 때문입니다. 이와 같은 공식은 아인슈타인의 상징적인 <span class="math notranslate nohighlight">\(E = MC^2\)</span>인데, 평범한 물질 안에 숨겨진 거대한 에너지의 척도를 제공하기 때문입니다. 대신 저는 우리가 모를 때 위험을 방출하는 공식들에 관심을 갖고 있습니다. 이 공식들은 가까이서 보면 사물들에 대해 명확하게 이해시켜주지만, 이 공식들의 부재는 우리를 위험하게 할 정도로 무지하게 만듭니다.”</p>
+<p>그가 말한 공식은 Moivre’s equation으로 아래와 같습니다:
+<span class="math notranslate nohighlight">\(
+SE = \frac{\sigma}{\sqrt{n}}
+\)</span>
+위 식에서 SE는 평균의 표준오차, <span class="math notranslate nohighlight">\(\sigma\)</span>는 표준편차, 그리고 n은 표본 크기를 의미합니다. 용감하고 진실된 사람이 정복해야 할 수학처럼 들리지만, 한번 시작해봅시다!</p>
+<p>이 공식을 모르는 것이 왜 매우 위험한지 알아보기 위해, 교육 데이터를 살펴봅시다. 저는 ENEM 점수(SAT와 유사한 브라질 표준 고등학교 점수)를 3년 동안 다른 학교들에서 수집했습니다. 또한 저는, 우리와 관련된 정보를 유지하기 위해 데이터를 전처리했습니다. 원본 데이터는 <a class="reference external" href="http://portal.inep.gov.br/web/guest/microdados#">Inep website</a>에서 다운로드 할 수 있습니다.</p>
+<p>가장 성적이 좋은 학교를 보면, 눈을 끄는 것이 있는데, 학생들의 수가 상당히 적습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;enem_scores.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;avg_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>school_id</th>
+      <th>number_of_students</th>
+      <th>avg_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16670</th>
+      <td>2007</td>
+      <td>33062633</td>
+      <td>68</td>
+      <td>82.97</td>
+    </tr>
+    <tr>
+      <th>16796</th>
+      <td>2007</td>
+      <td>33065403</td>
+      <td>172</td>
+      <td>82.04</td>
+    </tr>
+    <tr>
+      <th>16668</th>
+      <td>2005</td>
+      <td>33062633</td>
+      <td>59</td>
+      <td>81.89</td>
+    </tr>
+    <tr>
+      <th>16794</th>
+      <td>2005</td>
+      <td>33065403</td>
+      <td>177</td>
+      <td>81.66</td>
+    </tr>
+    <tr>
+      <th>10043</th>
+      <td>2007</td>
+      <td>29342880</td>
+      <td>43</td>
+      <td>80.32</td>
+    </tr>
+    <tr>
+      <th>18121</th>
+      <td>2007</td>
+      <td>33152314</td>
+      <td>14</td>
+      <td>79.82</td>
+    </tr>
+    <tr>
+      <th>16781</th>
+      <td>2007</td>
+      <td>33065250</td>
+      <td>80</td>
+      <td>79.67</td>
+    </tr>
+    <tr>
+      <th>3026</th>
+      <td>2007</td>
+      <td>22025740</td>
+      <td>144</td>
+      <td>79.52</td>
+    </tr>
+    <tr>
+      <th>14636</th>
+      <td>2007</td>
+      <td>31311723</td>
+      <td>222</td>
+      <td>79.41</td>
+    </tr>
+    <tr>
+      <th>17318</th>
+      <td>2007</td>
+      <td>33087679</td>
+      <td>210</td>
+      <td>79.38</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>다른 각도에서 보면 상위 1% 학교만 분리하고 연구할 수 있습니다. 어떻게 생겼나요? 아마도 우리는 최고로부터 배울 수 있고 다른 곳에서 복제할 수 있습니다. 그리고 당연히, 상위 1% 학교를 보면, 평균적으로 학생이 적음을 알 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span>
+             <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">top_school</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">],</span> <span class="mf">.99</span><span class="p">))</span>
+             <span class="p">[[</span><span class="s2">&quot;top_school&quot;</span><span class="p">,</span> <span class="s2">&quot;number_of_students&quot;</span><span class="p">]]</span>
+             <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;number_of_students&lt;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;number_of_students&#39;</span><span class="p">],</span> <span class="mf">.98</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span> <span class="c1"># remove outliers</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;top_school&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;number_of_students&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of Students of 1% Top Schools (Right)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/2288386e86ea22d6927ad74dbf095d7aa0b9eaf8f8cc882172eb7c4ea868a651.png" src="_images/2288386e86ea22d6927ad74dbf095d7aa0b9eaf8f8cc882172eb7c4ea868a651.png" />
+</div>
+</div>
+<p>한 가자 당연한 결론은, 작은 학교들이 더 높은 학업 성취를 이끌어낸다는 것입니다. 이는 직관적으로 교사 한 명당 맡은 학생 수가 적을 때, 교사가 각 학생에게 주의를 기울일 수 있기 때문입니다. 그러나 이것이 Moivre’s equation과 무슨 연관이 있을까요? 그리고 왜 위험할까요?</p>
+<p>이 정보를 기반으로 사람들이 중요하고 비싼 결정들을 한다면 위험해질 것입니다. 그의 기사에서 Howard는 계속 진행합니다.</p>
+<p>“1990년대에, 학교 규모를 줄이는 것이 인기가 많았습니다. 수 많은 자선 단체들과 정부 기관들이 더 큰 학교들에게 펀딩을 하였는데, 이는 작은 학교들의 학생들이 높은 시험 점수를 위해 과도하게 대표되긴 했습니다.”</p>
+<p>사람들은 하위 1%의 학교도 살펴보는 것을 잊었습니다. 만일 우리가 그것을 했더라면, 그들 역시 매우 적은 학생 수를 보여줍니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q_99</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">],</span> <span class="mf">.99</span><span class="p">)</span>
+<span class="n">q_01</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">],</span> <span class="mf">.01</span><span class="p">)</span>
+
+<span class="n">plot_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span>
+             <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+             <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Group</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">q_99</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;avg_score&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">q_01</span><span class="p">],</span>
+                                                 <span class="p">[</span><span class="s2">&quot;Top&quot;</span><span class="p">,</span> <span class="s2">&quot;Bottom&quot;</span><span class="p">],</span> <span class="s2">&quot;Middle&quot;</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;avg_score&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;number_of_students&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ENEM Score by Number of Students in the School&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/11b4243bd89a238de8253eff22e464bba8ba6b8c88cbb3960940b9aa14e5f161.png" src="_images/11b4243bd89a238de8253eff22e464bba8ba6b8c88cbb3960940b9aa14e5f161.png" />
+</div>
+</div>
+<p>우리는 위의 그래프를 통해 Moivre 공식에서 무엇을 기대하는지 명확하게 볼 수 있습니다. 학생 수가 증가할 수록, 평균 점수는 더 정확해집니다. 학생 수가 적은 학교들은 운에 의해 매우 높거나 매우 낮은 점수 분포를 보여줍니다. 이 점은 큰 학교들에서는 잘 나타나지 않습니다. Moivre 공식은 정보의 실재화와 데이터 기록 형태는 항상 정확하지 않다는 기본적인 사실에 대해서 이야기 합니다. 그렇다면 질문은 얼마나 정확하지 않을까요?</p>
+<p>통계학은 이러한 부정확한 것에 대해 다루는 과학이라 우리의 허를 찌르지 않습니다. Taleb은 자신의 책에 무작위에 속았다고 적었습니다.</p>
+<blockquote>
+<div><p>확률은 단순히 주사위 던지기나 더 복잡한 것들에 대해 계산하는 것이 아닙니다. 확률은 우리의 지식에 대한 확신의 부족함을 인정하고 우리의 무지를 대하는 방법들을 발전하는 방법입니다.</p>
+</div></blockquote>
+<p>불확실성을 계산하는 방법 중 하나는 <strong>분산의 추정량</strong>을 구하는 것입니다. 분산은 중심과 가장 있을 것 같은 값으로부터 얼마나 떨어져있는지 알려줍니다. Moivre 공식이 말해주듯이, 불확실성은 관측된 데이터가 클 수록 줄어듭니다. 말이 되죠? 만일 우리가 많은 학생들이 학교에서 잘한다면, 우리는 좋은 학교라고 확신할 수 있습니다. 그렇나 만일 우리가 10명의 학생 중 8명만 잘한다고 하면, 더 의구심이 들어야 합니다. 우연으로 인해 그 학교는 평균 이상의 학생들이 다닐 가능성이 있으니까요.</p>
+<p>위의 아름다운 삼각형 그래프는 이 이야기를 보여줍니다. 표본의 수가 작을 때 우리의 추정치는 큰 분산을 갖습니다. 또한 표본이 커질 수록 분산이 줄어듬을 보여줍니다. 학교에서의 평균 점수는 이에 대해 사실이고, 우리가 추정하고 싶은 ATE를 포함한 그 어떤 요약 통계에 대해서도 마찬가지입니다.</p>
+<section id="the-standard-error-of-our-estimates">
+<h2>The Standard Error of Our Estimates<a class="headerlink" href="#the-standard-error-of-our-estimates" title="Permalink to this headline">#</a></h2>
+<p>지금까지는 통계학의 리뷰였기 때문에 더 빨리 진행하도록 하겠습니다. 만일 분포, 분산, 표준오차에 대해 잘 모르신다면 계속 읽어주시되 추가적인 요소들이 필요함을 명심하시기 바랍니다. MIT의 기초 통계학 수업이 보편적으로 꽤 좋기 때문에 수강할 것을 권장합니다.</p>
+<p>이 전 섹션에서 우리는 평균 처리 효과 <span class="math notranslate nohighlight">\(E[Y_{1}-Y_{0}]\)</span>를 처리 군과 대조 군 평균 간 차이 <span class="math notranslate nohighlight">\(E[Y|T=1] - E[Y|T=0]\)</span>으로 다뤘습니다. 우리는 온라인 수업의 ATE를 동기부여 사례로 알아냈습니다. 또한 우리는 온라인 수업은 학생들의 수행 점수가 대면 수업일 때 보다 5점 낮은 부정적인 효과도 보았습니다. 이제 우리는 통계적으로 유의한지 확인하고자 합니다.
+이를 위해 우리는 표준오차를 추정해야합니다. 우리는 이미 표본크기 n에 대해 알고 있습니다. 표준오차의 추정치는
+<span class="math notranslate nohighlight">\(\hat{\sigma} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (x_{i}-\bar{x})^2}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\bar{x}\)</span>는 x의 평균을 의미합니다. 다행히도 대부분 프로그래밍 소프트웨어를 통해 이를 구현할 수 있습니다. 판다스에서는 <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.std.html">std</a>를 사용합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;online_classroom.csv&quot;</span><span class="p">)</span>
+<span class="n">online</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;format_ol==1&quot;</span><span class="p">)[</span><span class="s2">&quot;falsexam&quot;</span><span class="p">]</span>
+<span class="n">face_to_face</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;format_ol==0 &amp; format_blended==0&quot;</span><span class="p">)[</span><span class="s2">&quot;falsexam&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">se</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SE for Online:&quot;</span><span class="p">,</span> <span class="n">se</span><span class="p">(</span><span class="n">online</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SE for Face to Face:&quot;</span><span class="p">,</span> <span class="n">se</span><span class="p">(</span><span class="n">face_to_face</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SE for Online: 1.5371593973041635
+SE for Face to Face: 0.8723511456319104
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals">
+<h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this headline">#</a></h2>
+<p>추정치에 대한 표준오차는 확신에 대한 치수입니다. 무슨 의미인지 정확하게 이해하기 위해 우리는 혼란스럽고 격렬한 통계의 물줄기에 빠져야합니다. 빈도주의자 관점에서 데이터는 정확한 데이터 생성 과정에 대한 표현일 뿐입니다. 이 과정은 추상적이고 이상적입니다. 바뀌지 않지만 우리에게 알려지지 않는 모수에 의해 지배됩니다. 학생들 시험의 문맥으로 보면, 만일 우리가 여러번 실험을 하여 많은 데이터를 얻었을 때, 모든 것은 실제 기본 데이터 생성 과정과 유사하지만 정확히 같지는 않습니다. 플라톤의 이데아와 유사합니다.</p>
+<blockquote>
+<div><p>본질의 하나 하나는 그 자신을 굉장히 다양한 조합들; 운동, 물질 등 다양한 형태로 표현합니다.</p>
+</div></blockquote>
+<p>우리가 학생 시험 점수가 참 평균 74, 참 표준편차 2의 정규분포를 따른 다는 것을 알고 있다고 가정합시다. 이 분포로부터 우리는 10000번의 실험을 합니다. 한 번의 실험에서 우리는 500의 표본을 얻습니다. 이것을 히스토그램으로 그리면, 실험에 대한 평균이 참 평균 근처로 분포됨을 알 수 있습니다. 어떤 실험 표본은 참 값에 비해 작을 수도 있고 클 수도 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_std</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">true_mean</span> <span class="o">=</span> <span class="mi">74</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="k">def</span> <span class="nf">run_experiment</span><span class="p">():</span> 
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">true_mean</span><span class="p">,</span><span class="n">true_std</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">freq</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">([</span><span class="n">run_experiment</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Experiment Means&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">true_mean</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">freq</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True Mean&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/f9e1dfb71dd96d5e6ad686168c737d90b86ac101b770d65b4a67b365ab25f242.png" src="_images/f9e1dfb71dd96d5e6ad686168c737d90b86ac101b770d65b4a67b365ab25f242.png" />
+</div>
+</div>
+<p>우리는 평균들의 평균에 대해 얘기하고 있는 것을 기억하십시오. 우연하게 우리는 실험의 평균이 참 평균보다 작거나 클 수 있습니다. 이는 우리는 실험의 평균이 참 평균과 맞다고 확신할 수 없습니다. 그렇지만 <strong>표준오차를 통해 우리는 참 평균이 95%안에 포함되도록 구간을 만들 수 있습니다.</strong></p>
+<p>현실 세계에서 우리는 다양한 데이터 셋을 통해 같은 실험에 대해 여러번 실험할 수 없습니다. 그렇지만 우리는 <strong>신뢰구간</strong>을 만들 수 있습니다. 신뢰구간은 확률이 더해져서 구해지고 가장 일반적인 구간은 95%입니다. 이 확률은 서로 다른 연구에서 얼마나 많은 가상 신뢰구간을 만들 수 있는지 알려줍니다. 예를 들어 비슷한 연구에서 95% 신뢰구간을 계산하면 실제 평균 95%가 포함됩니다.</p>
+<p>신뢰구간을 계산하기 위해서 우리는 **중심극한정리(central limit theorem)**를 이용합니다. 중심극한정리는 실험들의 <strong>평균들이 정규분포를 따른다는 것</strong>을 말하고 있어요. 우리는 통계학적 이론에서 정규분포 질량의 95%는 평균 위와 아래의 2 표준편차 사이에 있다는 것을 알고 있습니다. (정확하게는 1.96이지만, 2는 충분히 가깝습니다)</p>
+<p><img alt="normal_density" src="_images/normal_dist.jpeg" /></p>
+<p>평균의 표준오차는 실험 평균의 분포에 대한 추정치 역할을 합니다. 따라서 만일 우리가 표준오차에서 2를 곱한 실험 평균들 중 하나를 에서 더하고 빼면 참 평균에 대한 95% 신뢰구간을 만들 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">321</span><span class="p">)</span>
+<span class="n">exp_data</span> <span class="o">=</span> <span class="n">run_experiment</span><span class="p">()</span>
+<span class="n">exp_se</span> <span class="o">=</span> <span class="n">exp_data</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">exp_data</span><span class="p">))</span>
+<span class="n">exp_mu</span> <span class="o">=</span> <span class="n">exp_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="p">(</span><span class="n">exp_mu</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">exp_se</span><span class="p">,</span> <span class="n">exp_mu</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">exp_se</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(73.82718114045632, 74.17341543460314)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">exp_mu</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">exp_se</span><span class="p">,</span> <span class="n">exp_mu</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">exp_se</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">exp_mu</span><span class="p">,</span> <span class="n">exp_se</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/96b9a484e737c56588f845f3816083c3a6981e1311ae71eb79f6fc453b67c623.png" src="_images/96b9a484e737c56588f845f3816083c3a6981e1311ae71eb79f6fc453b67c623.png" />
+</div>
+</div>
+<p>당연히 우리는 95% 신뢰구간으로 제한할 필요는 없습니다. 우리는 표준편차를 곱하는데 필요한 것을 찾아 정규 분포의 질량의 99% 포함하는 신뢰구간도 만들 수 있습니다.</p>
+<p>파이썬의 ppf 함수는 누적 분포 함수의 역함수를 알려줍니다. 85% 신뢰구간을 찾기 위해 표준오차 2를 곱하는 대신에, 99% 신뢰구간을 만들 z를 곱할 것입니다. 따라서 ppf(0.5)는 정규분포 질량의 50%가 0 아래 있음을 나타내는 0을 나타낼 것입니다. 같은 방법으로 우리가 99.5%를 넣으면 분포 질량의 99.5%가 z값 아래 형성되도록 만드는 z를 구할 것입니다. 다시 말해 분포 질량의 0.5%는 z값보다 큽니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.995</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="p">(</span><span class="n">exp_mu</span> <span class="o">-</span> <span class="n">z</span> <span class="o">*</span> <span class="n">exp_se</span><span class="p">,</span> <span class="n">exp_mu</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">exp_se</span><span class="p">)</span>
+<span class="n">ci</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.5758293035489004
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(73.7773381773405, 74.22325839771896)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">exp_mu</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">exp_se</span><span class="p">,</span> <span class="n">exp_mu</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">exp_se</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">exp_mu</span><span class="p">,</span> <span class="n">exp_se</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;99% CI&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/73c4b558c4a2ee2c8ba264d7c4b0e2eb7134fa7fcdd6700babfe23b872e38d4a.png" src="_images/73c4b558c4a2ee2c8ba264d7c4b0e2eb7134fa7fcdd6700babfe23b872e38d4a.png" />
+</div>
+</div>
+<p>우리의 교실 실험으로 돌아오겠습니다. 우리는 온라인 수업과 대면 수업의 학생들의 평균 시험 점수에 대한 신뢰구간을 만들 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ci</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">se</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">se</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;95% CI for Online:&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="p">(</span><span class="n">online</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;95</span><span class="si">% f</span><span class="s2">or Face to Face:&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="p">(</span><span class="n">face_to_face</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>95% CI for Online: (70.56094429049804, 76.7095818797147)
+95% for Face to Face: (76.80278229206948, 80.29218687459712)
+</pre></div>
+</div>
+</div>
+</div>
+<p>집단 간 95% 신뢰구간이 겹치지 않습니다. 대면 수업 신뢰구간의 하한은 온라인 수업 신뢰구간의 상한보다 높습니다. 이는 대면 수업 학생들의 실제 평균 값이 온라인 수업 학생들의 실제 평균 값보다 높다는 결과가 우연적이지 않음을 나타냅니다. 다시 말해 대면 수업에서 온라인 수업으로 전환할 경우 학업 성취에 대해 유의한 인과적 감소를 주장할 수 있습니다.</p>
+<p>요약하자면, 신뢰구간은 추정치들에 대한 불확실성을 배치하는 방법입니다. 표본이 작을 수록, 표준오차는 커지고 신뢰구간은 넓어집니다. 표준오차와 신뢰구간은 계산하기 쉽기 때문에, 신뢰구간의 신호 부족은 나쁜 의도나 지식의 부족을 의미하는데, 동등하게 우려됩니다. 마지막으로 불확실성에 대한 척도가 없다면 항상 의심하셔야합니다.</p>
+<p><img alt="img" src="_images/ci_xkcd.png" /></p>
+<p>마지막으로 주의 한마디를 하겠습니다. 신뢰구간은 한 눈에 보는 것보다 해석하기 까다롭습니다. 예를 들면, 이 특정 95% 신뢰구간에 95% 확률로 실제 모집단 평균이 포함되어 있다고 말하면 안됩니다. 빈도주의자 입장에서 모집단 평균은 실제 모수로 간주합니다. 그렇기 때문에 우리의 특정 신뢰구간에 존재한다고 할 수 없습니다. 다시 말해, 만일 존재 한다면, 95%가 아니라 100%입니다. 만일 존재하지 않는다면 0%입니다. 대신 신뢰구간에서 95%는 많은 연구에서 계산된 신뢰구간이 실제 평균을 포함하는 빈도를 나타냅니다. 95%는 특정 간격 자체가 아니라 95%를 신뢰구간을 계산하는데 사용되는 알고리즘에 대한 우리의 신뢰도 입니다.</p>
+<p>경제학자로서(통계학자들은 한 눈 팔아주세요 ^^) 저는 이 순수주의가 그다지 유용하다고 생각하지 않습니다. 실제로 특정 신뢰구간에 실제 평균 95%가 포함되어 있다고 말하는 사람들을 볼 수 있습니다. 틀리긴 했지만, 우리의 추정치에 대한 불확실성의 정도를 정확하게 표현한다는 점에서 유해하지는 않습니다. 게다가, 베이지안 통계학으로 바꿔서 신뢰구간 대신 신용구간을 사용한다면, 우리는 구간 안에 분포의 평균이 95% 포함되어 있다고 할 수 있습니다. 또한, 실제로 제가 본 바에 따르면, 어느 정도 큰 표본에서 빈도주의자도 인정 하시겠지만, 베이지안 확률 구간은 베이지안보다 신뢰구간에 더 유사합니다.</p>
+<p>그러니, 만일 제 말에 중요한 것이 있다면, 신뢰구간에 대해 여러분이 원하는 어떤 것이든 자유롭게 말해주시기 바랍니다. 저는 여러분들이 실제 평균의 95% 포함하고 있다고 말해도 상관 없습니다. 여러분들의 추정치에 신뢰구간을 배치하는 것을 잊지 마세요. 그렇지 않으면 바보처럼 보일 것입니다.</p>
+</section>
+<section id="hypothesis-testing">
+<h2>Hypothesis Testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this headline">#</a></h2>
+<p>불확실성을 표현하는 또 다른 방법은 가설검정입니다. 평균 간 차이가 통계학적으로 0(혹은 다른 값)과 다릅니까? 독립 정규분포 2개의 합과 차는 정규분포임을 기억하십시오. 평균의 결과는 두 분포 간 합 또는 차인 반면, 분산의 결과는 항상 분산의 합이 됩니다.</p>
+<p><span class="math notranslate nohighlight">\(N(\mu_{1}, \sigma_{1}^2) - N(\mu_{2}, \sigma_{2}^2) = N(\mu_{1} - \mu_{2}, \sigma_{1}^2 + \sigma_{2}^2)\)</span></p>
+<p><span class="math notranslate nohighlight">\(N(\mu_{1}, \sigma_{1}^2) + N(\mu_{2}, \sigma_{2}^2) = N(\mu_{1} + \mu_{2}, \sigma_{1}^2 + \sigma_{2}^2)\)</span></p>
+<p>기억 못하셔도 괜찮습니다. 우리는 항상 코드를 통해 체크할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">n1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">30000</span><span class="p">)</span>
+<span class="n">n2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">30000</span><span class="p">)</span>
+<span class="n">n_diff</span> <span class="o">=</span> <span class="n">n2</span> <span class="o">-</span> <span class="n">n1</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">hist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N(4,3^2)$&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span> <span class="n">hist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N(1,4^2)$&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">n_diff</span><span class="p">,</span> <span class="n">hist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$N(1,4^2) - (4,3^2) = N(-3, 5^2)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/380f9493c703520126106e83a762f80a6e9edf7f2a1174af943e330897c9e3d9.png" src="_images/380f9493c703520126106e83a762f80a6e9edf7f2a1174af943e330897c9e3d9.png" />
+</div>
+</div>
+<p>만일 우리가 두 집단들의 분포에서 평균을 뺀다면, 우리는 3번째 분포를 얻게 될 것입니다. 이 최종 분포의 평균은 평균들 간 차이이고, 표준편차는 표준편차들의 합의 제곱근입니다.</p>
+<p><span class="math notranslate nohighlight">\(\mu_{diff} = \mu_{1} - \mu_{2}\)</span><br />
+<span class="math notranslate nohighlight">\(SE_{diff} = \sqrt{SE_{1} + SE_{2}} = \sqrt{\frac{\sigma_{1}^2}{n_{1}} + \frac{\sigma_{2}^2}{n_{2}}}\)</span></p>
+<p>교실 예제로 돌아갑시다. 우리는 차이에 대한 분포를 만들 것입니다. 당연히 95% 신뢰구간도 만들 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_mu</span> <span class="o">=</span> <span class="n">online</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">face_to_face</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">diff_se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">face_to_face</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">face_to_face</span><span class="p">)</span> <span class="o">+</span> <span class="n">online</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">online</span><span class="p">))</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff_mu</span> <span class="o">-</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span> <span class="o">+</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">diff_se</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-8.376410208363357, -1.4480327880904964)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">diff_mu</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">diff_mu</span><span class="p">,</span> <span class="n">diff_se</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mf">.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mf">.05</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/80b55edd2eebed18eda9cd2dfd3a4be986ccb2d4359adbed416b37593470a8f0.png" src="_images/80b55edd2eebed18eda9cd2dfd3a4be986ccb2d4359adbed416b37593470a8f0.png" />
+</div>
+</div>
+<p>이를 통해 온라인 집단과 대면 집단 간 실제 차이가 -8.37에서 -1.44 사이에 있다고 95% 신뢰할 수 있다고 할 수 있습니다. 우리는 또한 평균 간 차이에 차이에 대한 표준오차를 나누어서 z통계량을 만들 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(z = \frac{\mu_{diff}-H_{0}}{SE_{diff}} = \frac{(\mu_{1}-\mu_{2})}{\sqrt{\frac{\sigma_{1}^2}{n_{1}} + \frac{\sigma_{2}^2}{n_{2}}}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(H_{0}\)</span>는 우리가 차이를 검정하고 싶은 값입니다.<br />
+z통계량은 관측된 차이가 얼마나 극단적인지 측정해줍니다. 우리는 평균의 차이가 0과 통계적으로 다르다는 가설을 검정하기 위해 모순을 이용할 것입니다. 우리는 반대(차이가 0이다)를 참으로 가정할 것입니다. 이를 귀무가설 혹은 <span class="math notranslate nohighlight">\(H_{0}\)</span>으로 표현합니다. 그리고 우리 자신에게 “만일 진정한 차이가 0이라면 우리는 이런 차이를 관찰할 가능성이 있을까?” 물어봅니다. 우리는 이 질문을  통계학적 수학 용어로 z통계량이 0에서 얼마나 멀리 있는지 확인하는 것으로 변환할 수 있습니다.</p>
+<p>귀무가설 하에, z통계량은 표준 정규 분포를 따릅니다. 따라서 만일 차이가 정말 0이라면, 우리는 z통계량이 평균적으로 95%의 확률로 2 표준편차 내에 확인할 수 있습니다. z가 2 표준편차보다 높거나 낮으면, 95% 신뢰도로 귀무가설을 기각할 수 있습니다.</p>
+<p>교실예제에서 한번 살펴봅시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">diff_mu</span> <span class="o">/</span> <span class="n">diff_se</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.7792810791031064
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Standard Normal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mf">.05</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Z statistic&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/8e76083b0b9f789ad506329eeac3b4fd9d1741e63838e3b4d3413e50588b881f.png" src="_images/8e76083b0b9f789ad506329eeac3b4fd9d1741e63838e3b4d3413e50588b881f.png" />
+</div>
+</div>
+<p>꽤 극단적인 값으로 보입니다. 실제로 2보다 큰데, 이는 집단 간 차이가 없다면 우리가 이런 극단적인 값을 볼 확률이 5% 미만을 의미합니다. 이는 또한 대면 수업에서 온라인 수업으로 전환하는 것이 통계적으로 유의미한 학업 성취도를 떨어뜨린다는 결론을 내리게 합니다.</p>
+<p>가설검정의 마지막 흥미로운 점은 처리된 집단과 처리되지 않은 집단의 95% 신뢰구간이 겹치는지 확인하는 것보다 덜 보수적이라는 점입니다. 다시 말해 만일 두 집단 간 신뢰구간이 겹친다 하더라도 통계적으로 유의할 수 있습니다. 예를 들어 대면 집단이 평균 80점에, 표준오차 4, 온라인 집단이 평균 71점에 표준오차 2를 받았다고 가정합시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cont_mu</span><span class="p">,</span> <span class="n">cont_se</span> <span class="o">=</span>  <span class="p">(</span><span class="mi">71</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">test_mu</span><span class="p">,</span> <span class="n">test_se</span> <span class="o">=</span> <span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">diff_mu</span> <span class="o">=</span> <span class="n">test_mu</span> <span class="o">-</span> <span class="n">cont_mu</span>
+<span class="n">diff_se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cont_se</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">test_se</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Control 95% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">cont_mu</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">cont_se</span><span class="p">,</span> <span class="n">cont_mu</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">cont_se</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test 95% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">test_mu</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">test_se</span><span class="p">,</span> <span class="n">test_mu</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">test_se</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Diff 95% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">diff_mu</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">diff_se</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Control 95% CI: (67.08, 74.92)
+Test 95% CI: (72.16, 87.84)
+Diff 95% CI: (0.23461352820082482, 17.765386471799175)
+</pre></div>
+</div>
+</div>
+</div>
+<p>만일 우리가 두 집단에 대해 신뢰구간을 만들면 겹칩니다. 온라인 집단의 상한은 74.92이고 대면 집단의 하한은 72.16입니다. 그러나 집단 간 차이에 대한 95% 신뢰구간을 계산하면 0이 포함되지 않습니다. 개별 신뢰구간이 겹치더라도 여전히 통계학적으로 0과 다를 수 있습니다.</p>
+</section>
+<section id="p-values">
+<h2>P-values<a class="headerlink" href="#p-values" title="Permalink to this headline">#</a></h2>
+<p>이전에 저는 온라인 집단과 대면 집단의 차이가 실제로 0이라면 우리가 이러한 극단적인 값을 관찰할 확률은 5% 미만이라고 말했습니다. 하지만 우리가 그 가능성을 정확히 예측할 수 있을까요? 우리가 이러한 극단적인 값을 관찰할 가능성이 얼마나 될까요? p값을 입력하세요!</p>
+<p>신뢰구간(사실 가장 빈도주의 통계학)과 마찬가지로 p값으 진정한 정의는 매우 헷갈릴 수 있습니다. 따라서 어떠한 위험도 감수하지 않기 위해 위키피디아에서 정의를 복사해왔습니다. “p값은 귀무가설이 올바르다고 가정할 때, 검정 중에 실제 관찰될 수 있는 가장 극단적인 검정결과를 얻을 확률입니다”</p>
+<p>좀 더 간결히 설명하면, 귀무가설이 참이라는 가정하에 p값은 그러한 데이터를 볼 확률입니다. 귀무가설이 참일 경우 측정값을 볼 가능성이 얼마나 낮은지를 측정합니다. 자연스럽게 이는 귀무가설이 참일 확률과 혼동됩니다. 여기서 차이점을 주의하십시오. p값은 <span class="math notranslate nohighlight">\(P(H_{0}|data)\)</span>가 아니라 <span class="math notranslate nohighlight">\(P(data|H_{0})\)</span>입니다.</p>
+<p>하지만 이런 복잡함이 당신을 속이게 하지 마십시오. 실용적인 측면에서 사용하기 쉽습니다.</p>
+<p>p값을 구하려면, z통계량 전후에 표준 정규분포 면적을 계산해야합니다. 다행히도, 이 계산을 해 줄 컴퓨터가 있습니다. 누적 표준 정규분포에 z통계량을 넣으면 됩니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P-value:&quot;</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P-value: 0.0027239680835564706
+</pre></div>
+</div>
+</div>
+</div>
+<p>p값은 95% 혹은 99%와 같은 신뢰수준을 지정할 필요 없기에 흥미롭습니다. 하지만 p값에서 하나를 보고자 하는 경우 어떤 신뢰 수준에서 우리의 검정이 합격 혹은 불합격인지 정확히 알 수 있습니다. 예를 들어 p값이 0.0027이라면, 유의수준이 0.2%임을 알 수 있습니다. 따라서 95% 신뢰구간과 99% 신뢰구간에서는 0이 포함되지 않지만, 99.9% 신뢰구간에서는 포함됩니다. 이는 만일 차이가 0이라면 이 극단적인 z통계량을 관측할 확률이 0.2%임을 의미합니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_mu</span> <span class="o">=</span> <span class="n">online</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">face_to_face</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">diff_se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">face_to_face</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">face_to_face</span><span class="p">)</span> <span class="o">+</span> <span class="n">online</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">online</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;95% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">diff_mu</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.975</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.975</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;99% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">diff_mu</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.995</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.995</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;99.9% CI:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">diff_mu</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.9995</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">,</span> <span class="n">diff_mu</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">.9995</span><span class="p">)</span><span class="o">*</span><span class="n">diff_se</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>95% CI: (-8.37634655308288, -1.4480964433709733)
+99% CI: (-9.464853535264012, -0.3595894611898425)
+99.9% CI: (-10.72804065824553, 0.9035976617916743)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>이번 챕터에서 Moivre의 공식을 아는 것이 얼마나 중요한지 보았고, 그것이 우리 추정치에 어느정도 확신이 되는지 알기 위해 사용했습니다. 우리는 온라인 수업이 대면 수업에 비해 학업성취도 저하를 유발하는 것을 알아냈습니다. 우리는 또한 통계학적으로 유의한 결과임을 확인했습니다. 우리는 두 집단의 평균 신뢰구간을 비교하고, 차이에 대한 신뢰구간을 살펴보고, 가설검정을 수행했고 p값을 확인했습니다. 이전에 했던 것 처럼 단일 A/B 테스트 비교 함수를 만드는 것으로 이번 장을 마무리하려고 해요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">AB_test</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">control</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">control</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">se1</span><span class="p">,</span> <span class="n">se2</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)),</span> <span class="n">control</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">control</span><span class="p">))</span>
+    
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">mu1</span> <span class="o">-</span> <span class="n">mu2</span>
+    <span class="n">se_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="o">+</span> <span class="n">control</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">control</span><span class="p">))</span>
+    
+    <span class="n">z_stats</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff</span><span class="o">-</span><span class="n">h0</span><span class="p">)</span><span class="o">/</span><span class="n">se_diff</span>
+    <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z_stats</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">critial</span><span class="p">(</span><span class="n">se</span><span class="p">):</span> <span class="k">return</span> <span class="o">-</span><span class="n">se</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">confidence</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test </span><span class="si">{</span><span class="n">confidence</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">% CI: </span><span class="si">{</span><span class="n">mu1</span><span class="si">}</span><span class="s2"> +- </span><span class="si">{</span><span class="n">critial</span><span class="p">(</span><span class="n">se1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Control </span><span class="si">{</span><span class="n">confidence</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">% CI: </span><span class="si">{</span><span class="n">mu2</span><span class="si">}</span><span class="s2"> +- </span><span class="si">{</span><span class="n">critial</span><span class="p">(</span><span class="n">se2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test-Control </span><span class="si">{</span><span class="n">confidence</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">% CI: </span><span class="si">{</span><span class="n">diff</span><span class="si">}</span><span class="s2"> +- </span><span class="si">{</span><span class="n">critial</span><span class="p">(</span><span class="n">se_diff</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Z Statistic </span><span class="si">{</span><span class="n">z_stats</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-Value </span><span class="si">{</span><span class="n">p_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+<span class="n">AB_test</span><span class="p">(</span><span class="n">online</span><span class="p">,</span> <span class="n">face_to_face</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test 95.0% CI: 73.63526308510637 +- 3.0127770572134565
+Control 95.0% CI: 78.5474845833333 +- 1.7097768273108
+Test-Control 95.0% CI: -4.912221498226927 +- 3.4641250548559537
+Z Statistic -2.7792810791031064
+P-Value 0.0027239680835564706
+</pre></div>
+</div>
+</div>
+</div>
+<p>우리 함수는 충분히 일반적이기 때문에, 우리는 다른 귀무가설 검정도 할 수 있습니다. 예를 들어, 온라인과 대면 수업 수행차이가 -1인지 기각할 수 있을까요? 우리가 얻는 결과를 통해 우리는 95% 신뢰도를 통해 차이가 -1보다 유의하다고 할 수 있습니다. 그렇지만 99% 신뢰도로는 할 수 없습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">AB_test</span><span class="p">(</span><span class="n">online</span><span class="p">,</span> <span class="n">face_to_face</span><span class="p">,</span> <span class="n">h0</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test 95.0% CI: 73.63526308510637 +- 3.0127770572134565
+Control 95.0% CI: 78.5474845833333 +- 1.7097768273108
+Test-Control 95.0% CI: -4.912221498226927 +- 3.4641250548559537
+Z Statistic -2.2134920404560723
+P-Value 0.013431870694630667
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막으로 제가 참고한 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>해당 챕터에서 사용된 데이터는 해당 논문의 자료입니다. Alpert, William T., Kenneth A. Couch, and Oskar R. Harmon. 2016. <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/aer.p20161057">“A Randomized Assessment of Online Learning”</a></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요. 여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요. 만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, 이 책의 <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="02-Randomised-Experiments.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">02 - Randomised Experiments</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="04-Graphical-Causal-Models.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">04 - Graphical Causal Models</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-standard-error-of-our-estimates">
+   The Standard Error of Our Estimates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#confidence-intervals">
+   Confidence Intervals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hypothesis-testing">
+   Hypothesis Testing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#p-values">
+   P-values
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

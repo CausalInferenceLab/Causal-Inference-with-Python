@@ -1,0 +1,1589 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>05 - The Unreasonable Effectiveness of Linear Regression &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '05-The-Unreasonable-Effectiveness-of-Linear-Regression';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="06 - Grouped and Dummy Regression" href="06-Grouped-and-Dummy-Regression.html" />
+    <link rel="prev" title="04 - Graphical Causal Models" href="04-Graphical-Causal-Models.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F05-The-Unreasonable-Effectiveness-of-Linear-Regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>05 - The Unreasonable Effectiveness of Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#all-you-need-is-regression">
+   All You Need is Regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression-theory">
+   Regression Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression-for-non-random-data">
+   Regression for Non-Random Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#omitted-variable-or-confounding-bias">
+   Omitted Variable or Confounding Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="the-unreasonable-effectiveness-of-linear-regression">
+<h1>05 - The Unreasonable Effectiveness of Linear Regression<a class="headerlink" href="#the-unreasonable-effectiveness-of-linear-regression" title="Permalink to this headline">#</a></h1>
+<section id="all-you-need-is-regression">
+<h2>All You Need is Regression<a class="headerlink" href="#all-you-need-is-regression" title="Permalink to this headline">#</a></h2>
+<p>앞서 배웠듯, 인과 추론에서 각 개인에게서 얻을 수 있는 결과값은 두 가지가 있습니다. 그 개인이 처치를 받지 않았을 때 얻는 결과 <span class="math notranslate nohighlight">\(Y_0\)</span>과, 처치를 받았을 때 결과인 <span class="math notranslate nohighlight">\(Y_1\)</span>이죠. 처치 <span class="math notranslate nohighlight">\(T\)</span>의 값이 0 또는 1로 정해지면 그에 따라 잠재적 결과 중 하나를 확인할 수 있습니다. 대신 다른 하나는 영영 알 수 없게 되죠. 그렇기 때문에, 개인에 대한 처치 효과(individual treatment effect) <span class="math notranslate nohighlight">\(\delta_i = Y_{1i} - Y_{0i}\)</span>는 알 수 없습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+Y_i = Y_{0i} + T_i(Y_{1i} - Y_{0i}) = Y_{0i}(1-T_i) + T_i Y_{1i}
+\)</span></p>
+<p>그러니 좀 더 쉬운 일을 해봅시다. 평균적인 인과 효과(Average treatment effect)를 추정하는 것입니다. 처치를 받았을 때, 어떤 사람들은 다른 사람들보다 더 잘 반응합니다. 우리는 누가 그런 사람들인지 알 수 없고요. 이 사실을 인정하고, 대신 처치를 받았을 때 <strong>평균적으로</strong> 어떤 효과가 나타나는지를 확인해봅시다.</p>
+<p><span class="math notranslate nohighlight">\(
+ATE = E[Y_1 - Y_0]
+\)</span></p>
+<p>이러면 더 간단한 모형을 얻을 수 있습니다. 여기서 일정한 처치 효과 <span class="math notranslate nohighlight">\(\kappa\)</span>는 식 <span class="math notranslate nohighlight">\(Y_{1i} = Y_{0i} + \kappa\)</span>를 만족합니다. <span class="math notranslate nohighlight">\(\kappa\)</span>가 양수라면, 평균적으로 처치가 양의 효과를 가지고 있다고 말합니다. 어떤 개인들은 처치를 받고 더 낮은 결과를 낼 수도 있지만 평균적으로는 양의 효과를 가지는 거죠.</p>
+<p>편향(bias) 때문에 평균의 차이 <span class="math notranslate nohighlight">\(E[Y|T=1] - E[Y|T=0]\)</span>와 <span class="math notranslate nohighlight">\(E[Y_1 - Y_0]\)</span>는 다르다고 했던 것 기억하시나요? 이런 편향은 처치 집단과 비처치 집단이 처치 여부 외에 다른 측면에서도 갈라질 때 발생합니다. 편향을 확인하는 한 가지 방법은, 두 집단에서 잠재적 결과 <span class="math notranslate nohighlight">\(Y_0\)</span>의 차이가 있는지를 보는 것입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+E[Y|T=1] - E[Y|T=0] = \underbrace{E[Y_1 - Y_0|T=1]}_{ATET} + \underbrace{\{ E[Y_0|T=1] - E[Y_0|T=0]\}}_{BIAS}
+\)</span></p>
+<p>앞서, 우리는 무작위 실험 또는 **무작위 대조 실험(Randomized Controlled Trial, RCT)**을 이용해 편향을 제거할 수 있다고 배웠습니다. RCT는 처치 집단과 비처치 집단을 동일하게 만듭니다. 그 덕분에 편향을 없앨 수 있죠. 또한, 우리는 처치 효과에 대한 추정치 주변에 불확실성 수준(uncertainty level)을 두는 방법도 배웠습니다. 대면 강의는 <span class="math notranslate nohighlight">\(T=0\)</span>, 온라인 강의는 <span class="math notranslate nohighlight">\(T=1\)</span>으로 나타낸 사례를 살펴보았죠? 이 두 가지 유형의 강의에 학생들을 무작위로 배정한 후 시험 성적을 평가했습니다. 그리고 두 그룹을 비교하여 평균 처치 효과를 계산하고, 그 주위의 신뢰 구간까지 얻어낼 수 있는 A/B 검사 도구를 만들었습니다.</p>
+<p>그런데 인과 추론에는 이 모든 작업을 한번에 할 수 있는 마법의 도구가 있습니다. 바로 **선형 회귀(linear regression)**입니다! 처치 그룹과 비처치 그룹의 평균을 비교하는 것이 그냥 커피라면, 선형 회귀는 TOP입니다. 또는 처치/비처치 그룹을 비교하는 것이 그냥 식빵이라면, 선형 회귀는 100도로 끓인 물로 반죽하는 탕종공법으로 만들어 수분 함량이 높아 최상의 촉촉함과 찰진 식감을 살린 프리미엄 식빵입니다.</p>
+<p><img alt="img" src="_images/you_vs.png" /></p>
+<p>이 멋쟁이가 어떻게 작용하는지 봅시다. 아래 코드는 온라인 수업과 대면 수업을 비교하는 분석을 똑같이 실행합니다. 하지만 온갖 수식을 거쳐 신뢰 구간을 계산할 필요 없이 그냥 회귀 분석을 실행하면 됩니다. 구체적으로 말하자면 다음 모형을 추정하게 됩니다.</p>
+<p><span class="math notranslate nohighlight">\(
+exam_i = \beta_0 + \kappa \ Online_i + u_i
+\)</span></p>
+<p>온라인 수업의 경우, 시험 성적 추정치는 베이스라인 <span class="math notranslate nohighlight">\(\beta_0\)</span>에다가 <span class="math notranslate nohighlight">\(\kappa\)</span>를 더한 값입니다. 물론 시험 성적은 추가적인 변수(시험 당일 학생의 기분, 공부 시간 등)에 의해서도 결정됩니다. 하지만 우리는 그런 연관 관계에는 관심이 없습니다. 대신, 우리가 신경쓰지 않는 모든 것들은 <span class="math notranslate nohighlight">\(u_i\)</span> 항에 포함시킵니다. 이를 모형 오차(model error)라고 합니다.</p>
+<p><span class="math notranslate nohighlight">\(Online\)</span>은 처치를 받는지를 나타내는 더미 변수입니다. 대면 수업을 들었을 때는 0이고 온라인 수업일 때는 1입니다. 이를 기억하면, 선형 회귀를 돌렸을 때 <span class="math notranslate nohighlight">\(E[Y|T=0] = \delta_0\)</span>이고 <span class="math notranslate nohighlight">\(E[Y|T=1] = \delta_0 + \kappa\)</span>임을 알 수 있습니다. <span class="math notranslate nohighlight">\(\kappa\)</span>는 우리의 ATE가 되겠죠?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gr</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/online_classroom.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;format_blended==0&quot;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;falsexam ~ format_ol&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   78.5475</td> <td>    1.113</td> <td>   70.563</td> <td> 0.000</td> <td>   76.353</td> <td>   80.742</td>
+</tr>
+<tr>
+  <th>format_ol</th> <td>   -4.9122</td> <td>    1.680</td> <td>   -2.925</td> <td> 0.004</td> <td>   -8.223</td> <td>   -1.601</td>
+</tr>
+</table></div></div>
+</div>
+<p>정말 놀랍지 않나요? ATE를 추정할 뿐만 아니라, 동시에 신뢰구간과 p-value까지 구할 수 있습니다! 게다가 회귀는 우리가 원하던 <span class="math notranslate nohighlight">\(E[Y|T=0]\)</span>와 <span class="math notranslate nohighlight">\(E[Y|T=1]\)</span>를 비교값을 그대로 보여주고 있습니다. y 절편은 <span class="math notranslate nohighlight">\(T=0\)</span>일 때의 샘플 평균, <span class="math notranslate nohighlight">\(E[Y|T=0]\)</span>입니다. 그리고 <span class="math notranslate nohighlight">\(Online\)</span>의 계수는 <span class="math notranslate nohighlight">\(E[Y|T=1] - E[Y|T=0]\)</span>의 평균입니다. 못 믿겠다고요? 괜찮습니다. 직접 계산해 비교해보시죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">data</span>
+ <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;format_ol&quot;</span><span class="p">)</span>
+ <span class="p">[</span><span class="s2">&quot;falsexam&quot;</span><span class="p">]</span>
+ <span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>format_ol
+0    78.547485
+1    73.635263
+Name: falsexam, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>제 말이 맞죠? ATE, 즉 <span class="math notranslate nohighlight">\(Online\)</span>의 모수 추정치에 절편을 더하면 처치 집단의 표본 평균 <span class="math notranslate nohighlight">\(78.5475 +(-4.9122) = 73.635263\)</span>을 얻을 수 있습니다.</p>
+</section>
+<section id="regression-theory">
+<h2>Regression Theory<a class="headerlink" href="#regression-theory" title="Permalink to this headline">#</a></h2>
+<p>여기서 선형 회귀가 어떻게 구성되고 추정되는지에 대해 너무 깊이 파고들지는 않을 겁니다. 하지만 선형 회귀 이론을 이해한다면, 인과 추론에서 선형 회귀가 어떤 장점을 가지는지 설명하는 데 큰 도움이 될 것입니다. 가장 먼저, 회귀 분석은 이론적으로 최상의 선형 예측(linear prediction)을 계산할 수 있도록 해줍니다. <span class="math notranslate nohighlight">\(\beta^*\)</span>를 다음과 같은 파라미터의 벡터라고 합시다.</p>
+<p><span class="math notranslate nohighlight">\(
+\beta^* =\underset{\beta}{argmin} \ E[(Y_i - X_i'\beta)^2]
+\)</span></p>
+<p>선형 회귀는 평균 제곱 오차(Mean Squared Error, MSE)를 최소화하는 파라미터를 찾아줍니다.</p>
+<p>그 미분값이 0이 되도록 하는 선형방정식의 해는 다음과 같습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\beta^* = E[X_i'X_i]^{-1}E[X_i' Y_i]
+\)</span></p>
+<p>표본에 대해 비슷한 계산을 해서 추정치를 얻을 수 있죠.</p>
+<p><span class="math notranslate nohighlight">\(
+\hat{\beta} = (X'X)^{-1}X' Y
+\)</span></p>
+<p>제가 말한다고 다 믿지는 마세요. 수식보다 코드를 이해하는 게 더 쉬우신 분이라면, 아래 코드로 직접 해보십시오.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;format_ol&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">intercep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;falsexam&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">regress</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="n">regress</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-4.9122215 , 78.54748458])
+</pre></div>
+</div>
+</div>
+</div>
+<p>위의 공식들은 꽤 일반적입니다. 하지만 회귀 변수(regressor)가 하나밖에 없는 경우를 연구하는 것도 의미가 있습니다. 인과 추론에서, 우리의 목적은 변수 <span class="math notranslate nohighlight">\(T\)</span>가 결과 <span class="math notranslate nohighlight">\(y\)</span>에 미치는 인과적 영향을 추정하는 것입니다. 이 효과를 추정하기 위해서는 그 단일 변수 <span class="math notranslate nohighlight">\(T\)</span>와 함께 회귀 분석을 사용하면 됩니다. 모형에 다른 변수를 포함하더라도 대체로는 보조 변수일 뿐입니다. 다른 변수를 추가하면 처치의 인과 효과를 추정하는 데 도움이 될 수 있지만, 우리는 그 보조 변수의 파라미터를 추정하는 데 관심이 별로 없습니다.</p>
+<p>하나의 회귀 변수 <span class="math notranslate nohighlight">\(T\)</span>가 있을 때, 그에 대한 파라미터는 다음과 같습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\beta_1 = \dfrac{Cov(Y_i, T_i)}{Var(T_i)} 
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(T\)</span>가 무작위로 배정된다면, <span class="math notranslate nohighlight">\(\beta_1\)</span>은 ATE입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kapa</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;falsexam&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;format_ol&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;format_ol&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="n">kapa</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.91222149822695
+</pre></div>
+</div>
+</div>
+</div>
+<p>회귀 변수가 두 개 이상인 경우, 이를 수용하기 위해서는 아래의 공식을 확장하면 됩니다. 다른 변수들은 단지 보조적이고 우리는 <span class="math notranslate nohighlight">\(T\)</span>와 관련된 파라미터 <span class="math notranslate nohighlight">\(\kappa\)</span>를 추정하는 데만 관심이 있다고 합시다.</p>
+<p><span class="math notranslate nohighlight">\(
+y_i = \beta_0 + \kappa T_i + \beta_1 X_{1i} + ... +\beta_k X_{ki} + u_i
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(\kappa\)</span>는 다음 공식을 통해 구할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\kappa = \dfrac{Cov(Y_i, \tilde{T_i})}{Var(\tilde{T_i})} 
+\)</span></p>
+<p>여기서 <span class="math notranslate nohighlight">\(\tilde{T_i}\)</span>가 <span class="math notranslate nohighlight">\(T_i\)</span>에 대하여 다른 공변인을 포함한 회귀식 <span class="math notranslate nohighlight">\(X_{1i} + ... + X_{ki}\)</span>의 잔차(residual)입니다. 자, 이게 얼마나 멋진지 아시겠나요? 다변량 회귀 분석의 계수는 <strong>모형의 다른 변수의 효과를 고려한 후</strong> 동일한 회귀 분석기의 이변량 계수와 같습니다. 인과 추론 용어를 사용하자면, <span class="math notranslate nohighlight">\(\kappa\)</span>는 다른 모든 변수를 사용하여 예측한 후 <span class="math notranslate nohighlight">\(T\)</span>의 이변량 계수입니다.</p>
+<p>직관적으로도 이해하기 쉽습니다. 다른 변수들로부터 <span class="math notranslate nohighlight">\(T\)</span>를 예측할 수 있다면, <span class="math notranslate nohighlight">\(T\)</span>는 랜덤이 아니라는 뜻입니다. 하지만 다른 가능한 변수들을 통제하면 <span class="math notranslate nohighlight">\(T\)</span>를 랜덤에 가깝게 만들 수 있습니다. 선형 회귀를 이용해 다른 변수들로부터 <span class="math notranslate nohighlight">\(T\)</span>를 예측하고, 그 잔차 <span class="math notranslate nohighlight">\(\tilde{T}\)</span>를 취합니다. 정의에 따라, <span class="math notranslate nohighlight">\(\tilde{T}\)</span>는 다른 변수 <span class="math notranslate nohighlight">\(X\)</span>로부터 예측할 수 없습니다. 이미 <span class="math notranslate nohighlight">\(T\)</span>를 예측하는 데 썼으니까요. 멋있지 않나요? <span class="math notranslate nohighlight">\(\tilde{T}\)</span>는 <span class="math notranslate nohighlight">\(X\)</span>의 다른 변수들과 연관되지 않은 처치입니다.</p>
+<p>참고로 이것도 선형 회귀의 특징입니다. 잔차는 항상 직교(orthogonal)하거나 잔차를 생성한 모형의 다른 변수와 상관 관계가 없습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Orthogonality imply that the dot product is zero:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">X</span><span class="p">))</span>
+<span class="n">X</span><span class="p">[[</span><span class="s2">&quot;format_ol&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Orthogonality imply that the dot product is zero: [7.81597009e-13 4.63984406e-12]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>format_ol</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>format_ol</th>
+      <td>1.000000e+00</td>
+      <td>-9.419033e-16</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>-9.419033e-16</td>
+      <td>1.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>더 멋진 것은, 이게 다른 무엇에 의해 결정되는 게 아니라는 점입니다! 당신의 데이터가 어떻든 이건 수학적 사실입니다.</p>
+</section>
+<section id="regression-for-non-random-data">
+<h2>Regression for Non-Random Data<a class="headerlink" href="#regression-for-non-random-data" title="Permalink to this headline">#</a></h2>
+<p>지금까지 우리는 무작위 실험 데이터를 다뤘습니다. 하지만 아시다시피 그런 데이터는 구하기가 어렵죠. 실험을 수행하는 것이 비싸거나 아예 불가능할 수도 있습니다. 기업 컨설팅의 효과를 규명하고 싶다고 해서 랜덤한 회사에 무료 컨설팅을 해줄 수는 없는 노릇입니다.</p>
+<p>그런 이유로 우리는 랜덤하지 않은 데이터, 또는 관측 데이터(observational data)를 다뤄볼 겁니다. 다음 예제에서 추가 교육 기간이 시간당 임금에 미치는 영향을 추정하려고 합니다. 다들 짐작하시다시피 교육을 가지고 실험을 하는 것은 매우 어렵습니다. 사람을 무작위로 나눠서 4년, 8년, 12년의 교육을 받으라고 할 수는 없으니까요. 우리에게 주어진 것은 관측 데이터 뿐입니다.</p>
+<p>먼저, 매우 간단한 모형을 추정해봅시다. 우리는 교육 받은 기간을 조작변인, 시간당 임금의 로그값을 결과로 하여 회귀 모형을 실행할 겁니다. 로그를 사용하면 파라미터 추정치를 백분율로 해석할 수 있게 됩니다. (로그 값에 이런 놀라운 특징이 있다는 걸 처음 들어보나요? 그 이유를 알고 싶다면 <a class="reference external" href="https://stats.stackexchange.com/questions/244199/why-is-it-that-natural-log-changes-are-percentage-changes-what-is-about-logs-th">이 링크</a>를 확인해보세요) 이렇게 하면, 교육기간이 1년 늘어날 때 임금이 x% 늘어난다고 말할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+log(hwage)_i = \beta_0 + \beta_1 educ_i + u_i
+\)</span></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/wage.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">model_1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;np.log(hwage) ~ educ&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">hwage</span><span class="o">=</span><span class="n">wage</span><span class="p">[</span><span class="s2">&quot;wage&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">wage</span><span class="p">[</span><span class="s2">&quot;hours&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model_1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    2.3071</td> <td>    0.104</td> <td>   22.089</td> <td> 0.000</td> <td>    2.102</td> <td>    2.512</td>
+</tr>
+<tr>
+  <th>educ</th>      <td>    0.0536</td> <td>    0.008</td> <td>    7.114</td> <td> 0.000</td> <td>    0.039</td> <td>    0.068</td>
+</tr>
+</table></div></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\beta_1\)</span>의 추정치는 0.0536이며 95% 신뢰 구간은 (0.039, 0.068)입니다. 이 모형에 따르면 교육 기간이 1년 추가될 때마다 임금이 약 5.3% 증가한다고 예측할 수 있다는 뜻입니다. 이런 비율 증가는 교육이 임금에 기하급수적인 영향을 미친다는 믿음과 일치합니다. 대학교까지 졸업하는 것(14~16년의 교육)은 고등학교를 졸업(11~12년의 교육)했을 때보다 더 높은 임금을 받게 해줍니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model_1</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">model_1</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Years of Education&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Hourly Wage&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Impact of Education on Hourly Wage&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/a8f3f027d8df11441a4e964f96ccb7a17076ff6d3de41e7793c99798169cf95c.png" src="_images/a8f3f027d8df11441a4e964f96ccb7a17076ff6d3de41e7793c99798169cf95c.png" />
+</div>
+</div>
+<p>물론, 이 단순한 모형을 추정(estimate)할 수 있다고 해서 그 값이 정확하다고 할 수는 아닙니다. 제가 교육 기간으로부터 임금을 <strong>예측할 수 있다</strong>고 조심스럽게 말한 것 보세요. 저는 이 예측이 인과관계에 의한 것이라고 말한 적 없습니다. 사실 이 모델이 편향되어 있다고 믿을 만한, 아주 중대한 문제가 있습니다. 우리의 데이터는 무작위 실험에서 나온 것이 아니잖아요. 교육을 많이 받은 사람과 적게 받은 사람을 단순 비교하면 안 될지도 모릅니다. 아니죠, 저희의 경험에 비춰보자면 그 둘을 단순 비교하는 것은 확실하게 안 됩니다. 몇 년간 교육을 더 받은 사람들은 아마도 더 부유한 부모를 뒀을 것이고, 교육 기간을 늘렸을 때 나타난 임금 인상은 가족의 부와 교육 기간이 연관되어 있다는 증거라고 주장할 수도 있습니다. 수학적으로 말하자면 우리는 교육을 더 많이 받은 사람들은 그 교육을 받지 않았어도 어차피 더 높은 소득을 가질 것이라고, 즉 <span class="math notranslate nohighlight">\(E[Y_0|T=0] &lt; E[Y_0|T=1]\)</span>라고 주장할 수도 있습니다. 교육에 대해 정말 부정적인 사람은 일할 시간을 뺏고 경력이 줄어들기 때문에 교육 기간이 임금을 <em>감소시킨다고</em> 말할 수도 있고요.</p>
+<p>다행히도, 우리 데이터에는 다른 변수들도 있습니다. 부모의 교육 기간 <code class="docutils literal notranslate"><span class="pre">meduc</span></code>와 <code class="docutils literal notranslate"><span class="pre">feduc</span></code>, 그 사람의 <code class="docutils literal notranslate"><span class="pre">IQ</span></code> 점수, 경력 년수 <code class="docutils literal notranslate"><span class="pre">exper</span></code>, 그리고 회사에 재직한 기간 <code class="docutils literal notranslate"><span class="pre">tenure</span></code> 등을 알 수 있죠. 심지어 결혼 여부와 흑인 여부에 대한 더미 변수도 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>wage</th>
+      <th>hours</th>
+      <th>lhwage</th>
+      <th>IQ</th>
+      <th>educ</th>
+      <th>exper</th>
+      <th>tenure</th>
+      <th>age</th>
+      <th>married</th>
+      <th>black</th>
+      <th>south</th>
+      <th>urban</th>
+      <th>sibs</th>
+      <th>brthord</th>
+      <th>meduc</th>
+      <th>feduc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>769</td>
+      <td>40</td>
+      <td>2.956212</td>
+      <td>93</td>
+      <td>12</td>
+      <td>11</td>
+      <td>2</td>
+      <td>31</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.0</td>
+      <td>8.0</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>825</td>
+      <td>40</td>
+      <td>3.026504</td>
+      <td>108</td>
+      <td>14</td>
+      <td>11</td>
+      <td>9</td>
+      <td>33</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.0</td>
+      <td>14.0</td>
+      <td>14.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>650</td>
+      <td>40</td>
+      <td>2.788093</td>
+      <td>96</td>
+      <td>12</td>
+      <td>13</td>
+      <td>7</td>
+      <td>32</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3.0</td>
+      <td>12.0</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>562</td>
+      <td>40</td>
+      <td>2.642622</td>
+      <td>74</td>
+      <td>11</td>
+      <td>14</td>
+      <td>5</td>
+      <td>34</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>10</td>
+      <td>6.0</td>
+      <td>6.0</td>
+      <td>11.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>600</td>
+      <td>40</td>
+      <td>2.708050</td>
+      <td>91</td>
+      <td>10</td>
+      <td>13</td>
+      <td>0</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2.0</td>
+      <td>8.0</td>
+      <td>8.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>우리는 그 추가 변수들을 모두 포함한 모형을 추정할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+log(hwage)_i = \beta_0 + \kappa \ educ_i + \pmb{\beta}X_i + u_i
+\)</span></p>
+<p>이것이 왜 편향을 없애주는지 궁금하다면, 다변량 선형 회귀의 이변량 분석을 되짚어봅시다.</p>
+<p><span class="math notranslate nohighlight">\(
+\kappa = \dfrac{Cov(Y_i, \tilde{T_i})}{Var(\tilde{T_i})} 
+\)</span></p>
+<p>이 공식은 부모의 교육, IQ, 경력 등으로부터 교육기간 <code class="docutils literal notranslate"><span class="pre">educ</span></code>을 예측할 수 있다는 것을 말해줍니다. 이 작업을 수행하고 나면 이전에 포함된 모든 변수와 상관이 없는 버전의 <code class="docutils literal notranslate"><span class="pre">educ</span></code>, <span class="math notranslate nohighlight">\(\tilde{educ}\)</span>이 남습니다. “교육을 더 오래 받은 사람들은 IQ가 더 높기 때문에 교육을 많이 받은 것이다. 교육이 임금 인상으로 이어진 것이 아니라 IQ 때문에 임금이 높아진 것이다”고 주장하는 사람 있나요? 이 방식을 이용하면 이런 주장을 깨트릴 수 있습니다. 우리의 모형에 IQ를 포함한다면, <span class="math notranslate nohighlight">\(\kappa\)</span>는 IQ를 고정시키면서 교육기간을 추가했을 때의 반환값이 됩니다. 이것이 무엇을 의미하는지 생각해보고 넘어가세요. RCT를 해서 처치 집단과 비처치 집단을 동등하게 만들 수는 없지만, 회귀 모형에 다른 요소들을 포함하면 같은 효과를 낼 수 있습니다. 랜덤하게 얻은 데이터가 아닌데도요!</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">controls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IQ&#39;</span><span class="p">,</span> <span class="s1">&#39;exper&#39;</span><span class="p">,</span> <span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;married&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;south&#39;</span><span class="p">,</span> <span class="s1">&#39;urban&#39;</span><span class="p">,</span> <span class="s1">&#39;sibs&#39;</span><span class="p">,</span> <span class="s1">&#39;brthord&#39;</span><span class="p">,</span> <span class="s1">&#39;meduc&#39;</span><span class="p">,</span> <span class="s1">&#39;feduc&#39;</span><span class="p">]</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">wage</span><span class="p">[</span><span class="n">controls</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">intercep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">wage</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wage</span><span class="p">[</span><span class="s2">&quot;lhwage&quot;</span><span class="p">]</span>
+
+<span class="n">beta_aux</span> <span class="o">=</span> <span class="n">regress</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">t_tilde</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta_aux</span><span class="p">)</span>
+
+<span class="n">kappa</span> <span class="o">=</span> <span class="n">t_tilde</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">t_tilde</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="n">kappa</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.041147191010057635
+</pre></div>
+</div>
+</div>
+</div>
+<p>우리가 방금 추정한 이 계수는 동일한 IQ, 경력, 재직 기간, 나이 등을 가진 사람들의 경우 교육 기간이 1년 늘어날 때마다 시간당 임금이 4.11% 상승한다는 뜻입니다. 처음에 <code class="docutils literal notranslate"><span class="pre">educ</span></code>만 포함해 만든 모형은 편향된 게 맞았네요! 또, 이러한 편향으로 인해 교육의 영향을 과대평가됐다는 것도 알 수 있습니다. 일단 다른 요소들을 통제하고 나면, 우리가 추정한 교육의 영향력은 줄어듭니다.</p>
+<p>모든 것을 새로 코딩하는 대신 <del>머리를 써서</del> 다른 사람들이 만든 패키지를 사용한다면 신뢰구간도 구할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;lhwage ~ educ +&#39;</span> <span class="o">+</span> <span class="s1">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">controls</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">wage</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model_2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    1.1156</td> <td>    0.232</td> <td>    4.802</td> <td> 0.000</td> <td>    0.659</td> <td>    1.572</td>
+</tr>
+<tr>
+  <th>educ</th>      <td>    0.0411</td> <td>    0.010</td> <td>    4.075</td> <td> 0.000</td> <td>    0.021</td> <td>    0.061</td>
+</tr>
+<tr>
+  <th>IQ</th>        <td>    0.0038</td> <td>    0.001</td> <td>    2.794</td> <td> 0.005</td> <td>    0.001</td> <td>    0.006</td>
+</tr>
+<tr>
+  <th>exper</th>     <td>    0.0153</td> <td>    0.005</td> <td>    3.032</td> <td> 0.003</td> <td>    0.005</td> <td>    0.025</td>
+</tr>
+<tr>
+  <th>tenure</th>    <td>    0.0094</td> <td>    0.003</td> <td>    2.836</td> <td> 0.005</td> <td>    0.003</td> <td>    0.016</td>
+</tr>
+<tr>
+  <th>age</th>       <td>    0.0086</td> <td>    0.006</td> <td>    1.364</td> <td> 0.173</td> <td>   -0.004</td> <td>    0.021</td>
+</tr>
+<tr>
+  <th>married</th>   <td>    0.1795</td> <td>    0.053</td> <td>    3.415</td> <td> 0.001</td> <td>    0.076</td> <td>    0.283</td>
+</tr>
+<tr>
+  <th>black</th>     <td>   -0.0801</td> <td>    0.063</td> <td>   -1.263</td> <td> 0.207</td> <td>   -0.205</td> <td>    0.044</td>
+</tr>
+<tr>
+  <th>south</th>     <td>   -0.0397</td> <td>    0.035</td> <td>   -1.129</td> <td> 0.259</td> <td>   -0.109</td> <td>    0.029</td>
+</tr>
+<tr>
+  <th>urban</th>     <td>    0.1926</td> <td>    0.036</td> <td>    5.418</td> <td> 0.000</td> <td>    0.123</td> <td>    0.262</td>
+</tr>
+<tr>
+  <th>sibs</th>      <td>    0.0065</td> <td>    0.009</td> <td>    0.722</td> <td> 0.470</td> <td>   -0.011</td> <td>    0.024</td>
+</tr>
+<tr>
+  <th>brthord</th>   <td>   -0.0080</td> <td>    0.013</td> <td>   -0.604</td> <td> 0.546</td> <td>   -0.034</td> <td>    0.018</td>
+</tr>
+<tr>
+  <th>meduc</th>     <td>    0.0089</td> <td>    0.007</td> <td>    1.265</td> <td> 0.206</td> <td>   -0.005</td> <td>    0.023</td>
+</tr>
+<tr>
+  <th>feduc</th>     <td>    0.0069</td> <td>    0.006</td> <td>    1.113</td> <td> 0.266</td> <td>   -0.005</td> <td>    0.019</td>
+</tr>
+</table></div></div>
+</div>
+</section>
+<section id="omitted-variable-or-confounding-bias">
+<h2>Omitted Variable or Confounding Bias<a class="headerlink" href="#omitted-variable-or-confounding-bias" title="Permalink to this headline">#</a></h2>
+<p>아직 한 가지 의문점이 남아있습니다. 우리가 추정한 이 파라미터가 인과 관계일까요? 안타깝지만 우리는 확실하게 말할 수 없습니다. 첫 번째 세웠던 단순한 회귀모형의 파라미터는 인과 관계가 아닐 것입니다. 그 모형은 교육과 임금, 둘 다와 상관관계가 있는 중요한 변수들을 생략하니까요. 그것들을 통제하지 않으면 교육의 영향을 추정했을 때 회귀 모형에 포함되지 않은 다른 변수들의 영향도 같이 집계될 겁니다.</p>
+<p>편향이 어떤 식으로 작용하는지 이해하기 위해, 교육과 임금의 상관관계가 실제로는 이런 모형을 따른다고 합시다.</p>
+<p><span class="math notranslate nohighlight">\(
+Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
+\)</span></p>
+<p>교육이 임금에 끼치는 영향은 <span class="math notranslate nohighlight">\(\kappa\)</span>의 크기와, 추가적인 능력 인자를 나타내는 벡터 <span class="math notranslate nohighlight">\(A\)</span>에 의해 측정됩니다. 우리의 모델에서 능력을 제거하면 <span class="math notranslate nohighlight">\(\kappa\)</span>에 대한 추정치는 다음과 같을 겁니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\dfrac{Cov(Wage_i, Educ_i)}{Var(Educ_i)} = \kappa + \beta'\delta_{Ability}
+\)</span></p>
+<p>여기서 <span class="math notranslate nohighlight">\(\delta_{A}\)</span>는 <span class="math notranslate nohighlight">\(Educ\)</span>에 대한 회귀 모델에서 <span class="math notranslate nohighlight">\(A\)</span>의 계수 벡터입니다.</p>
+<p>여기서 중요한 것은 그것이 우리가 원하는 <span class="math notranslate nohighlight">\(\kappa\)</span>와 정확히 같지는 않다는 것입니다. 대신, 귀찮지만 <span class="math notranslate nohighlight">\(\beta'\delta_{A}\)</span>라는 추가 항이 붙습니다. 이 항은 생략된 <span class="math notranslate nohighlight">\(A\)</span>가 <span class="math notranslate nohighlight">\(Wage\)</span>에 미치는 영향으로, 생략 변수가 <span class="math notranslate nohighlight">\(Educ\)</span>에 끼치는 영향에 <span class="math notranslate nohighlight">\(\beta\)</span>를 곱한 것입니다. 이것은 경제학자들에게 굉장히 중요한 사실입니다. 심지어 조슈아 앵그리스트는 학생들이 명상 중에 암송할 수 있는 문구까지 만들었죠.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Short equals long </span>
+<span class="n">plus</span> <span class="n">the</span> <span class="n">effect</span> <span class="n">of</span> <span class="n">omitted</span> 
+<span class="n">times</span> <span class="n">the</span> <span class="n">regression</span> <span class="n">of</span> <span class="n">omitted</span> <span class="n">on</span> <span class="n">included</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>여기서, 짧은 회귀 분석(short)은 변수를 생략한 회귀 분석입니다. 긴 회귀 분석(long)은 그 변수들을 포함하는 회귀 분석이고요. 이 문구는 우리에게 편향의 본질에 대한 인사이트를 제공합니다. 첫째, 생략 변수가 종속 변수 <span class="math notranslate nohighlight">\(Y\)</span>에 영향을 미치지 않는다면 편향 항(bias term)은 0이 됩니다. 당연한 얘기죠? 교육이 임금에 미치는 영향을 이해하려고 할 때, 임금과 무관한 변수들 - 라일락의 키가 얼마나 되는지 등 - 을 통제할 필요는 없습니다. 둘째, 생략 변수가 처치 변수에 영향을 미치지 않는 경우에도 편향 항은 0이 됩니다. 이것도 직관적으로 말이 됩니다. 모델에 교육에 영향을 미치는 모든 요소들이 포함되어 있다면, 교육과 임금에 모두 영향을 끼치는 변수 때문에 추정치가 바뀌는 일은 없을 테니까요.</p>
+<p><img alt="img" src="_images/confused_cat.png" /></p>
+<p>좀 더 깔끔하게 표현하자면, <strong>모형에서 모든 교란 변수를 고려한 경우 OVB가 없다</strong>고 말합니다. 여기서 인과 그래프에 대한 지식을 활용할 수 있습니다. 교란 변수는 <strong>처치와 결과를 모두 유발하는</strong> 변수입니다. 임금 사례에서 IQ는 교란 변수입니다. 높은 IQ를 가진 사람들은 교육을 더 오래 이어가는 경향이 있습니다. IQ 높은 사람들에게는 어렵지 않은 일이니까요. 그러니 우리는 IQ가 교육 기간에 영향을 준다고 말할 수 있습니다. 또한, IQ가 높은 사람들은 선천적으로 더 생산적인 경향이 있습니다. 그 결과 더 높은 임금을 받겠죠. 즉, IQ는 임금에도 영향을 줍니다. 교란 요인은 처치와 결과에 모두 영향을 미치는 변수이므로 T와 Y로 가는 화살표로 표시합니다. 여기서는 교란 변수를 <span class="math notranslate nohighlight">\(W\)</span>로 표시했습니다. 또, 양의 인과관계를 빨간색으로, 음의 인과관계를 파란색으로 표시했습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;IQ&quot;</span><span class="p">,</span> <span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;IQ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Crime&quot;</span><span class="p">,</span> <span class="s2">&quot;Police&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Crime&quot;</span><span class="p">,</span> <span class="s2">&quot;Violence&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span> 
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Police&quot;</span><span class="p">,</span> <span class="s2">&quot;Violence&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ae59e730ae744732460cb0c2e4ebdee0df46fedbf9dc38f47370846df1920628.svg" src="_images/ae59e730ae744732460cb0c2e4ebdee0df46fedbf9dc38f47370846df1920628.svg" /></div>
+</div>
+<p>인과 그래프는 우리가 세상을 어떻게 이해하는지를 표현해줍니다. 또, 교란 편향이 어떻게 작동하는지 이해하는 데에도 유용한 도구입니다. 우리의 첫 번째 예시에서, 교육이 임금을 유발하는 그래프를 얻을 수 있습니다. 더 많은 교육은 더 높은 임금을 초래합니다. 하지만 IQ는 임금도 유발하고 교육도 유발합니다. IQ가 높으면 교육 기간도 임금도 높아지니까요. 우리의 모형이 IQ를 통제하지 않는다면, IQ가 임금에 미치는 영향의 일부가 교육과의 상관관계를 통해 흐를 겁니다. 그러면 교육의 영향을 과대평가하게 되겠죠. 이것은 양의 편향(positive bias)의 한 예입니다.</p>
+<p>또 다른 예를 들어볼까요? 이번에는 음의 편향(negative bias)의 예시를 봅시다. 경찰이 도시 폭력에 미치는 영향에 대한 인과 그래프를 생각해봅시다. 우리는 경찰력이 더 많은 도시에 더 많은 폭력 사건이 일어나는 경우가 흔히 있습니다. 이게 경찰이 폭력을 일으킨다는 뜻일까요? 글쎄요, 그럴 수도 있겠죠. 그에 대해 토론을 벌일 필요는 없을 것 같습니다. 하지만 교란 변수로 인해 폭력에 대한 경찰의 영향력을 편향적으로 바라볼 가능성이 더 높을 겁니다. 경찰력이 증가하면 폭력을 감소할 확률이 높습니다. 하지만 ‘범죄’라는 세 번째 변수는 더 많은 폭력과 더 많은 경찰력을 유발합니다. 우리가 그것을 고려하지 않는다면, 폭력에 대한 범죄의 영향은 경찰력을 통해 흘러갈 것입니다. 그럼 경찰력이 폭력을 증가시키는 것처럼 보이겠죠. 이것은 음의 편향의 예시입니다.</p>
+<p>우리는 인과 그래프를 통해 회귀나 RCT가 교란 편향을 보정하는 방식도 확인할 수 있습니다. RCT는 처리 변수에 대한 교란 변수의 연결을 끊어서 그 효과를 보정합니다. 정의상, <span class="math notranslate nohighlight">\(T\)</span>를 랜덤으로 만들면 교란 편향은 사라지니까요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;IQ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/153ae60000f746fec23cfbb0ee8adad7c99abdf8faec7f2ff5c1699eee3c7685.svg" src="_images/153ae60000f746fec23cfbb0ee8adad7c99abdf8faec7f2ff5c1699eee3c7685.svg" /></div>
+</div>
+<p>반면, 회귀 분석은 교란 변수 <span class="math notranslate nohighlight">\(W\)</span>를 고정하고 <span class="math notranslate nohighlight">\(T\)</span>의 효과를 비교하여 교란 변수의 효과를 보정합니다. 회귀 분석에서는 W가 여전히 T와 Y를 유발하하고 있습니다. 다만, 그 값이 고정되어 있기 때문에 T와 Y의 변화에 영향을 줄 수 없을 뿐이죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;W=w&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s2">&quot;IQ=x&quot;</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;Educ&quot;</span><span class="p">,</span> <span class="s2">&quot;Wage&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/00a3f02f72b8e3aeffd1e75b791d07e70ad8fbd8ffbda4ccb223db686543e5bf.svg" src="_images/00a3f02f72b8e3aeffd1e75b791d07e70ad8fbd8ffbda4ccb223db686543e5bf.svg" /></div>
+</div>
+<p>이제 원래 질문으로 돌아갑시다. 우리는 교육 기간(<code class="docutils literal notranslate"><span class="pre">educ</span></code>)이 임금에 미치는 영향을 추정했습니다. 이 파라미터가 인과관계일까요? 미안한 말이지만, 모든 교란 요인이 모델에 포함되었다고 말할 수 있느냐 아니냐에 따라 달라집니다. 개인적으로, 저는 이 사례에서는 부족했다고 생각합니다. 예를 들어, 우리는 가족의 재산을 포함하지 않았습니다. 가족의 교육 기간을 포함하긴 했지만, 그건 부를 간접적으로 보여주는 것에 불과하죠. 우리는 또한 개인적인 야망과 같은 요소들을 고려하지 않았습니다. 야망은 더 오랜 교육 기간과 더 높은 임금 모두를 유발할 수 있으니, 교란 변수로 볼 수 있습니다. 이것은 <strong>랜덤하지 않은, 또는 관측 데이터를 사용한 인과 추론은 항상 어림짐작</strong>으로 간주해야 한다는 것을 보여주기 위한 것입니다. 우리는 모든 교란 변수를 고려했는지 결코 확신할 수 없습니다.</p>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>우리는 회귀를 이용해 많은 작업을 해결했습니다. 회귀 분석을 사용하여 A/B 검사를 수행하는 방법을 보았고, 간편하게 신뢰 구간을 얻는 방법도 확인했죠. 그런 다음 회귀 분석으로 이 예측 문제를 해결할 수 있다는 것을 보았습니다. 선형 회귀가 조건부 기대 함수(CEF)에 대한 최상의 선형 근사치죠. 또한 이변량의 경우 회귀 처치 계수가 처치와 결과 사이의 공분산을 처치의 분산으로 나눈 값이라는 것도 보았습니다. 다변량 사례로 확장하자면, 회귀 분석은 처치 계수에 대한 부분적인 해석을 제공하는 방법을 알아냈습니다. 다른 포함된 변수 모두를 일정하게 유지하면서, 처치에 따라 결과가 어떻게 변화하는지로 해석하는 거죠. 경제학자들의  용어로는 *ceteris paribus(다른 조건이 동일하다면)*라고 하는 상황입니다.</p>
+<p>마지막으로, 우리는 편향을 어떻게 이해해야 할지를 다뤘습니다. <code class="docutils literal notranslate"><span class="pre">Short</span> <span class="pre">equals</span> <span class="pre">long</span> <span class="pre">plus</span> <span class="pre">the</span> <span class="pre">effect</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">times</span> <span class="pre">the</span> <span class="pre">regression</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">on</span> <span class="pre">included</span></code>라는 말의 의미를 살펴봤죠. 이것은 편향이 어떻게 생겨났는지를 보여줍니다. 우리는 생략된 변수 편향이 교란 변수 - 처치와 결과에 모두 영향을 미치는 변수 - 때문이라는 걸 알게 되었습니다. 끝으로, 우리는 인과 그래프를 이용해 RCT 및 회귀 분석이 교란을 수정하는 방법을 확인했습니다.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>제가 참고한 또다른 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>마지막으로, Scott Cunningham과 인과 추론과 Mixtape 형태를을 결합한 그의 훌륭한 작업에도 찬사를 보냅니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.scunning.com/mixtape.html">Causal Inference: The Mixtape</a></p></li>
+</ul>
+<p><img alt="img" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="04-Graphical-Causal-Models.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">04 - Graphical Causal Models</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="06-Grouped-and-Dummy-Regression.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">06 - Grouped and Dummy Regression</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#all-you-need-is-regression">
+   All You Need is Regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression-theory">
+   Regression Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regression-for-non-random-data">
+   Regression for Non-Random Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#omitted-variable-or-confounding-bias">
+   Omitted Variable or Confounding Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

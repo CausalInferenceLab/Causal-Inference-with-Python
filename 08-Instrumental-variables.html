@@ -1,0 +1,1757 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>08 - Instrumental Variables &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '08-Instrumental-Variables';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="09 - Non Compliance and LATE" href="09-Non-Compliance-and-LATE.html" />
+    <link rel="prev" title="07 - Beyond Confounders" href="07-Beyond-Confounders.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="16-Regression-Discontinuity-Design.html">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-Regression-Discontinuity-Design.html">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F08-Instrumental-Variables.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/08-Instrumental-Variables.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>08 - Instrumental Variables</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#going-around-omitted-variable-bias">
+   Going Around Omitted Variable Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quarter-of-birth-and-the-effect-of-education-on-wage">
+   Quarter of Birth and the Effect of Education on Wage
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-1st-stage">
+     The 1st Stage
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-reduced-form">
+   The Reduced Form
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instrumental-variables-by-hand">
+   Instrumental Variables by Hand
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-instruments">
+   Multiple Instruments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weakness-of-instruments">
+   Weakness of Instruments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="instrumental-variables">
+<h1>08 - Instrumental Variables<a class="headerlink" href="#instrumental-variables" title="Permalink to this headline">#</a></h1>
+<section id="going-around-omitted-variable-bias">
+<h2>Going Around Omitted Variable Bias<a class="headerlink" href="#going-around-omitted-variable-bias" title="Permalink to this headline">#</a></h2>
+<p>OVB(Omitted Variable Bias)를 다루는 한 가지 방법은 바로 생략된 변수를 우리의 모델에 추가하는 것입니다. 안타깝게도 생략된 변수에 대한 데이터가 항상 존재하는 것은 아니기 때문에 언제나 가능한 것은 아니죠. 예를 들어, 교육이 임금에 미치는 영향에 대한 모델을 살펴볼까요?</p>
+<p><span class="math notranslate nohighlight">\(log(hwage)_i = \beta_0 + \kappa \ educ_i + \pmb{\beta}Ability_i + u_i\)</span></p>
+<p>교육(<span class="math notranslate nohighlight">\(\kappa\)</span>)이 임금(<span class="math notranslate nohighlight">\(log(hwage)\)</span>)에 미치는 인과적 영향을 파악하기 위해선 역량(<span class="math notranslate nohighlight">\(Ability_i\)</span>) 요인을 통제할 필요가 있습니다. 이 요인을 통제하지 않는다면 우리는 아마 작아보일수도 있지만 절대 작지 않은 편향(bias)을 가지게 될 것이고, 결국 역량 변수로 인한 편향은 교란 요인(confounder)이 되어 우리가 가하는 처치라 할 수 있는 교육 변수와 그리고 결과 변수인 수입에도 모두 영향을 주게 될 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gr</span>
+<span class="kn">from</span> <span class="nn">linearmodels.iv</span> <span class="kn">import</span> <span class="n">IV2SLS</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;educ&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/d6f4eb74733d870fec7cd27aea539e5140e557c6a72f6041ae2fc07ee7cdbd77.svg" src="_images/d6f4eb74733d870fec7cd27aea539e5140e557c6a72f6041ae2fc07ee7cdbd77.svg" /></div>
+</div>
+<p>위와 같은 상황을 피할 수 있는 한 가지 방법은 교육이 임금에 주는 영향을 측정할 때 일정한 수준의 역량 변수를 통제하는 것입니다. 선형 회귀 모델에 역량 변수를 포함함으로써 통제할 수도 있겠죠? 하지만 문제는 우리에게 ‘역량’을 측정할만한 좋은 척도가 없다는 것입니다. 우리가 고려할 수 있는 그나마 좋은 척도는 IQ가 될 수 있겠네요.</p>
+<p>그러나 아직 절망할 때는 아닙니다. 여기서 우리는 바로 도구변수(Instrumental Variables)를 활용할 수 있습니다! 도구변수의 아이디어는 처치(T) 변수를 유발하는 다른 변수를 찾는 것에서부터 시작되며, 도구변수는 처치를 통한 결과(Y)와만 상관 관계가 있어야 합니다. 다르게 말하자면, 도구변수(<span class="math notranslate nohighlight">\(Z_i\)</span>)는 <span class="math notranslate nohighlight">\(Y_0\)</span>와는 상관 관계가 성립하지 않으면서 <span class="math notranslate nohighlight">\(T\)</span>와의 상관 관계는 성립해야 합니다. 이것을 Exclusion Restriction(제외 제한)이라고 하곤 하죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;educ&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;instrument&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/7159523929eda535250853b8069079d319036a8bd94341978f940c02d2ccdfc0.svg" src="_images/7159523929eda535250853b8069079d319036a8bd94341978f940c02d2ccdfc0.svg" /></div>
+</div>
+<p>만약 우리가 이러한 도구변수(IV)가 있다면, 아래의 도구변수(IV) 식에 따라 인과 효과(<span class="math notranslate nohighlight">\(\kappa\)</span>)를 밝혀낼 수 있겠죠? 일단은 가장 이상적인 식에 대해 생각해봅시다. 이제부터 처치를 <span class="math notranslate nohighlight">\(T\)</span>라 하고, 교란 변수를 <span class="math notranslate nohighlight">\(W\)</span>라 하겠습니다.</p>
+<p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \kappa \ T_i + \pmb{\beta}W_i + u_i\)</span></p>
+<p>그러나 우리는 <span class="math notranslate nohighlight">\(W\)</span>에 대한 데이터가 없으므로 우리가 할 수 있는 것은…</p>
+<p><span class="math notranslate nohighlight">\(Y_i = \beta_0 + \kappa\ T_i + v_i\)</span>
+<span class="math notranslate nohighlight">\(v_i = \pmb{\beta}W_i + u_i\)</span></p>
+<p><span class="math notranslate nohighlight">\(W\)</span>가 교란변수기 때문에, <span class="math notranslate nohighlight">\(Cov(T, v) \neq 0\)</span>가 성립되겠죠? 우리는 그다지 길지 않은 식을 가지고 있어요. 그리고 우리의 예시에서 이건 바로 능력과 교육이 연관성이 있다는 것을 의미합니다. 이런 경우에 우리가 만약 짧은 회귀 분석을 진행한다면, 생략된 변수들로 인해 편향된 추정치(<span class="math notranslate nohighlight">\(\kappa\)</span>)가 산출될 것입니다.</p>
+<p>자! 이제 도구변수(IV)의 마법을 볼 시간이에요. 도구변수 <span class="math notranslate nohighlight">\(Z\)</span>가 처치 <span class="math notranslate nohighlight">\(T\)</span>를 통해서만 결과 변수와 상관성이 있기 때문에, <span class="math notranslate nohighlight">\(Cov(Z,v) = 0\)</span> 식이 성립될 것입니다. 만약 그렇지 않다면 <span class="math notranslate nohighlight">\(W\)</span>를 거쳐 <span class="math notranslate nohighlight">\(Z\)</span>에서 <span class="math notranslate nohighlight">\(Y\)</span>로 가는 또다른 경로가 있겠죠? 이를 잘 명심하세요! 우리는 바로 아래와 같은 수식을 얻을 수 있으니까요!</p>
+<p><span class="math notranslate nohighlight">\(Cov(Z,Y) = Cov(Z,\beta_0 + \kappa\ T_i + v_i) = \kappa Cov(Z,T) + Cov(Z, v) = \kappa Cov(Z,T)\)</span></p>
+<p>양 쪽을 <span class="math notranslate nohighlight">\(V(Z_i)\)</span>로 나누고 식을 정리해보면,</p>
+<p><span class="math notranslate nohighlight">\(\kappa = \dfrac{Cov(Y_i, Z_i)/V(Z_i)}{Cov(T_i, Z_i)/V(Z_i)} = \dfrac{\text{Reduced Form}}{\text{1st Stage}}\)</span></p>
+<p>분자와 분모는 모두 회귀계수(Regression Coefficients; 공분산을 분산으로 나눈 값)입니다. 분자는 <span class="math notranslate nohighlight">\(Z\)</span>에 대한 <span class="math notranslate nohighlight">\(Y\)</span>의 회귀 분석 결과죠. 다시 말해, <span class="math notranslate nohighlight">\(Y\)</span>에 대한 <span class="math notranslate nohighlight">\(Z\)</span>의 “영향”이라고 할 수 있습니다. 우리는 <span class="math notranslate nohighlight">\(Z\)</span>가 <span class="math notranslate nohighlight">\(T\)</span>를 통해서만 <span class="math notranslate nohighlight">\(Y\)</span>에 영향을 줄 수 있다는 것을 알고 있기 때문에, <span class="math notranslate nohighlight">\(Z\)</span>가 <span class="math notranslate nohighlight">\(Y\)</span>의 원인이 아니라는 것을 파악할 수 있죠. 오히려 <span class="math notranslate nohighlight">\(Z\)</span>가 <span class="math notranslate nohighlight">\(T\)</span>를 통해 <span class="math notranslate nohighlight">\(Y\)</span>에 미치는 효과가 얼마나 큰 지를 포착할 수 있게끔 해주죠. 이 분자는 너무 유명해서 The reduced form coefficient 라는 이름 또한 가지고 있죠.</p>
+<p>분모 또한 회귀계수(Regression Coefficient)입니다. 이번에는 <span class="math notranslate nohighlight">\(Z\)</span>에 대한 <span class="math notranslate nohighlight">\(T\)</span>의 회귀식이죠. 이 회귀식은 <span class="math notranslate nohighlight">\(T\)</span>에 대한 <span class="math notranslate nohighlight">\(Z\)</span>의 영향을 알 수 있게끔 해주죠. 이 분모도 너무 유명해서 1st Stage Coefficient라는 이름을 가지고 있습니다.</p>
+<p>이 식을 더 멋지게 봐보도록 할까요? 바로 부분 도함수(Partial derivatives)의 측면에서요! <span class="math notranslate nohighlight">\(T\)</span>에 대한 <span class="math notranslate nohighlight">\(Z\)</span>를 조정함으로써 우리는 <span class="math notranslate nohighlight">\(Y\)</span>에 대한 <span class="math notranslate nohighlight">\(T\)</span>의 영향과 <span class="math notranslate nohighlight">\(Y\)</span>에 대한 <span class="math notranslate nohighlight">\(Z\)</span>의 영향이 같다는 것을 알 수 있어요.</p>
+<p><span class="math notranslate nohighlight">\(\kappa = \dfrac{\frac{\partial y}{\partial z}}{\frac{\partial T}{\partial z}} = \dfrac{\partial y}{\partial z} * \dfrac{\partial z}{\partial T} =  \dfrac{\partial y}{\partial T}\)</span></p>
+<p>이것이 우리에게 시사하는 바는 대다수의 사람들이 평가하는 것보다 조금 더 미묘합니다. 더 멋지죠! 우리가 도구변수(IV)를 이렇게 활용함으로써 우리는 이렇게 말할 수 있습니다.
+“교란 변수때문에 Y에 대한 T의 영향도를 측정하기는 어려워.. 근데 말이야 나는 Y에 대한 Z의 영향도는 쉽게 찾을 수 있어! 어떻게 하나고? Z와 Y를 유발하는 것은 아무 것도 없기 때문이지!(Exclusion Restriction) 그런데 사실 나는 Y에 대한 T의 영향도가 궁금한거지 Y에 대한 Z의 영향도가 궁금한게 아니란 말이지… 그래서 나는 방법을 하나 찾았어. Z 대신 T에 대한 효과로 변환하기 위해 T에 대한 Z의 효과를 조정(Scale)함으로써 Y에 대한 Z의 효과를 측정할 거야!”</p>
+<p>또한 도구변수가 더미가 된 심플한 상황에서도 이를 확인할 수 있습니다. 이러한 경우에는 도구변수는 평균의 두 차이 사이의 비율에 의해 더욱 단순화됩니다.</p>
+<p><span class="math notranslate nohighlight">\(\kappa = \dfrac{E[Y|Z=1]-E[Y|Z=0]}{E[T|Z=1]-E[T|Z=0]}\)</span></p>
+<p>이 비율은 <strong>Wald Estimator</strong>라고도 명명됩니다. 다시 말해서, 우리는 도구변수를 말할 때, Y에 대한 처치 T의 효과(실제론 굉장히 밝혀내기 어렵죠.)를 말하고 싶어하는 건데요. 따라서 우리는 우선 Y에 대한 Z의 효과를 먼저 주목하는 것입니다. 도구변수의 정의에 따르자면, Z의 경우 반드시 T를 통해서만 Y에 영향을 미칠 수 있으므로, 우리는 드디어 Y에 대한 Z의 효과를 Y에 대한 T의 효과로 바꿔볼 수 있는 것이죠. 이렇게 하기 위해 T에 대한 Z의 효과를 확인함으로써 Y에 대한 Z의 효과를 측정할 수 있는 것이죠.</p>
+</section>
+<section id="quarter-of-birth-and-the-effect-of-education-on-wage">
+<h2>Quarter of Birth and the Effect of Education on Wage<a class="headerlink" href="#quarter-of-birth-and-the-effect-of-education-on-wage" title="Permalink to this headline">#</a></h2>
+<p>지금까지, 우리는 이 도구변수들을 처치를 통해서만 결과에 영향을 미치는 기적적인 타당성을 가진 마법의 변수로 취급해 왔습니다. 솔직히 말해보자면, 좋은 도구변수는 구하기가 매우 어렵습니다. 좋은 도구변수를 구했을 때 우리가 기적이 일어났다고 생각하는 것도 과언은 아니죠. 소문에 의하면 시카고 경제 대학의 멋진 학생들은 주변 바에서 어떻게 엄청난 도구변수를 만들 수 있을지에 대해 이야기한다고 합니다.</p>
+<p><img alt="good-iv" src="_images/good-iv.png" /></p>
+<p>하지만 여전히, 우리는 우리의 가설을 좀 더 구체적으로 만들기 위한 몇 가지 흥미로운 도구변수를 가지고 있습니다. 우리는 교육이 임금에 미치는 영향을 다시 한번 추정해볼건데요. 이를 위해, 우리는 그 사람의 출생 4분기를 도구변수 <span class="math notranslate nohighlight">\(Z\)</span>로 사용할 것입니다.</p>
+<p>이 아이디어는 미국의 의무 출석법을 활용한 것인데요. 이 법은 아이들이 학교에 입학하는 해의 1월 1일까지 6살이 되어야 한다고 명명되어 있습니다. 이러한 이유로, 연초에 태어난 아이들은 더 많은 나이에 학교에 입학하게 되는데요. 의무 출석법은 또한 학생들이 16살이 될 때까지 학교에 있어야 하며, 그 시점에서 그들은 법적으로 중퇴가 허용된다는 내용도 있습니다. 결과적으로 그 해에 늦게 태어난 사람들은 평균적으로 연초에 태어난 사람들보다 더 많은 교육을 받게 되는 것이죠.</p>
+<p><img alt="qob" src="_images/qob.png" /></p>
+<p>출생 분기가 능력 요소와는 무관하여 교육이 임금에 미치는 영향을 교란시키지 않는 다는 것을 받아들인다면, 우리는 출생 분기를 도구변수로 사용할 수 있습니다. 다시 말해, 우리는 출생 분기가 교육에 미치는 영향 외에는 임금에 영향을 미치지 않는다고 생각해야 합니다. 이거 꽤 설득력 있지 않나요?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">gr</span><span class="o">.</span><span class="n">Digraph</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;ability&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;educ&quot;</span><span class="p">,</span> <span class="s2">&quot;wage&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s2">&quot;qob&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">)</span>
+<span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/972417d82f0a3d336d2d364812fa8447a89d4d07c74b3a83e9907f2e15ea11f9.svg" src="_images/972417d82f0a3d336d2d364812fa8447a89d4d07c74b3a83e9907f2e15ea11f9.svg" /></div>
+</div>
+<p>이 분석을 위해 우리는 10년마다 실시되는 인구조사의 데이터를 사용할 수 있는데요. 이는 도구변수(IV)에 대한 눈문에서  <a class="reference external" href="https://economics.mit.edu/faculty/angrist/data1/data/angkru1991">Angrist and Krueger</a>가 사용한 것과 같은 데이터입니다. 이 데이터 셋에는 임금에 대한 로그값, 결과 변수, 처치 변수인 교육 기간에 대한 정보가 있습니다. 또한 출생 분기, 장비 및 출생 연도 및 출생 상태와 같은 추가 컨트롤 변수에 대한 데이터도 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./asciiqob.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>log_wage</th>
+      <th>years_of_schooling</th>
+      <th>year_of_birth</th>
+      <th>quarter_of_birth</th>
+      <th>state_of_birth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.790019</td>
+      <td>12</td>
+      <td>30</td>
+      <td>1</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.952494</td>
+      <td>11</td>
+      <td>30</td>
+      <td>1</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5.315949</td>
+      <td>12</td>
+      <td>30</td>
+      <td>1</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.595926</td>
+      <td>12</td>
+      <td>30</td>
+      <td>1</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.068915</td>
+      <td>12</td>
+      <td>30</td>
+      <td>1</td>
+      <td>37</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="the-1st-stage">
+<h3>The 1st Stage<a class="headerlink" href="#the-1st-stage" title="Permalink to this headline">#</a></h3>
+<p>출생 분기를 도구변수로 활용하기 전에 우리는 유효성에 대해 먼저 검증할 필요가 있습니다. 아래와 같은 두 가지 도구변수 가정을 충족해야 하는데요.</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(Cov(Z, T) \neq 0\)</span> 도구변수가 실제로 처치변수에 영향을 미친다는 첫번째 단계를 충족해야합니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y \perp Z | T\)</span> Exclusion Restriction(제외 제한): 도구변수 Z가 처치 T를 통해서만 결과 Y에 영향을 준다는 가정 또한 충족해야 합니다.</p></li>
+</ol>
+<p>첫번째 가정은 천만 다행으로 검증이 가능합니다. 우리는 데이터를 통해 <span class="math notranslate nohighlight">\(Cov(Z, T)\)</span>dl 0이 아님을 확인할 수 있습니다. 우리의 예시에서, 만약 출생 분기가 정말로 도구변수로 기능하려면, 우리는 올해 4분기에 태어난 사람들이 1분기에 태어난 사람들보다 약간 더 많은 교육 시간을 받았다는 것을 확인해야 합니다. 이를 위해 통계 검정 전에 데이터를 시각화해서 직접 확인해볼까요?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">group_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span>
+              <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;year_of_birth&quot;</span><span class="p">,</span> <span class="s2">&quot;quarter_of_birth&quot;</span><span class="p">])</span>
+              <span class="p">[[</span><span class="s2">&quot;log_wage&quot;</span><span class="p">,</span> <span class="s2">&quot;years_of_schooling&quot;</span><span class="p">]]</span>
+              <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+              <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+              <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">time_of_birth</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;year_of_birth&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;quarter_of_birth&quot;</span><span class="p">])</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;time_of_birth&quot;</span><span class="p">],</span> <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;years_of_schooling&quot;</span><span class="p">],</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">group_data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;quarter_of_birth==</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)[</span><span class="s2">&quot;time_of_birth&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">group_data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;quarter_of_birth==</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)[</span><span class="s2">&quot;years_of_schooling&quot;</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Years of Education by Quarter of Birth (first stage)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Year of Birth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Years of Schooling&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/34bd86b1e79b21a5cde1b1f4e66cb39ae5f04bb0c076f3d54b74671c9df42b57.png" src="_images/34bd86b1e79b21a5cde1b1f4e66cb39ae5f04bb0c076f3d54b74671c9df42b57.png" />
+</div>
+</div>
+<p>놀랍게도, 분기마다 이어지는 학교 교육에는 계절성(Seasonality)이 있네요. 시각적으로, 우리는 1분기에 태어난 사람들이 4분기에 태어난 사람들보다 거의 항상 더 적은 교육을 받는다는 것을 알 수 있습니다. (우리가 일단 출생 연도를 통제하면 일반적으로 마지막 분기에 태어난 사람들은 더 많은 교육을 받습니다.)</p>
+<p>좀 더 엄격하게 말하자면, 우리는 이런 1단계를 선형 회귀로 실행할 수 있습니다. 먼저 출생 분기를 더미 변수로 변환해볼까요?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">factor_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">&quot;q</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;quarter_of_birth&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+                             <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;quarter_of_birth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()})</span>
+
+<span class="n">factor_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>log_wage</th>
+      <th>years_of_schooling</th>
+      <th>...</th>
+      <th>q3</th>
+      <th>q4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.790019</td>
+      <td>12</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.952494</td>
+      <td>11</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5.315949</td>
+      <td>12</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.595926</td>
+      <td>12</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.068915</td>
+      <td>12</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 9 columns</p>
+</div></div></div>
+</div>
+<p>문제를 단순하게 하기 위해, 현재 도구변수로는 4분기만 활용해 봅시다. 이제 수년간의 학교 교육, 처치, 출생 분기에 해당하는 도구변수의 회귀를 실행해볼까요? 이는 우리가 위에서 본 것처럼 실제로 출생 분기가 교육 시간에 긍정적으로 영향을 미치는지를 보여줄 것입니다. 우리는 여기서 출생 연도 또한 통제할 필요가 있기 때문에 추가 통제적 조치로 출생 상태를 추가할 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_stage</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;years_of_schooling ~ C(year_of_birth) + C(state_of_birth) + q4&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">factor_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;q4 parameter estimate:, &quot;</span><span class="p">,</span> <span class="n">first_stage</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;q4 p-value:, &quot;</span><span class="p">,</span> <span class="n">first_stage</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q4 parameter estimate:,  0.10085809272785462
+q4 p-value:,  5.464829416657941e-15
+</pre></div>
+</div>
+</div>
+</div>
+<p>한 해의 4분기에 태어난 사람들은 다른 분기에 태어난 사람들보다 평균적으로 0.1년 더 많은 교육을 받은 것으로 보이네요. p-value가 0에 가깝습니다. 이것으로 출생 분기가 학교 교육 시간에 실제로 영향을 주는지에 대한 사례를 마무리 지어볼까요?</p>
+<p><img alt="incomplete-files" src="_images/incomplete-files.png" /></p>
+</section>
+</section>
+<section id="the-reduced-form">
+<h2>The Reduced Form<a class="headerlink" href="#the-reduced-form" title="Permalink to this headline">#</a></h2>
+<p>안타깝게도 두 번째 도구변수 가정은 확인할 수 없습니다. 우리는 찬성하는 주장만 할 수 있지요. 우리는 출생 분기가 잠재적인 수입에 영향을 미치지 않는다고 표현할 수는 있죠. 다시 말해서, 사람들이 태어나는 시간은 교육에 미치는 영향 외에, 그들의 개인적인 능력이나 수입에 차이를 일으킬 수 있는 요소가 아니라는 것이죠. 출생 분기가 수입에 미치는 영향이 무작위로 할당된 것과 같다는 것입니다. (엄밀히 말하면 완전 랜덤은 아닙니다. 여름이 끝날 무렵이나 어떤 종류의 휴일 즈음에 임신하는 경향이 있다는 자료가 있긴 합니다. 하지만 저는 이 경향이 교육을 통해서가 아닌, 다른 방법으로도 소득에 영향을 미친다는 긍적적인 이유를 생각하기 어렵네요.)</p>
+<p>두번째 가정인 Exclusion Restriction에 찬성하는 주장을 펼쳤으므로 좀 더 간소하게 진행해볼까요? 요약된 방식은 도구변수가 결과에 어떤 영향을 미치는지 파악하는 것을 목표로 합니다. 이 모든 것들은 처치에 미치는 영향 때문이라고 가정하기 때문에, 처치(T)가 결과(Y)에 어떻게 영향을 미치는지 알 수 있습니다. 다시 한 번, 회귀 분석을 진행하기 전에 시각적으로 이것을 평가해볼까요?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;time_of_birth&quot;</span><span class="p">],</span> <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;log_wage&quot;</span><span class="p">],</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">group_data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;quarter_of_birth==</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)[</span><span class="s2">&quot;time_of_birth&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">group_data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;quarter_of_birth==</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)[</span><span class="s2">&quot;log_wage&quot;</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Average Weekly Wage by Quarter of Birth (reduced form)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Year of Birth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Log Weekly Earnings&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/11462ed7a93fdf32a7fe6d9b714767476261e08342e755476dc45bc671655165.png" src="_images/11462ed7a93fdf32a7fe6d9b714767476261e08342e755476dc45bc671655165.png" />
+</div>
+</div>
+<p>다시 한 번, 우리는 출생 분기에 따른 임금에 대한 계절성을 볼 수 있습니다. 연초에 태어난 사람들보다 그 해 늦게 태어난 사람들의 소득이 약간 더 높습니다. 이 가설을 테스트하기 위해 임금 로그 값에 대한 도구변수인 q4를 다시 회귀 분석을 진행할 것입니다. 또한 1단계와 동일한 추가 통제를 진행해봅시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduced_form</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;log_wage ~ C(year_of_birth) + C(state_of_birth) + q4&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">factor_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;q4 parameter estimate:, &quot;</span><span class="p">,</span> <span class="n">reduced_form</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;q4 p-value:, &quot;</span><span class="p">,</span> <span class="n">reduced_form</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>q4 parameter estimate:,  0.008603484258925376
+q4 p-value:,  0.0014949127203772554
+</pre></div>
+</div>
+</div>
+</div>
+<p>또 다시 한번, 우리는 중요한 결과를 얻었네요. 올해 4분기에 태어난 사람들은 평균적으로 임금이 무려 0.8% 더 높네요. 이번에는 p-value값이 이전처럼 0에 수렴하진 않지만, 0.0015로 통계적으로 아주 유의한 수치입니다.</p>
+</section>
+<section id="instrumental-variables-by-hand">
+<h2>Instrumental Variables by Hand<a class="headerlink" href="#instrumental-variables-by-hand" title="Permalink to this headline">#</a></h2>
+<p>우리가 첫번째 단계와 요약된 방식을 모두 확인했으므로, 우리는 요약된 방식으로 첫번째 단계의 효과를 확장할 수 있습니다. 첫번째 단계의 결정계수(coefficient)가 0.1과 같았기 때문에 요약된 방식의 결정계수의 효과를 거의 10배까지 증가시킬 것입니다. 이로 인해 우리는 평균적인 인과 효과에 대한 편향되지 않은 도구변수(IV)를 알 수 있겠죠?</p>
+<p><span class="math notranslate nohighlight">\(ATE_{IV} = \dfrac{\text{Reduced Form}}{\text{1st Stage}}\)</span></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduced_form</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">first_stage</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;q4&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08530286490881953
+</pre></div>
+</div>
+</div>
+</div>
+<p>위 값의 의미는 우리가 매 학년마다 임금이 8% 인상될 것으로 예상한다는 것인데요.</p>
+<p>도구변수(IV) 추정치를 얻는 또 다른 방법은 2단계 최소 제곱 회귀분석(2SLS)을 진행하는 것입니다. 2SLS를 통해 이전과 같이 첫 번째 단계를 수행한 후, 첫 번째 단계의 적합치를 활용해 처치 변수(<span class="math notranslate nohighlight">\(T\)</span>)를 대신하는 두 번째 단계를 실행해 볼 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(educ_i = \gamma_0 + \gamma_1 * q4_i + \gamma_2 yob_i + \gamma_3 sob_i + v_i\)</span>
+<span class="math notranslate nohighlight">\(log(wage)_i = \beta_0 + \beta_1 educ_i + \beta_2 yob_i + \beta_3 sob_i + u_i\)</span>
+<span class="math notranslate nohighlight">\(log(wage)_i = \beta_0 + \beta_1 [\gamma_0 + \gamma_1 * q4_i + \gamma_2 yob_i + \gamma_3 sob_i + v_i ]  + \beta_2 yob_i + \beta_3 sob_i + u_i\)</span></p>
+<p>한 가지 유념할 점은 우리가 <strong>두 번째 단계에서 추가할 모든 통제 변수는 도구변수(IV)의 첫 번째 단계에도 추가되어야 한다는 것</strong>입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iv_by_hand</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;log_wage ~ C(year_of_birth) + C(state_of_birth) + years_of_schooling_fitted&quot;</span><span class="p">,</span>
+                     <span class="n">data</span><span class="o">=</span><span class="n">factor_data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">years_of_schooling_fitted</span><span class="o">=</span><span class="n">first_stage</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">iv_by_hand</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;years_of_schooling_fitted&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08530286490889338
+</pre></div>
+</div>
+</div>
+</div>
+<p>확인한대로, 모든 파라미터는 완전히 똑같네요. 도구변수를 확인하는 두번째 방법의 직관성이 주는 인사이트로 인해 이 방법은 상당히 유용합니다. 2SLS에서 처치변수의 새로운 버전을 만드는데요. 이는 생략된 변수 편향(Omitted Variable bias)에서 제거되는 것입니다. 그런 다음 이 제거된 버전의 처리, 즉 1단계의 적합치를 선형 회귀(Linear Regression)에서 사용하는 것이죠.</p>
+<p>그러나 우리는 도구변수를 직접 실행하진 않습니다. 이러한 방법이 번거로워서가 아니라 두번째 단계로부터 얻는 표준 오차(standard error)를 확인하기 어렵기 때문인데요. 대신에 우리는 모델을 돌릴 수 있죠. 파이썬에선 2SLS를 <a class="reference external" href="https://bashtage.github.io/linearmodels/">선형 회귀 모델</a>을 통해 돌려볼 수 있습니다.</p>
+<p>2SLS의 공식은 살짝 다른데요. 공식 내부의 [ ] 사이에 첫 번째 단계를 추가해야 합니다. 우리의 경우에는 우리는 <code class="docutils literal notranslate"><span class="pre">years_of_schooling</span> <span class="pre">~</span> <span class="pre">q4</span></code>를 추가해야 합니다. 두 번째 단계에 통제 변수을 포함하면 모델이 자동으로 이 작업을 수행하므로 첫 번째 단계에 추가 통제 변수를 추가할 필요는 없습니다. 이러한 이유들로 인해, 우리는 첫 번째 단계에서 공식 밖에 <code class="docutils literal notranslate"><span class="pre">year_of_birth</span></code>와 <code class="docutils literal notranslate"><span class="pre">state_of_birth</span></code>를 추가하게 됩니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="s2">&quot;years_of_schooling&quot;</span><span class="p">):</span>
+    <span class="n">param</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">exog</span><span class="p">]</span>
+    <span class="n">se</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">std_errors</span><span class="p">[</span><span class="n">exog</span><span class="p">]</span>
+    <span class="n">p_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="n">exog</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter: </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SE: </span><span class="si">{</span><span class="n">se</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;95 CI: </span><span class="si">{</span><span class="p">(</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">se</span><span class="p">,</span><span class="mf">1.96</span><span class="o">*</span><span class="n">se</span><span class="p">)</span> <span class="o">+</span> <span class="n">param</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;log_wage ~ 1 + C(year_of_birth) + C(state_of_birth) + [years_of_schooling ~ q4]&#39;</span>
+<span class="n">iv2sls</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">factor_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">parse</span><span class="p">(</span><span class="n">iv2sls</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter: 0.08530286491077277
+SE: 0.025540812814796848
+95 CI: [0.03524287 0.13536286]
+P-value: 0.0008381914676560687
+</pre></div>
+</div>
+</div>
+</div>
+<p>다시 한번, 우리는 파라미터가 이전과 정확히 같다는 것을 알 수 있는데요. 추가적인 이점은 현재 우리가 확인할 수 있는 유효한 표준 오류가 있다는 것입니다. 이를 감안하면 1년간의 추가 교육으로 평균 8.5%의 임금 인상이 기대된다고 볼 수 있겠네요.</p>
+</section>
+<section id="multiple-instruments">
+<h2>Multiple Instruments<a class="headerlink" href="#multiple-instruments" title="Permalink to this headline">#</a></h2>
+<p>모델을 돌리는 것의 또 다른 장점은 우리가 여러 개의 도구변수(IV)를 추가할 수 있다는 건데요. 우리 예시를 살펴볼까요? 우리는 모든 태어난 분기를 수년 간의 학교 교육의 도구변수로 활용할 수 있을거에요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;log_wage ~ 1 + C(year_of_birth) + C(state_of_birth) + [years_of_schooling ~ q1+q2+q3]&#39;</span>
+<span class="n">iv_many_zs</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">factor_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">parse</span><span class="p">(</span><span class="n">iv_many_zs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter: 0.10769370487719243
+SE: 0.019557149009348015
+95 CI: [0.06936169 0.14602572]
+P-value: 3.657974678716869e-08
+</pre></div>
+</div>
+</div>
+</div>
+<p>3개의 더미들을 모두 포함하여, 현재 예상 교육 수익률은 0.1이겠네요. 이는 추가 교육을 받을 때마다 평균 10%의 수익 증가를 예상할 수 있다는 것을 의미할 수 있겠습니다. 기존 OLS 추정치와 비교해볼까요?. 그러기 위해서는 다시 2SLS를 사용할 수 있지만, 1단계를 제외하고 해봐야겠네요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;log_wage ~ years_of_schooling + C(state_of_birth) + C(year_of_birth) + C(quarter_of_birth)&quot;</span>
+<span class="n">ols</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">parse</span><span class="p">(</span><span class="n">ols</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter: 0.0673257281766455
+SE: 0.00038839984390110925
+95 CI: [0.06656446 0.06808699]
+P-value: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>교육에 따른 수익은 OLS가 2SLS에 비해 낮은 것으로 보이네요. 이것은 OVB(생략된 변수 편향; Omitted Variables bias)가 처음처럼 그렇게 강하게 영향을 미치지 않았을 수도 있음을 추측해 볼 수 있겠네요. 또 신뢰 구간을 유의해서 살펴봐야겠네요. 2SLS의 CI는 OLS 추정치보다 훨씬 넓네요. 이에 대해 더 자세히 알아봐볼까요?</p>
+</section>
+<section id="weakness-of-instruments">
+<h2>Weakness of Instruments<a class="headerlink" href="#weakness-of-instruments" title="Permalink to this headline">#</a></h2>
+<p><img alt="weak-iv" src="_images/weak-iv.png" /></p>
+<p>도구변수(IV)를 다룰 때 반드시 유념해야 하는 점은, 우리가 간접적으로 ATE(Average Treatment Effect)를 추정하고 있다는 것인데요. 우리의 측정치는 첫 번째 단계와 두 번째 단계 모두에게 의존하고 있습니다. 처치(T)가 결과에 미치는 영향이 정말 강하다면, 두 번째 단계 또한 쎄질 것입니다. 그러나 첫 번째 단계가 그렇게 강하지 않다면 두 번째 단계가 얼마나 강한지는 별로 신경 쓸 필요가 없습니다. 첫 번째 단계가 약하다는 것은 도구변수(IV)가 처치와 아주 적은 상관 관계를 가지고 있다는 것을 의미하기 때문인데요. 그러므로.. 우리는 도구변수로부터 처치에 대해 많이 알 수가 없는 것이죠.</p>
+<p>도구변수(IV)의 표준 오차(Standard Error)에 대한 공식은 살짝 복잡하고 직관적이지 않기 때문에 이 문제를 해결하기 위해 다른 방법을 시도해볼껀데요. 결과 Y, 관찰되지 않은 교란 변수 U 및 추가 통제 변수 X에 2.0의 효과를 갖는 처치 T가 있는 데이터를 돌려볼 것입니다. 또한 첫 번째 단계에서 서로 다른 영향력을 가진 여러 도구변수를 실행해 볼 것입니다.</p>
+<p><span class="math notranslate nohighlight">\(X \sim N(0, 2^2)
+U \sim N(0, 2^2)
+T \sim N(1+0.5U, 5^2)
+Y \sim N(2+ X - 0.5U + 2T, 5^2)
+Z \sim N(T, \sigma^2) \text{ for }\sigma^2 \text{ in 0.1 to 100}\)</span></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="c1"># observable variable</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="c1"># unobservable (omitted) variable</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">U</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="c1"># treatment</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">X</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">U</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">T</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="c1"># outcome</span>
+
+<span class="n">stddevs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">Zs</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;Z_</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stddevs</span><span class="p">)}</span> <span class="c1"># instruments with decreasing Cov(Z, T)</span>
+
+<span class="n">sim_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">U</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">))</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="n">Zs</span><span class="p">)</span>
+
+<span class="n">sim_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>U</th>
+      <th>T</th>
+      <th>...</th>
+      <th>Z_48</th>
+      <th>Z_49</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.696148</td>
+      <td>8.056988</td>
+      <td>...</td>
+      <td>-117.798705</td>
+      <td>-13.485292</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.570240</td>
+      <td>0.245067</td>
+      <td>...</td>
+      <td>-209.727577</td>
+      <td>-70.792948</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.664741</td>
+      <td>5.597510</td>
+      <td>...</td>
+      <td>60.562232</td>
+      <td>47.619414</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.037725</td>
+      <td>0.493532</td>
+      <td>...</td>
+      <td>78.136513</td>
+      <td>-108.322304</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.590591</td>
+      <td>-6.263014</td>
+      <td>...</td>
+      <td>78.776566</td>
+      <td>-80.547214</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 53 columns</p>
+</div></div></div>
+</div>
+<p>더블 체크를 위해서 Z와 T의 상관관계(correlation)가 실제로 감소하는지를 확인해볼까요?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="p">(</span><span class="n">sim_data</span><span class="o">.</span><span class="n">corr</span><span class="p">()[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span>
+        <span class="p">[</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)])</span>
+
+<span class="n">corr</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Z_0    0.999807
+Z_1    0.919713
+Z_2    0.773434
+Z_3    0.634614
+Z_4    0.523719
+Name: T, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>드디어 우리는 도구변수마다 각각의 도구변수 모델을 실행해보고, ATE 추정치와 표준 오차를 모두 알 수 있을 거에요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">se</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ate</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Zs</span><span class="p">)):</span>
+    <span class="n">formula</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Y ~ 1 + X + [T ~ Z_</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1">]&#39;</span>
+    <span class="n">iv</span> <span class="o">=</span> <span class="n">IV2SLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">sim_data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">se</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iv</span><span class="o">.</span><span class="n">std_errors</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">])</span>
+    <span class="n">ate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iv</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">se</span><span class="o">=</span><span class="n">se</span><span class="p">,</span> <span class="n">ate</span><span class="o">=</span><span class="n">ate</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;corr&quot;</span><span class="p">],</span> <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;se&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Corr(Z, T)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;IV Standard Error&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Variance of the IV Estimates by 1st Stage Strength&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/e88bcbfb5b3f9ac8d5576b2ccf72c82c37e7847dbb47f8d2195cebb6ee49b805.png" src="_images/e88bcbfb5b3f9ac8d5576b2ccf72c82c37e7847dbb47f8d2195cebb6ee49b805.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;corr&quot;</span><span class="p">],</span> <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;ate&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;corr&quot;</span><span class="p">],</span>
+                 <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;ate&quot;</span><span class="p">]</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;se&quot;</span><span class="p">],</span>
+                 <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;ate&quot;</span><span class="p">]</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;se&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Corr(Z, T)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$\hat</span><span class="si">{ATE}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;IV ATE Estimates by 1st Stage Strength&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/c9edb38a5122e2b5175566c151599b0fc87e9547f1b6ea7128cff6122b009647.png" src="_images/c9edb38a5122e2b5175566c151599b0fc87e9547f1b6ea7128cff6122b009647.png" />
+</div>
+</div>
+<p>위 플롯에서 확인할 수 있는대로, T와 Z의 상관관계가 매우 약할 때 측정치가 매우 크게 흩뿌러져 있는 것을 알 수 있는데요. 왜냐하면 상관관계가 낮을 때 SE 값 또한 증가하기 때문입니다.</p>
+<p>또 한 가지 알아야할 점은 2SLS가 편향성이 있다는 것입니다. 높은 상관관계에도 불구하고 파라미터 측정치가 2.0의 ATE에 여전히 도달하지 못하기 때문입니다. 실제로 2.0이라는 값은 심지어 95% 신뢰구간(CI) 안에 있지도 않습니다. 따라서 2SLS가 일관적이기만 한다는 것인데요. 이는 모수의 크기가 충분히 커진다면 실제 파라미터 값에 가까워질 수 있다는 것을 의미하기도 합니다. 그러나 어느 정도 크기가 충분한지 우리는 알 수가 없습니다. 이러한 편향이 어떻게 작용하는지 이해하기 위해 몇 가지 방법들을 고려해볼 수만 있겠지요.</p>
+<ol class="arabic simple">
+<li><p>2SLS는 OLS에 치우쳐있다는 것입니다. 이는 OLS가 긍부정적인 편향을 가지고 있다면 2SLS 또한 그 편향을 가지고 있다는 것인데요. 2SLS의 장점은 생략된 변수에 의해 일관성을 가지지 못하는 OLS에 비해 그나마 일관성을 띄고 있다는 것이죠. 위 예시로 인해 우리의 교란 변수 U는 결과엔 부정적인 영향을 미치지만 처치 변수와는 긍정적인 상관관계를 가지고 있죠. 결국 이는 부정적인 편향으로 이어지지만요. 이러한 이유들로 인해 실제 값(부정 편향) 하에 ATE 추정치를 확인하는 것이겠죠.</p></li>
+<li><p>편향은 우리가 추가하는 도구변수만큼 증가한다는 것인데요. 우리가 너무 많은 도구변수를 집어넣는다면 2SLS 점점 OLS에 가까워진다는 것입니다.</p></li>
+</ol>
+<p>우리가 편향이 어떻게 동작하는지 안다 하더라도, 우리는 적어도 도구변수를 활용할 떄 흔히 발생하는 실수들은 피할 수 있어야겠죠?</p>
+<ol class="arabic simple">
+<li><p>도구변수를 직접 돌려보는 것을 피하세요. 직접 하는 것은 실제로 파라미터 측정치가 맞다고 하더라도 잘못된 표준 오차를 발생시킬 수 있어요. 표준 오차는 사라지지 않을 꺼에요. 우리가 모델을 사용하여 옳은 표준 오차를 확인할 수 있는데 굳이 직접할 필요는 없겠죠?</p></li>
+<li><p>첫 번째 단계에서 OLS 이외의 방법을 사용하는 것을 피하세요. 수많은 데이터 사이언티스트들은 도구변수를 접하고 더 좋은 방법론을 활용할 수 있다고 생각하는데요. 예를 들어 더미처리하는 것을 보고 로지스틱 회귀분석을 활용하는 방법을 생각하는데요. 결국엔 그들이 더미 변수를 예측하고 있는 것이겠죠? 문제는 바로 이것이 완전히 잘못되었다는 것인데요. 도구변수의 일관성은 잔차의 직교성 특징을 가지고 있는 OLS만이 제공해줄 수 있는 것이므로 첫 번째 단계에서 OLS 이외의 방법론을 도입한다면 편향된 결과가 도출되겠죠. (OBS: 도구변수(IV)를 위해 머신 러닝을 사용하는 최신 기술이 있지만, 그 결과가 상당히 의문이 들긴 하네요.)</p></li>
+</ol>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>우리는 지금까지 도구변수를 활용할 수 있을때 어떻게 OVB(생략된 편항)를 해결할 수 있는지 살펴보았습니다. 도구변수는 처치변수와 상관관계가 있으면서(첫 번째 단계) 처치변수를 통해서만 결과 변수에 영향을 주는 것(Exclusion Restriction)을 의미합니다. 우리는 태어난 분기라는 도구변수 예시를 통해 교육이 임금에 미치는 영향을 살펴보았습니다.</p>
+<p>그런 다음 도구변수, 즉 2SLS를 사용하여 인과 효과를 추정하는 방법을 배웠습니다. 또한 도구변수가 만능이 아니라는 것을 알았지요. 첫 번째 단계가 약할 때 추정하기 매우 번거로울 수 있다는 것이죠. 또한, 일관성이 있긴 하지만, 2SLS는 여전히 인과 효과를 추정하기 위한 편향된 방법이라는 것입니다.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 놀라운 계량경제학 수업에 대한 찬사로 생각하고 싶습니다. 여기 있는 대부분의 아이디어들은 미국 경제 협회의 수업에서 따온 것들입니다. 그들을 보는 것이 2020년의 힘든 한 해 동안 제 정신을 유지하는 것입니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>저는 또한 Angrist의 놀라운 책들을 참고하고 있습니다. 그들은 저에게 계량경제학이 매우 유용할 뿐만 아니라 매우 재미있다는 것을 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>마지막 참고 문헌은 Miguel Hernan와 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 가장 골치 아픈 인과적 질문에 대한 저의 신뢰할 수 있는 동반자였습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p><img alt="poetry" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요. 여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요. 만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, 이 책의 <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="07-Beyond-Confounders.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">07 - Beyond Confounders</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="09-Non-Compliance-and-LATE.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">09 - Non Compliance and LATE</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#going-around-omitted-variable-bias">
+   Going Around Omitted Variable Bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quarter-of-birth-and-the-effect-of-education-on-wage">
+   Quarter of Birth and the Effect of Education on Wage
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-1st-stage">
+     The 1st Stage
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-reduced-form">
+   The Reduced Form
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#instrumental-variables-by-hand">
+   Instrumental Variables by Hand
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-instruments">
+   Multiple Instruments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weakness-of-instruments">
+   Weakness of Instruments
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

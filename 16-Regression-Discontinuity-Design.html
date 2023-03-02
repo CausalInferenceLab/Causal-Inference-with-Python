@@ -1,0 +1,1639 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>16 - Regression Discontinuity Design &#8212; Causal Inference for the Brave and True</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '16-Regression-Discontinuity-Design';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="17 - Predictive Models 101" href="17-Predictive-Models-101.html" />
+    <link rel="prev" title="15 - Synthetic Control" href="15-Synthetic-Control.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="01-Introduction-To-Causality.html">
+                        01 - Introduction To Causality
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="02-Randomised-Experiments.html">
+                        02 - Randomised Experiments
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">
+                        03 - Stats Review: The Most Dangerous Equation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="04-Graphical-Causal-Models.html">
+                        04 - Graphical Causal Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">
+                        05 - The Unreasonable Effectiveness of Linear Regression
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="06-Grouped-and-Dummy-Regression.html">
+                        06 - Grouped and Dummy Regression
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="07-Beyond-Confounders.html">
+                        07 - Beyond Confounders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="08-Instrumental-Variables.html">
+                        08 - Instrumental Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="09-Non-Compliance-and-LATE.html">
+                        09 - Non Compliance and LATE
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="10-Matching.html">
+                        10 - Matching
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="11-Propensity-Score.html">
+                        11 - Propensity Score
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="12-Doubly-Robust-Estimation.html">
+                        12 - Doubly Robust Estimation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="13-Difference-in-Differences.html">
+                        13 - Difference-in-Differences
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="14-Panel-Data-and-Fixed-Effects.html">
+                        14 - Panel Data and Fixed Effects
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="15-Synthetic-Control.html">
+                        15 - Synthetic Control
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        16 - Regression Discontinuity Design
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="17-Predictive-Models-101.html">
+                        17 - Predictive Models 101
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">
+                        18 - Hatarogeneous Treatment Effects and Personalization
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">
+                        Patreon
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="landing-page.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Causal Inference for the Brave and True</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="landing-page.html">
+                    Python으로 하는 인과추론 : 개념부터 실습까지
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part I</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-To-Causality.html">01 - Introduction To Causality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Randomised-Experiments.html">02 - Randomised Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Stats-Review-The-Most-Dangerous-Equation.html">03 - Stats Review: The Most Dangerous Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Graphical-Causal-Models.html">04 - Graphical Causal Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-The-Unreasonable-Effectiveness-of-Linear-Regression.html">05 - The Unreasonable Effectiveness of Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Grouped-and-Dummy-Regression.html">06 - Grouped and Dummy Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Beyond-Confounders.html">07 - Beyond Confounders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Instrumental-Variables.html">08 - Instrumental Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Non-Compliance-and-LATE.html">09 - Non Compliance and LATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Matching.html">10 - Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-Propensity-Score.html">11 - Propensity Score</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="12-Doubly-Robust-Estimation.html">12 - Doubly Robust Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Difference-in-Differences.html">13 - Difference-in-Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Panel-Data-and-Fixed-Effects.html">14 - Panel Data and Fixed Effects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Synthetic-Control.html">15 - Synthetic Control</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">16 - Regression Discontinuity Design</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">인과추론 Part II</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="17-Predictive-Models-101.html">17 - Predictive Models 101</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18-Heterogeneous-Treatment-Effects-and-Personalization.html">18 - Hatarogeneous Treatment Effects and Personalization</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?title=Issue%20on%20page%20%2F16-Regression-Discontinuity-Design.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="_sources/16-Regression-Discontinuity-Design.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>16 - Regression Discontinuity Design</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#is-alcohol-killing-you">
+   Is Alcohol Killing You?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rdd-estimation">
+   RDD Estimation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kernel-weighting">
+     Kernel Weighting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sheepskin-effect-and-fuzzy-rdd">
+   Sheepskin Effect and Fuzzy RDD
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-mccrary-test">
+     The McCrary Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="regression-discontinuity-design">
+<h1>16 - Regression Discontinuity Design<a class="headerlink" href="#regression-discontinuity-design" title="Permalink to this headline">#</a></h1>
+<p>생각해보면 자연은 굉장히 매끄럽게(smooth) 흘러갑니다. 나무를 기르려면 싹부터 틔워야 하고, 한 곳에서 다른 곳으로 순간이동을 할 수는 없으며, 상처가 치유되는 데에는 시간이 걸리죠. 사회적인 분야에서도 매끄러움은 일반적인 현상입니다. 하루 만에 사업을 성장시킬 수는 없고, 부를 쌓기 위해서는 일관성과 노력이 필요합니다. 선형 회귀가 어떻게 작동하는지를 배우려면 수 년이 걸리죠. 정상적인 상황에서 자연은 매우 큰 결합력이 있습니다. 갑작스러운 도약은 드뭅니다.</p>
+<blockquote>
+<div><p>혼백을 하나로 껴안고 떨어져나가지 않도록 할 수 있는가?</p>
+</div></blockquote>
+<p>- 도덕경, 노자.</p>
+<p>그렇다면 <strong>우리가 갑작스런 도약이나 급등을 보는 경우, 그것은 인위적인 요인에 의해 생겼을 가능성이 높습니다.</strong> 이런 사건들은 ‘정상적인 상황’에 대한 반사실적(counterfactual) 정보를 주기도 합니다. 만약 이상한 일이 생겼다면, 변화가 자연스러웠다면 상황이 다르지 않았을까 하는 시사점을 주는 거죠. 회귀단절모형(Regression Discontinuity Design, RDD)의 핵심은 이런 인위적인 도약들을 살펴보는 것입니다.</p>
+<p><img alt="img" src="_images/smooth.png" /></p>
+<p>기본적인 설정은 다음과 같습니다. 처치변수 <span class="math notranslate nohighlight">\(T\)</span>와 잠재적 결과 <span class="math notranslate nohighlight">\(Y_0\)</span>, <span class="math notranslate nohighlight">\(Y_1\)</span>가 있다고 합시다. 그리고 처치 T는 실행변수 <span class="math notranslate nohighlight">\(R\)</span>의 관측값에 대한 불연속적인 함수로 정해집니다.</p>
+<p><span class="math notranslate nohighlight">\(
+D_i = \mathcal{1}\{R_i&gt;c\}
+\)</span></p>
+<p>즉, <span class="math notranslate nohighlight">\(R\)</span>이 특정한 임계값 <span class="math notranslate nohighlight">\(c\)</span>보다 크면 1이고, 아니면 0입니다. <span class="math notranslate nohighlight">\(R&gt;c\)</span>인 경우에는 <span class="math notranslate nohighlight">\(Y_1\)</span>를 얻고 <span class="math notranslate nohighlight">\(R&lt;c\)</span>인 경우에는 <span class="math notranslate nohighlight">\(Y_0\)</span>을 얻습니다. 상황을 더 쉽게 이해하기 위해, 잠재적 결과가 두 개의 함수를 따른다고 가정해봅시다. 우리는 이 함수들을 완전히 관측할 수는 없습니다. <span class="math notranslate nohighlight">\(Y_0(R)\)</span>과 <span class="math notranslate nohighlight">\(Y_1(R)\)</span>의 값이 존재하긴 하지만, 우리가 직접 볼 수는 없는 거죠. 우리는 둘 중 하나의 함수만 볼 수 있습니다. 그리고 임계값 <span class="math notranslate nohighlight">\(c\)</span>가 둘을 구분하는 스위치 역할을 해주죠. 아래 그림처럼요.</p>
+<p><img alt="img" src="_images/rdd.png" /></p>
+<p>회귀단절의 핵심은 임계값 바로 위와 바로 아래의 결과를 비교하여, 임계값에서의 처치 효과를 구하는 것입니다. 이런 모형을 <strong>Sharp RD</strong> 모형이라고 합니다. 임계값에서 처치를 받을 확률이 0에서 1로 뛰기 때문입니다. 마찬가지로, 확률이 뛰기는 하지만 그렇게 극단적이지는 않은 <strong>Fuzzy RD</strong> 모형도 생각해 볼 수 있습니다.</p>
+<section id="is-alcohol-killing-you">
+<h2>Is Alcohol Killing You?<a class="headerlink" href="#is-alcohol-killing-you" title="Permalink to this headline">#</a></h2>
+<p>최소 음주 연령은 공공 정책 분야에서 굉장히 중요한 사안 중 하나입니다. 브라질을 포함한 대부분의 국가는 18세부터 음주가 가능하지만, 한국은 19세부터 가능합니다. 미국 대부분의 주에서는 21세부터 가능하고요. 미국이 쓸데없이 조심하는 걸까요? 아니면 다른 나라들이 음주 가능 연령을 높여야 할까요?</p>
+<p>이 문제에 접근하는 한 가지 방법은 사망률을 살펴보는 것입니다. <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/app.1.1.164">(Carpenter and Dobkin, 2009)</a> 공공 정책을 세우는 입장에서는 사망률을 최대한 낮추는 게 좋을 겁니다. 알코올 섭취가 사망률을 크게 높인다면 최소 음주 연령을 낮추는 것은 피해야 합니다. 알코올 섭취로 인한 사망률을 낮출 수 있을 테니까요.</p>
+<p>법적 음주 연령은 자연에 불연속을 만들어줍니다. 이 사실을 이용해 알코올이 사망에 미치는 영향을 추정해 봅시다. 미국에서 21세 미만의 사람들은 술을 마시지 못 하는 반면, 21세 이상의 사람들은 술을 마실 수 있습니다. 음주 가능성이 21세를 전후로 뛰어오른다는 뜻이죠. 그리고 RDD를 이용해 이런 도약을 이용할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;fivethirtyeight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>연령별로 집계된 사망률 데이터를 살펴봅시다. 각 행에는 해당 그룹의 평균 연령, 원인을 막론한 사망률(<code class="docutils literal notranslate"><span class="pre">all</span></code>), 교통사고에 의한 사망률(<code class="docutils literal notranslate"><span class="pre">mva</span></code>) 그리고 자살률(<code class="docutils literal notranslate"><span class="pre">suicide</span></code>)이 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drinking</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/drinking.csv&quot;</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">head</span><span class="p">()[[</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;mva&quot;</span><span class="p">,</span> <span class="s2">&quot;suicide&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>agecell</th>
+      <th>all</th>
+      <th>mva</th>
+      <th>suicide</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>19.068493</td>
+      <td>92.825400</td>
+      <td>35.829327</td>
+      <td>11.203714</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>19.150684</td>
+      <td>95.100740</td>
+      <td>35.639256</td>
+      <td>12.193368</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>19.232876</td>
+      <td>92.144295</td>
+      <td>34.205650</td>
+      <td>11.715812</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>19.315070</td>
+      <td>88.427760</td>
+      <td>32.278957</td>
+      <td>11.275010</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>19.397260</td>
+      <td>88.704940</td>
+      <td>32.650967</td>
+      <td>10.984314</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>가독성을 높이기 위해, 변수 <code class="docutils literal notranslate"><span class="pre">agecell</span></code> 의 값을 조정하여 21세가 중앙에 오게 합시다. 뒤에 다루겠지만 다른 중요한 이유도 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">21</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>x축에 실행 변수를 두고 모든 결과변수(<code class="docutils literal notranslate"><span class="pre">all</span></code>, <code class="docutils literal notranslate"><span class="pre">mva</span></code>, <code class="docutils literal notranslate"><span class="pre">suicide</span></code>)의 그래프를 그려봅시다. 법적 음주 연령(<code class="docutils literal notranslate"><span class="pre">0.0</span></code>)을 전후로 일종의 도약을 관찰할 수 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Death Cause by Age (Centered at 0)&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;mva&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;suicide&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/03f8174ecead0d1f15b7e2b88f0cff7a35062d4c04739e7e18e86c63d961a644.png" src="_images/03f8174ecead0d1f15b7e2b88f0cff7a35062d4c04739e7e18e86c63d961a644.png" />
+</div>
+</div>
+<p>음주 가능 연령이 영향을 준다는 것 같기는 한데, 아직 부족합니다. 21세 근처에서 음주는 사망률에 정확히 얼마나 영향을 끼칠까요? 그리고 그 추정의 표준편차는 어떨까요?</p>
+</section>
+<section id="rdd-estimation">
+<h2>RDD Estimation<a class="headerlink" href="#rdd-estimation" title="Permalink to this headline">#</a></h2>
+<p>RDD의 핵심 가정은 ‘원래는 임계값 근처에서도 잠재적 결과가 매끄럽게 이어져야 한다’는 것입니다. 수학적으로 말하자면 실행변수가 임계값에 가까워질 때, 좌극한 값과 우극한 값이 같아야 한다는 뜻입니다.</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{r \to c^-} E[Y_{ti}|R_i=r] = \lim_{r \to c^+} E[Y_{ti}|R_i=r]
+\]</div>
+<p>이 가정이 성립한다면, 경계선 근처에서의 인과 효과는 다음과 같이 계산할 수 있습니다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\lim_{r \to c^+} E[Y_{ti}|R_i=r] - \lim_{r \to c^-} E[Y_{ti}|R_i=r]=&amp; \lim_{r \to c^+} E[Y_{1i}|R_i=r] - \lim_{r \to c^-} E[Y_{0i}|R_i=r] \\
+=&amp; E[Y_{1i}|R_i=r] - E[Y_{0i}|R_i=r] \\
+=&amp; E[Y_{1i} - Y_{0i}|R_i=r]
+\end{align}
+\end{split}\]</div>
+<p>이것은 일종의  LATE (Local Average Treatment Effect)입니다. 임계값 근처에서의 ATE만 알 수 있으니까요. 이런 상황에서, 우리는 RDD를 국소적(local)인 무작위 시험으로 생각할 수 있습니다. 임계값에 있는 사람들은 어느 쪽으로든 갈 수 있습니다. 그런데 우연히 어떤 사람들은 임계값 조금 아래에 배치되고, 어떤 사람들은 조금 위로 배치되죠. 우리의 예시에서 어떤 사람들은 21세를 조금 넘고 어떤 사람들은 21세를 조금 밑돌게 됩니다. 이것을 결정하는 것은 그 사람이 언제 태어났는지, 겨우 며칠 사이의 간격으로 결정되죠. 이것은 꽤나 무작위적입니다. 따라서 RDD는 매우 설득력 있는 인과 관계를 제공해줄 수 있습니다. 완벽한 RCT는 아니지만 이 정도면 충분합니다.</p>
+<p>이제, 임계값에서의 처치 효과를 추정하려면 위의 공식에서 두 극한값을 계산해 비교하면 됩니다. 가장 간단한 방법은 선형회귀를 돌리는 것입니다.</p>
+<p><img alt="img" src="_images/ols.png" /></p>
+<p>이를 위해, 임계값 위에 있는지를 나타내는 더미 변수를 추가해 사용합니다.</p>
+<p><span class="math notranslate nohighlight">\(
+y_i = \beta_0 + \beta_1 r_i + \beta_2 \mathcal{1}\{r_i&gt;c\} + \beta_3 \mathcal{1}\{r_i&gt;c\} r_i
+\)</span></p>
+<p>이것은 임계값 전후로 다른 회귀모형을 구하는 셈입니다. 회귀모형을 돌렸을 때, 임계값 밑에서의 y 절편은 <span class="math notranslate nohighlight">\(\beta_0\)</span>이고, 임계값 위에서의 y 절편은 <span class="math notranslate nohighlight">\(\beta_0+\beta_2\)</span>이죠.</p>
+<p>아까 <code class="docutils literal notranslate"><span class="pre">agecell</span></code>를 임계값 근처로 조정할 때, 중요한 이유가 있다고 했던 것 기억하시나요? <code class="docutils literal notranslate"><span class="pre">agecell</span></code>의 값을 조정하면 임계값은 0이 됩니다. 이 때, 절편 <span class="math notranslate nohighlight">\(\beta_0\)</span>는 임계값 밑에서 추정한 회귀모델의 예측값이 되죠. 즉, <span class="math notranslate nohighlight">\(\beta_0=\lim_{r \to c^-} E[Y_{ti}|R_i=r]\)</span>입니다. 마찬가지로 <span class="math notranslate nohighlight">\(\beta_0+\beta_2\)</span>는 임계값 위에서 추정한 회귀모델의 예측값입니다. 이로부터 아래 식을 구할 수 있습니다.</p>
+<p><span class="math notranslate nohighlight">\(
+\lim_{r \to c^+} E[Y_{ti}|R_i=r] - \lim_{r \to c^-} E[Y_{ti}|R_i=r]=\beta_2=E[ATE|R=c]
+\)</span></p>
+<p>파이썬 코드를 이용해 21세 전후로 알코올이 사망률에 미치는 영향을 추정해봅시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rdd_df</span> <span class="o">=</span> <span class="n">drinking</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="p">(</span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s2">&quot;all~agecell*threshold&quot;</span><span class="p">,</span> <span class="n">rdd_df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+          <td></td>             <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>         <td>   93.6184</td> <td>    0.932</td> <td>  100.399</td> <td> 0.000</td> <td>   91.739</td> <td>   95.498</td>
+</tr>
+<tr>
+  <th>agecell</th>           <td>    0.8270</td> <td>    0.819</td> <td>    1.010</td> <td> 0.318</td> <td>   -0.823</td> <td>    2.477</td>
+</tr>
+<tr>
+  <th>threshold</th>         <td>    7.6627</td> <td>    1.319</td> <td>    5.811</td> <td> 0.000</td> <td>    5.005</td> <td>   10.320</td>
+</tr>
+<tr>
+  <th>agecell:threshold</th> <td>   -3.6034</td> <td>    1.158</td> <td>   -3.111</td> <td> 0.003</td> <td>   -5.937</td> <td>   -1.269</td>
+</tr>
+</table></div></div>
+</div>
+<p>이 모형은 알코올 섭취와 함께 사망률이 7.6627 포인트 증가한다는 것을 알려줍니다. 알코올은 모든 원인에 의한 사망 확률을 8% (=100*((7.6627+93.6184)/93.6184-1)) 증가시킵니다. 이 방법을 통해 우리의 인과 효과 추정에 대한 표준 오류도 구할 수 있습니다. 이 경우 p-value가 0.01보다 작기 때문에 효과가 통계적으로 유의합니다.</p>
+<p>이 모델을 시각적으로 검증해볼까요? 데이터에 대한 예측값을 그래프로 그려봅시다. 그래프를 보면 임계값을 전후로 두 개의 회귀 모형이 있는 것처럼 보이죠?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Regression Discontinuity&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ec5fa7b58538017d79859b704037490f8608f9da1152653916a0f6bd0a713191.png" src="_images/ec5fa7b58538017d79859b704037490f8608f9da1152653916a0f6bd0a713191.png" />
+</div>
+</div>
+<p>다른 사망원인에 대해서도 실행해봅시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">cause</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;mva&quot;</span><span class="p">,</span> <span class="s2">&quot;suicide&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">cause</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cause</span><span class="si">}</span><span class="s2">~agecell*threshold&quot;</span><span class="p">,</span> <span class="n">rdd_df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">ate_pct</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">])</span><span class="o">/</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">drinking</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Impact of Alcohol on Death: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ate_pct</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/f232e6eadf99eb12e8964f5c1aeea9309339a81575bda1b9c62b812855912bc9.png" src="_images/f232e6eadf99eb12e8964f5c1aeea9309339a81575bda1b9c62b812855912bc9.png" />
+</div>
+</div>
+<p>RDD에 따르면 알코올 섭취가 자살률과 교통사고율을 15%까지 올릴 수 있다고 합니다. 꽤나 큰 수치네요. 사망률을 최소화하고 싶다면 음주 연령을 낮추지 않는 것이 좋겠습니다.</p>
+<section id="kernel-weighting">
+<h3>Kernel Weighting<a class="headerlink" href="#kernel-weighting" title="Permalink to this headline">#</a></h3>
+<p>회귀 단절은 선형 회귀의 외삽 특성에 크게 의존합니다. 그런데 우리는 2개의 회귀선에서 시작점과 끝점에 있는 값만 비교합니다. 그래서 이러한 단점을 보정할 필요가 있습니다. 임계값에서 멀찍이 떨어진 데이터들 때문에 임계값에서의 회귀 분석에 오류가 생긴다면 안 될테니까요. 이렇게 되면 처치 효과 측정이 잘못될 수 있습니다.</p>
+<p>이를 해결하는 한 가지 방법은, 임계값에 가까운 데이터에 더 높은 가중치를 부여하는 것입니다. 이를 위한 방법은 여러 가지가 있지만 일반적인 방법은 **삼각 커널(triangular kernel)**로 샘플의 가중치를 재조정하는 것입니다.</p>
+<p><span class="math notranslate nohighlight">\(
+K(R, c, h) = \mathcal{1}\{|R-c| \leq h\} * \bigg(1-\frac{|R-c|}{h}\bigg)
+\)</span></p>
+<p>이 커널의 첫 번째 부분은 어떤 데이터가 임계값에 가까운지를 알려줍니다. 그 가까움의 범위는 어떻게 정해줄까요? 삼각형의 너비를 정하는 파라미터 <span class="math notranslate nohighlight">\(h\)</span>가 ‘가까움’을 결정합니다. 이 커널의 두 번째 부분은 가중치 함수입니다. 임계값에서 멀어질수록 가중치가 점점 더 작아지죠. 이러한 가중치를 삼각형 너비로 나누어줍니다. 너비가 크면 가중치가 더 느린 속도로 작아집니다. 너비가 작으면 가중치가 빠르게 0이 됩니다.</p>
+<p>이해를 돕기 위해, 저희가 만든 커널의 가중치가 어떤지 그려보겠습니다. 이 커널에서는 너비를 1로 설정했습니다. 즉, 22세 이하와 20세 이상의 사람들의 데이터만 고려합니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+    <span class="n">indicator</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R</span><span class="o">-</span><span class="n">c</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">h</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">indicator</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="o">/</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">],</span> <span class="n">kernel</span><span class="p">(</span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;agecell&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Weight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Kernel Weight by Age&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/553cf8f0ce72b9b27b9cd0cc75995e1a1905f7e321d8ba1f542f0e0a8ccd3c19.png" src="_images/553cf8f0ce72b9b27b9cd0cc75995e1a1905f7e321d8ba1f542f0e0a8ccd3c19.png" />
+</div>
+</div>
+<p>이 커널을 적용하면 알코올이 사망률에 끼치는 영향이 더 커집니다. 적어도 모든 원인에 의한 사망률은요. 7.6627에서 9.7004 포인트로 증가하죠. 이 결과는 굉장히 중요합니다. 또, 제가 <code class="docutils literal notranslate"><span class="pre">ols</span></code> 대신 <code class="docutils literal notranslate"><span class="pre">wls</span></code>를 사용하는 것 주목하세요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s2">&quot;all~agecell*threshold&quot;</span><span class="p">,</span> <span class="n">rdd_df</span><span class="p">,</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">kernel</span><span class="p">(</span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+          <td></td>             <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>         <td>   93.2002</td> <td>    0.731</td> <td>  127.429</td> <td> 0.000</td> <td>   91.726</td> <td>   94.674</td>
+</tr>
+<tr>
+  <th>agecell</th>           <td>    0.4109</td> <td>    1.789</td> <td>    0.230</td> <td> 0.819</td> <td>   -3.196</td> <td>    4.017</td>
+</tr>
+<tr>
+  <th>threshold</th>         <td>    9.7004</td> <td>    1.034</td> <td>    9.378</td> <td> 0.000</td> <td>    7.616</td> <td>   11.785</td>
+</tr>
+<tr>
+  <th>agecell:threshold</th> <td>   -7.1759</td> <td>    2.531</td> <td>   -2.835</td> <td> 0.007</td> <td>  -12.276</td> <td>   -2.075</td>
+</tr>
+</table></div></div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">drinking</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Regression Discontinuity (Local Regression)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/6fdac99a70a8870797ab910f663125d8e3b565e2aa57aa56fcce859fa35978d8.png" src="_images/6fdac99a70a8870797ab910f663125d8e3b565e2aa57aa56fcce859fa35978d8.png" />
+</div>
+</div>
+<p>다른 사망 원인에 대한 그래프는 아래와 같습니다. 맨 오른쪽의 데이터를 무시하니 회귀선의 기울기가 더 가파라졌네요!</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">drinking</span><span class="p">[</span><span class="s2">&quot;agecell&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">cause</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;mva&quot;</span><span class="p">,</span> <span class="s2">&quot;suicide&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">drinking</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">cause</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cause</span><span class="si">}</span><span class="s2">~agecell*threshold&quot;</span><span class="p">,</span> <span class="n">rdd_df</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">ate_pct</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">])</span><span class="o">/</span><span class="n">m</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">drinking</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;agecell&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Impact of Alcohol on Death: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ate_pct</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/8a897a9b77484a7394d45ca3afaeae0f3c2cdca0cc03ae54b561985f6b11fad4.png" src="_images/8a897a9b77484a7394d45ca3afaeae0f3c2cdca0cc03ae54b561985f6b11fad4.png" />
+</div>
+</div>
+<p>커널 가중치를 더하니, 자살을 제외하고는 알코올의 부정적인 영향이 더 커졌습니다. 사망률을 최소화하고 싶다면 음주 가능 연령을 낮추면 절대 안 되겠습니다. 음주가 사망률에 미치는 영향이 확실하네요.</p>
+<p>이 사례는 회귀단절모형이 완벽하게 작동하는 경우입니다. 다음으로는 RDD를 얼마나 신뢰할 수 있는지 판단하기 위해 몇 가지 체크해야 할 사항을 소개하겠습니다. 우리에게 아주 소중한 주제, 교육이 소득에 미치는 영향을 다루면서요.</p>
+</section>
+</section>
+<section id="sheepskin-effect-and-fuzzy-rdd">
+<h2>Sheepskin Effect and Fuzzy RDD<a class="headerlink" href="#sheepskin-effect-and-fuzzy-rdd" title="Permalink to this headline">#</a></h2>
+<p>교육은 소득에 어떤 영향을 미칠까요? 경제학에서는 이에 대해 두 가지 견해가 있습니다. 첫 번째는 교육이 인적 자본과 생산성을 증가시켜 소득도 증가시킨다는 주장입니다. 이 관점에서는, 교육이 실제로 우리들을 더 나은 사람으로 변화시킵니다. 또 다른 관점은 교육이 멋진 타이틀만 달아준다는 것입니다. 교육은 그냥 여러분에게 시험과 과제를 던져줍니다. 당신이 그걸 통과한다면 멋진 타이틀을 달아주고, 당신이 좋은 직원이라는 것을 시장에 알려주죠. 이런 관점에서는 교육이 여러분을 더 생산적으로 만들지는 않습니다. 그저 당신이 원래 가지고 있던 생산성을 시장에 말해주는 것이죠. 이 관점에서 진짜 중요한 것은 졸업장입니다. 당신이 졸업장을 가지고 있다면 더 많은 돈을 받는 겁니다. 옛날에는 졸업장을 양가죽에 인쇄헸기 때문에 이것을 **양가죽 효과(sheepskin effect)**라고 부릅니다.</p>
+<p>이 가설을 시험하기 위해, <a class="reference external" href="https://faculty.smu.edu/millimet/classes/eco7321/papers/clark%20martorell%202014.pdf">Clark and Martorell</a>는 회귀단절모형을 이용해 12학년 졸업이 소득에 미치는 영향을 추정했습니다. 그러기 위해서는 어떤 실행 변수를 찾아야 했습니다. 어떤 임계값이 있어서, 그 위에 있는 학생들은 졸업하고 그 아래에 있는 학생들은 졸업하지 못하는 변수요. 마침 텍사스 교육 시스템에서 그러한 데이터가 있었습니다.</p>
+<p>텍사스에서 졸업하려면 시험을 통과해야 합니다. 시험은 10학년부터 시작하고, 학생들은 그 시험에 여러 번 응시할 수 있습니다. 하지만 12학년 말에는 마지막 시험 기회가 있습니다. 그러면 이 마지막 시험에 응시한 학생들의 데이터를 살펴봅시다. 시험을 간신히 통과한 학생들과 아깝게 떨어진 학생들을 비교하는 거죠. 이 학생들의 경우, 인적 자본은 매우 비슷하지만 시장에서는 서로 다른 타이틀을 가지게 됩니다. 간신히 합격한 학생들은 졸업장을 받을 테니까요.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sheepskin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/sheepskin.csv&quot;</span><span class="p">)[[</span><span class="s2">&quot;avgearnings&quot;</span><span class="p">,</span> <span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="s2">&quot;receivehsd&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">]]</span>
+<span class="n">sheepskin</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>avgearnings</th>
+      <th>minscore</th>
+      <th>receivehsd</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11845.086</td>
+      <td>-30.0</td>
+      <td>0.416667</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9205.679</td>
+      <td>-29.0</td>
+      <td>0.387097</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8407.745</td>
+      <td>-28.0</td>
+      <td>0.318182</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11114.087</td>
+      <td>-27.0</td>
+      <td>0.377778</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10814.624</td>
+      <td>-26.0</td>
+      <td>0.306667</td>
+      <td>75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>이번에도 데이터는 실행변수에 따라 그룹이 나뉘어져 있습니다. 이 데이터에는 실행 변수(<code class="docutils literal notranslate"><span class="pre">minscore</span></code>, 이미 0에 중심이 맞춰져 있음)와 결과(<code class="docutils literal notranslate"><span class="pre">avgearnings</span></code>) 뿐만 아니라 해당 점수 그룹에서 졸업장을 받을 확률과 크기(<code class="docutils literal notranslate"><span class="pre">n</span></code>)도 포함되어 있습니다. 예를 들어, 점수가 임계값보다 -30 낮은 그룹에는 12명의 학생이 있고, 그 중에서 오직 5명(= 12 * 0.416)만이 졸업장을 받을 수 있었습니다.</p>
+<p>이 사례에서는 처치를 받았을 때 약간의 불이행 케이스가 있습니다. 합격선 아래에 있는 학생들도 어찌됐든 졸업장을 받아낸 경우가 있죠. 여기서 회귀 단절은 날카롭지(sharp) 않고 **어렴풋(fuzzy)**합니다. 임계값에서 졸업장을 받을 확률은 0에서 1로 뛰어오르지 않습니다. 50%에서 90%로 뛰어오르죠.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sheepskin</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;receivehsd&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Test Scores Relative to Cut off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Fraction Receiving Diplomas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Last-chance Exams&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/fcabfd8f6267682597dab266ae53dfbd8f1f8a5bbc18ee99a4a5deeb36db275f.png" src="_images/fcabfd8f6267682597dab266ae53dfbd8f1f8a5bbc18ee99a4a5deeb36db275f.png" />
+</div>
+</div>
+<p>Fuzzy RD는 순응하지 않는 집단이 있다고 해석할 수 있습니다. 임계값을 넘으면 모두가 졸업장을 받을 수 있지만 어떤 청개구리들(never takers)은 졸업장을 안 받겠다고 합니다. 마찬가지로, 임계값 밑의 학생들은 졸업장을 못 받아야 하지만 언제나 쟁취하는(always takers) 일부 학생들은 어떻게 해서라도 졸업장을 받아냅니다.</p>
+<p>우리에게 잠재적 결과가 주어졌을 때와 마찬가지로, 이 상황에서는 잠재적인 처치 상태가 있다고 생각할 수 있습니다. 어떤 임계값이 있어서, 그 위의 사람들은 누구든지 <span class="math notranslate nohighlight">\(T_1\)</span>의 처치를 받고 밑의 사람들은 누구든지 <span class="math notranslate nohighlight">\(T_0\)</span>의 처치를 받는 거죠. 여러분도 눈치채셨겠지만, 우리는 <strong>이 임계값을 도구 변수로 생각</strong>할 수 있습니다. IV에서와 마찬가지로, 단순한 처치 효과를 추정하면 0으로 치우치게 됩니다.</p>
+<p><img alt="img" src="_images/rdd_fuzzy.png" /></p>
+<p>임계값 위인데도 처치를 받지 않을 확률이 존재합니다. 이 경우, 처치를 받았을 때의 진짜 잠재적 결과가 <span class="math notranslate nohighlight">\(Y_1\)</span>이라면, 우리의 관측값은 그보다 작아지게 되죠. 마찬가지로, 임계값 밑에서 우리가 관측한 값은 진짜 결과가 <span class="math notranslate nohighlight">\(Y_0\)</span>보다 클 겁니다. 이러면 처치 효과가 실제보다 작게 관측되겠죠. 도구변수를 이용해 이를 해결할 수 있습니다.</p>
+<p>앞에서는 잠재적인 결과가 ‘매끄럽게’ 나타난다고 가정했습니다. 마찬가지로, 잠재적 처치 역시 ‘매끄럽다’고 가정해봅시다. 또한, 도구변수를 이용할 때처럼 단조성(monotonicity)도 가정할 필요가 있습니다. 이는 <span class="math notranslate nohighlight">\(T_{i1}&gt;T_{i0} \ \forall i\)</span>를 의미합니다. 그러면 임계값 밑에서 위로 넘어갈 때, 졸업장을 받을 확률은 높아지기만 하고 낮아지지는 않습니다. 이 두 가지 가정 하에서, 우리는 LATE에 대한 Wald Estimator를 추정할 수 있습니다.</p>
+<div class="math notranslate nohighlight">
+\[
+\dfrac{\lim_{r \to c^+} E[Y_i|R_i=r] - \lim_{r \to c^-} E[Y_i|R_i=r]}{\lim_{r \to c^+} E[T_i|R_i=r] - \lim_{r \to c^-} E[T_i|R_i=r]} = E[Y_{1i} - Y_{0i} | T_{1i} &gt; T_{0i}, R_i=c]
+\]</div>
+<p>이것은 두 가지 의미에서 국소적인(local한) 추정치입니다. 첫째, 임계값 <span class="math notranslate nohighlight">\(c\)</span>에서의 처치 효과만 알 수 있기 때문에 국소적입니다. 이것은 RD의 국소성(RD locality)입니다. 둘째, 순응자(complier)에 대한 치료 효과만 추정하기 때문에 국소적입니다. 이것은 도구변수의 국소성(IV locality)입니다.</p>
+<p>이를 추정하기 위해 2개의 선형 회귀 분석을 사용할 것입니다. 위 식의 분자는 우리가 이전에 했던 것처럼 추정할 수 있습니다. 분모를 계산하기 위해서는 결과를 처치로 바꾸기만 하면 됩니다. 그런데 그 전에, RDD 추정치를 신뢰할 수 있는지 확인하기 위해 건전성 검사를 실시해야 합니다.</p>
+<section id="the-mccrary-test">
+<h3>The McCrary Test<a class="headerlink" href="#the-mccrary-test" title="Permalink to this headline">#</a></h3>
+<p>사람들이 임계값 위에 있을지, 밑에 있을지를 스스로 결정한다면 어떨까요? 이 경우 우리의 RDD 추정은 무의미해집니다. 양가죽 예제에서 생각해볼까요? 임계값 바로 아래에 있는 학생들이 시험 점수를 조금이라도 올릴 수 있는 방법을 찾았을 수도 있습니다. 또 다른 예시로, 정부 혜택을 받기 위해서는 특정 소득 수준 이하가 되어야 합니다. 어떤 가족은 그런 프로그램에 참여하기 위해 일부러 수입을 낮출 수도 있습니다.</p>
+<p>이런 경우에는 실행 변수의 밀도함수를 그렸을 때, 뭉침(bunching)이라는 현상이 나타납니다. 개체들이 임계값 바로 위나 바로 아래에 몰리게 되는 현상입니다. 이를 확인하기 위해 실행 변수의 밀도 함수를 그려보고, 임계값 주변에 급증이 있는지 확인해봐야 합니다. 우리의 사례에서 밀도는 데이터의 <code class="docutils literal notranslate"><span class="pre">n</span></code>열에 있습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sheepskin</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;McCrary Test&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Smoothness at the Threshold&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">sheepskin</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1877</span><span class="p">:</span><span class="mi">1977</span><span class="p">,</span> <span class="mi">1874</span><span class="p">:</span><span class="mi">2277</span><span class="p">})</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Test Scores Relative to Cut off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Spike at the Threshold&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/ca3fa9fa34cae0c3de4f51b05095b7fd3a96eba82db8cb8298aa69eef7b3f2e6.png" src="_images/ca3fa9fa34cae0c3de4f51b05095b7fd3a96eba82db8cb8298aa69eef7b3f2e6.png" />
+</div>
+</div>
+<p>첫 번째 그림에는 저희 데이터의 데이터 밀도가 나와있습니다. 보시다시피 임계값 주변에 급증하는 현상이 있지는 않습니다. 뭉침 현상이 없다는 뜻이죠. 학생들은 임계값 근처에서 값을 조작하지 않고 있습니다. 학생들이 임계값 근처에서 자기의 값을 조작할 수 있었다면 어땠을까요? 두 번째 그림은 그런 경우를 보여주기 위해 만든 데이터입니다. 임계값 바로 위의 데이터가 급증하는 것을 볼 수 있죠? 시험을 통과하기를 선택하는 학생들이 많았기 때문입니다.</p>
+<p>이제 검사를 마쳤으니 다시 돌아가 양가죽 효과를 추정해봅시다. 앞서 말했듯이, Wald estimator의 분자는 Sharp RD와 같은 방식으로 추정할 수 있습니다. 여기서는 너비가 15인 커널을 가중치로 사용하겠습니다. 각 그룹의 크기를 바탕으로, 우리는 커널에 샘플 크기를 곱해서 최종적인 가중치를 정할 것입니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sheepsking_rdd</span> <span class="o">=</span> <span class="n">sheepskin</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="p">(</span><span class="n">sheepskin</span><span class="p">[</span><span class="s2">&quot;minscore&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s2">&quot;avgearnings~minscore*threshold&quot;</span><span class="p">,</span>
+                <span class="n">sheepsking_rdd</span><span class="p">,</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">kernel</span><span class="p">(</span><span class="n">sheepsking_rdd</span><span class="p">[</span><span class="s2">&quot;minscore&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">*</span><span class="n">sheepsking_rdd</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+           <td></td>             <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>          <td> 1.399e+04</td> <td>   83.678</td> <td>  167.181</td> <td> 0.000</td> <td> 1.38e+04</td> <td> 1.42e+04</td>
+</tr>
+<tr>
+  <th>minscore</th>           <td>  181.6636</td> <td>   16.389</td> <td>   11.084</td> <td> 0.000</td> <td>  148.588</td> <td>  214.739</td>
+</tr>
+<tr>
+  <th>threshold</th>          <td>  -97.7571</td> <td>  145.723</td> <td>   -0.671</td> <td> 0.506</td> <td> -391.839</td> <td>  196.325</td>
+</tr>
+<tr>
+  <th>minscore:threshold</th> <td>   18.1955</td> <td>   30.311</td> <td>    0.600</td> <td> 0.552</td> <td>  -42.975</td> <td>   79.366</td>
+</tr>
+</table></div></div>
+</div>
+<p>분석 결과, 졸업장의 효과는 -97.7571이지만 통계적으로 유의하지 않습니다(p-value 0.5 이상). 결과를 그래프에 표시해볼까요? 임계값 근처에서 매우 연속적인 선이 나타납니다. 더 많은 교육을 받은 사람들이 돈을 더 많이 벌기는 하지만, 12학년 졸업장을 받는 점수 전후로는 도약이 없습니다. 교육은 단순히 사람들에게 타이틀만 달아주는 게 아니라, 실제로 사람들을 더 생산적으로 만들어준다는 주장을 뒷받침해주죠. 즉, 양가죽 효과는 없습니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sheepskin</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;avgearnings&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">sheepskin</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;minscore&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;predictions&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Test Scores Relative to Cutoff&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Average Earnings&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Last-chance Exams&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/e12145c68452d8c82571748d5b21a1ff4c9e1af70015246e196d2c99e76bb054.png" src="_images/e12145c68452d8c82571748d5b21a1ff4c9e1af70015246e196d2c99e76bb054.png" />
+</div>
+</div>
+<p>하지만 비순응자가 섞여 있으니, 처치 효과가 0에 치우친 것은 당연한 일입니다. 그 영향을 바로잡기 위해서는 1단계 스케일을 수정하여 Wald estimator를 구해야 합니다. 불행히도 이것을 수행하는 좋은 파이썬 구현은 없습니다. 부트스트랩을 이용해 직접 표준 오류를 얻어야 합니다.</p>
+<p>아래 코드는 우리가 이전에 했던 것처럼 Wald estimator의 분자를 실행합니다. 분모에서는 타겟 변수를 처리 변수 <code class="docutils literal notranslate"><span class="pre">receivehsd</span></code>로 대체합니다. 그리고 마지막으로, 분자를 분모로 나눠줍니다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wald_rdd</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">weights</span><span class="o">=</span><span class="n">kernel</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;minscore&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s2">&quot;receivehsd~minscore*threshold&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">numerator</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s2">&quot;avgearnings~minscore*threshold&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">numerator</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">denominator</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span> 
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">bootstrap_sample</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">ates</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">wald_rdd</span><span class="p">)(</span><span class="n">sheepsking_rdd</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                          <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bootstrap_sample</span><span class="p">))</span>
+<span class="n">ates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ates</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>부트스트랩 샘플을 이용해 ATE 분포를 플롯하고, 95% 신뢰구간을 그려봅시다.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">ates</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">ates</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">ates</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ATE Bootstrap Distribution&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/7672a65c3bf1afc4c8745cde6c865a9d68b450550dd7ac79d40fed7b8c3437fe.png" src="_images/7672a65c3bf1afc4c8745cde6c865a9d68b450550dd7ac79d40fed7b8c3437fe.png" />
+</div>
+</div>
+<p>보시다시피, 효과를 스케일링한 후에도 처치 효과는 통계적으로 0과 차이가 없습니다. 이것은 교육이 소득을 증가시키는 것이 단순히 양가죽 효과는 아니라는 것을 보여줍니다. 학생의 생산성을 증가시킴으로써 소득을 증가시키는 것이죠.</p>
+</section>
+</section>
+<section id="key-ideas">
+<h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
+<p>저희는 인공적인 불연속성을 이용해 인과 효과를 추정하는 방법을 배웠습니다. 특정 임계값이 있어서 그 전후로 처치 확률이 뛰어오르는 경우죠. 우리가 본 사례에서, 나이가 21세 전후일 때 음주 확률이 확 높아졌습니다. 그리고 이 사실을 이용해 음주가 사망률에 미치는 영향을 추정할 수 있었습니다. 임계값 근처에서는 무작위 실험과 같은 효과를 얻을 수 있습니다. 임계값 근처의 개체들은 어디에든 소속될 수 있었는지, 사실상 무작위로 임계값 위일지 밑일지가 정해졌으니까요. 임계값 바로 위와 바로 아래를 비교하여 처치 효과를 얻을 수 있습니다. 또한, 우리는 커널을 사용하는 가중 선형 회귀를 적용하는 방법도 배웠습니다. 이런 방법들은 우리의 ATE에 대한 표준 오류도 제공해주죠.</p>
+<p>그런 다음, 우리는 비순응자가 있는 Fuzzy RD 모형에서 어떤 일이 발생하는지를 살펴봤습니다. 그리고 이 경우에는 도구변수에서와 비슷하게 접근할 수 있었죠.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
+</ul>
+<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
+<li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
+</ul>
+<p>제가 참고한 또다른 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
+</ul>
+<p>마지막으로, Scott Cunningham과 인과 추론과 Mixtape 형태를을 결합한 그의 훌륭한 작업에도 찬사를 보냅니다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.scunning.com/mixtape.html">Causal Inference: The Mixtape</a></p></li>
+</ul>
+<p><img alt="img" src="_images/poetry.png" /></p>
+</section>
+<section id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="15-Synthetic-Control.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">15 - Synthetic Control</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="17-Predictive-Models-101.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">17 - Predictive Models 101</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#is-alcohol-killing-you">
+   Is Alcohol Killing You?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rdd-estimation">
+   RDD Estimation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kernel-weighting">
+     Kernel Weighting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sheepskin-effect-and-fuzzy-rdd">
+   Sheepskin Effect and Fuzzy RDD
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-mccrary-test">
+     The McCrary Test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-ideas">
+   Key Ideas
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contribute">
+   Contribute
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jinsoo Shin
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
