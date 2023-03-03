@@ -802,10 +802,10 @@ ATE = E[Y_1 - Y_0]
 <p><span class="math notranslate nohighlight">\(
 E[Y|T=1] - E[Y|T=0] = \underbrace{E[Y_1 - Y_0|T=1]}_{ATET} + \underbrace{\{ E[Y_0|T=1] - E[Y_0|T=0]\}}_{BIAS}
 \)</span></p>
-<p>앞서, 우리는 무작위 실험 또는 **무작위 대조 실험(Randomized Controlled Trial, RCT)**을 이용해 편향을 제거할 수 있다고 배웠습니다. RCT는 처치 집단과 비처치 집단을 동일하게 만듭니다. 그 덕분에 편향을 없앨 수 있죠. 또한, 우리는 처치 효과에 대한 추정치 주변에 불확실성 수준(uncertainty level)을 두는 방법도 배웠습니다. 대면 강의는 <span class="math notranslate nohighlight">\(T=0\)</span>, 온라인 강의는 <span class="math notranslate nohighlight">\(T=1\)</span>으로 나타낸 사례를 살펴보았죠? 이 두 가지 유형의 강의에 학생들을 무작위로 배정한 후 시험 성적을 평가했습니다. 그리고 두 그룹을 비교하여 평균 처치 효과를 계산하고, 그 주위의 신뢰 구간까지 얻어낼 수 있는 A/B 검사 도구를 만들었습니다.</p>
-<p>그런데 인과 추론에는 이 모든 작업을 한번에 할 수 있는 마법의 도구가 있습니다. 바로 **선형 회귀(linear regression)**입니다! 처치 그룹과 비처치 그룹의 평균을 비교하는 것이 그냥 커피라면, 선형 회귀는 TOP입니다. 또는 처치/비처치 그룹을 비교하는 것이 그냥 식빵이라면, 선형 회귀는 100도로 끓인 물로 반죽하는 탕종공법으로 만들어 수분 함량이 높아 최상의 촉촉함과 찰진 식감을 살린 프리미엄 식빵입니다.</p>
+<p>앞서, 우리는 무작위 실험 또는 <strong>무작위 대조 실험</strong>(Randomized Controlled Trial, RCT)을 이용해 편향을 제거할 수 있다고 배웠습니다. RCT는 처치 집단과 비처치 집단을 동일하게 만듭니다. 그 덕분에 편향을 없앨 수 있죠. 또한, 우리는 처치 효과에 대한 추정치 주변에 불확실성 수준(uncertainty level)을 두는 방법도 배웠습니다. 대면 강의는 <span class="math notranslate nohighlight">\(T=0\)</span>, 온라인 강의는 <span class="math notranslate nohighlight">\(T=1\)</span>으로 나타낸 사례를 살펴보았죠? 이 두 가지 유형의 강의에 학생들을 무작위로 배정한 후 시험 성적을 평가했습니다. 그리고 두 그룹을 비교하여 평균 처치 효과를 계산하고, 그 주위의 신뢰 구간까지 얻어낼 수 있는 A/B 검사 도구를 만들었습니다.</p>
+<p>그런데 인과 추론에는 이 모든 작업을 한번에 할 수 있는 마법의 도구가 있습니다. 바로 <strong>선형회귀</strong>(linear regression)입니다! 처치 그룹과 비처치 그룹의 평균을 비교하는 것이 그냥 커피라면, 선형 회귀는 TOP입니다. 또는 처치/비처치 그룹을 비교하는 것이 그냥 식빵이라면, 선형 회귀는 100도로 끓인 물로 반죽하는 탕종공법으로 만들어 수분 함량이 높아 최상의 촉촉함과 찰진 식감을 살린 프리미엄 식빵입니다.</p>
 <p><img alt="img" src="_images/you_vs.png" /></p>
-<p>이 멋쟁이가 어떻게 작용하는지 봅시다. 아래 코드는 온라인 수업과 대면 수업을 비교하는 분석을 똑같이 실행합니다. 하지만 온갖 수식을 거쳐 신뢰 구간을 계산할 필요 없이 그냥 회귀 분석을 실행하면 됩니다. 구체적으로 말하자면 다음 모형을 추정하게 됩니다.</p>
+<p>이렇게 멋진 선형 회귀가가 어떻게 작용하는지 파악해 봅시다. 아래 코드는 온라인 수업과 대면 수업을 비교하는 분석을 똑같이 실행합니다. 하지만 온갖 수식을 거쳐 신뢰 구간을 계산할 필요 없이 단순히, 회귀 분석을 해주시면 됩니다. 조금더 구체적으로 말씀드리자면, 아래와 같은 모형을 추정하게 됩니다.</p>
 <p><span class="math notranslate nohighlight">\(
 exam_i = \beta_0 + \kappa \ Online_i + u_i
 \)</span></p>
@@ -1055,7 +1055,7 @@ log(hwage)_i = \beta_0 + \beta_1 educ_i + u_i
 </tr>
 </table></div></div>
 </div>
-<p><span class="math notranslate nohighlight">\(\beta_1\)</span>의 추정치는 0.0536이며 95% 신뢰 구간은 (0.039, 0.068)입니다. 이 모형에 따르면 교육 기간이 1년 추가될 때마다 임금이 약 5.3% 증가한다고 예측할 수 있다는 뜻입니다. 이런 비율 증가는 교육이 임금에 기하급수적인 영향을 미친다는 믿음과 일치합니다. 대학교까지 졸업하는 것(14~16년의 교육)은 고등학교를 졸업(11~12년의 교육)했을 때보다 더 높은 임금을 받게 해줍니다.</p>
+<p><span class="math notranslate nohighlight">\(\beta_1\)</span>의 추정치는 0.0536이며 95% 신뢰 구간은 (0.039, 0.068)입니다. 이 모형에 따르면 교육 기간이 1년 추가될 때마다 임금이 약 5.3% 증가한다고 예측할 수 있어요. 해당 비율 증가는 교육이 임금에 기하급수적인 영향을 미친다는 우리의 믿음과 일치해요. 즉, 대학교까지 졸업하는 건(14~16년의 교육) 고등학교를 졸업(11~12년의 교육)했을 때보다 더 높은 임금을 받게 해준다는 것을 의미해요.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1232,11 +1232,11 @@ log(hwage)_i = \beta_0 + \beta_1 educ_i + u_i
 </table>
 </div></div></div>
 </div>
-<p>우리는 그 추가 변수들을 모두 포함한 모형을 추정할 수 있습니다.</p>
+<p>해당 추가 변수들을 모두 포함한 모형을 아래와 같이 추정할 수 있습니다.</p>
 <p><span class="math notranslate nohighlight">\(
 log(hwage)_i = \beta_0 + \kappa \ educ_i + \pmb{\beta}X_i + u_i
 \)</span></p>
-<p>이것이 왜 편향을 없애주는지 궁금하다면, 다변량 선형 회귀의 이변량 분석을 되짚어봅시다.</p>
+<p>해당 식이 왜 편향을 없애주는지 궁금하다면, 다변량 선형 회귀의 이변량 분석을 되짚어봅시다.</p>
 <p><span class="math notranslate nohighlight">\(
 \kappa = \dfrac{Cov(Y_i, \tilde{T_i})}{Var(\tilde{T_i})} 
 \)</span></p>
@@ -1337,8 +1337,8 @@ log(hwage)_i = \beta_0 + \kappa \ educ_i + \pmb{\beta}X_i + u_i
 </section>
 <section id="omitted-variable-or-confounding-bias">
 <h2>Omitted Variable or Confounding Bias<a class="headerlink" href="#omitted-variable-or-confounding-bias" title="Permalink to this headline">#</a></h2>
-<p>아직 한 가지 의문점이 남아있습니다. 우리가 추정한 이 파라미터가 인과 관계일까요? 안타깝지만 우리는 확실하게 말할 수 없습니다. 첫 번째 세웠던 단순한 회귀모형의 파라미터는 인과 관계가 아닐 것입니다. 그 모형은 교육과 임금, 둘 다와 상관관계가 있는 중요한 변수들을 생략하니까요. 그것들을 통제하지 않으면 교육의 영향을 추정했을 때 회귀 모형에 포함되지 않은 다른 변수들의 영향도 같이 집계될 겁니다.</p>
-<p>편향이 어떤 식으로 작용하는지 이해하기 위해, 교육과 임금의 상관관계가 실제로는 이런 모형을 따른다고 합시다.</p>
+<p>아직 한 가지 의문점이 남아있습니다. 우리가 추정한 이 파라미터가 인과 관계일까요? 안타깝지만 아직까지 확실하게 이야기할 수 없어요. 첫 번째 세웠던 단순한 회귀모형의 파라미터는 인과 관계가 아닐 거예요. 해당 회귀 모형은 교육과 임금, 둘 다와 상관관계가 있는 중요한 변수들을 생략하니까요. 해당 변수들을 적절하게 통제하지 않는다면, 교육의 영향을 추정했을 때 회귀 모형에 포함되지 않은 다른 변수들의 영향도 같이 집계될 겁니다.</p>
+<p>편향이 어떻게 영향을 주는지 이해하기 위해, 교육과 임금의 상관관계가 실제로는 아래와 같은 모형을 따른다고 가정해봅시다.</p>
 <p><span class="math notranslate nohighlight">\(
 Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
 \)</span></p>
@@ -1353,9 +1353,9 @@ Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
 <span class="n">times</span> <span class="n">the</span> <span class="n">regression</span> <span class="n">of</span> <span class="n">omitted</span> <span class="n">on</span> <span class="n">included</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
-<p>여기서, 짧은 회귀 분석(short)은 변수를 생략한 회귀 분석입니다. 긴 회귀 분석(long)은 그 변수들을 포함하는 회귀 분석이고요. 이 문구는 우리에게 편향의 본질에 대한 인사이트를 제공합니다. 첫째, 생략 변수가 종속 변수 <span class="math notranslate nohighlight">\(Y\)</span>에 영향을 미치지 않는다면 편향 항(bias term)은 0이 됩니다. 당연한 얘기죠? 교육이 임금에 미치는 영향을 이해하려고 할 때, 임금과 무관한 변수들 - 라일락의 키가 얼마나 되는지 등 - 을 통제할 필요는 없습니다. 둘째, 생략 변수가 처치 변수에 영향을 미치지 않는 경우에도 편향 항은 0이 됩니다. 이것도 직관적으로 말이 됩니다. 모델에 교육에 영향을 미치는 모든 요소들이 포함되어 있다면, 교육과 임금에 모두 영향을 끼치는 변수 때문에 추정치가 바뀌는 일은 없을 테니까요.</p>
+<p>여기서, 짧은 회귀 분석(short)은 변수를 생략한 회귀 분석입니다. 긴 회귀 분석(long)은 그 변수들을 포함하는 회귀 분석이고요. 이 부분은 편향의 본질에 대한 인사이트를 제공합니다. 첫 째, 생략 변수가 종속 변수 <span class="math notranslate nohighlight">\(Y\)</span>에 영향을 미치지 않는다면 편향 항(bias term)은 0이 됩니다. 당연한 얘기죠? 교육이 임금에 미치는 영향을 이해하려고 할 때, 임금과 무관한 변수들 - 라일락의 키가 얼마나 되는지 등 - 을 통제할 필요는 없습니다. 둘 째, 생략된 변수가 처치 변수에 영향을 미치지 않는 경우에도 편향 항은 0이 됩니다. 이 부분은 직관적으로 봐도 합리적이에요. 여러분이 설계한 모형에 교육에 영향을 미치는 모든 변수가 포함되어 있다면, 교육과 임금에 모두 영향을 주는 변수 때문에 추정치가 바뀌는 일은 없을 테니까요.</p>
 <p><img alt="img" src="_images/confused_cat.png" /></p>
-<p>좀 더 깔끔하게 표현하자면, <strong>모형에서 모든 교란 변수를 고려한 경우 OVB가 없다</strong>고 말합니다. 여기서 인과 그래프에 대한 지식을 활용할 수 있습니다. 교란 변수는 <strong>처치와 결과를 모두 유발하는</strong> 변수입니다. 임금 사례에서 IQ는 교란 변수입니다. 높은 IQ를 가진 사람들은 교육을 더 오래 이어가는 경향이 있습니다. IQ 높은 사람들에게는 어렵지 않은 일이니까요. 그러니 우리는 IQ가 교육 기간에 영향을 준다고 말할 수 있습니다. 또한, IQ가 높은 사람들은 선천적으로 더 생산적인 경향이 있습니다. 그 결과 더 높은 임금을 받겠죠. 즉, IQ는 임금에도 영향을 줍니다. 교란 요인은 처치와 결과에 모두 영향을 미치는 변수이므로 T와 Y로 가는 화살표로 표시합니다. 여기서는 교란 변수를 <span class="math notranslate nohighlight">\(W\)</span>로 표시했습니다. 또, 양의 인과관계를 빨간색으로, 음의 인과관계를 파란색으로 표시했습니다.</p>
+<p>좀 더 깔끔하게 표현하자면, <strong>모형에서 모든 교란 변수를 고려한 경우 OVB가 없다</strong>고 말합니다. 여기서 인과 그래프에 대한 지식을 활용할 수 있습니다. 교란 변수는 <strong>처치와 결과를 모두 유발하는</strong> 변수입니다. 임금 사례에서 IQ는 교란 변수입니다. 높은 IQ를 가진 사람들은 교육을 더 오래 이어가는 경향이 있습니다. IQ 높은 사람들에게는 어렵지 않은 이라고 볼 수 있으니까요. 그래서 해당 관점에서 본다면, IQ가 교육 기간에 영향을 준다고 말할 수 있어요. 또한, IQ가 높은 사람들은 선천적으로 더 생산적인 경향이 있습니다. 그 결과 더 높은 임금을 받을 수 있겠죠? 이러한 상황을 고려해보았을 때, IQ는 임금에도 영향을 준다고 볼 수 이어요. 교란 요인은 처치와 결과에 모두 영향을 미치는 변수이므로 T와 Y로 가는 화살표로 표시합니다. 여기서는 교란 변수를 <span class="math notranslate nohighlight">\(W\)</span>로 표시하겠습니다. 또한, 양의 인과관계를 빨간색으로, 음의 인과관계를 파란색으로 표시하도록 할게요.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1380,7 +1380,7 @@ Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
 <div class="cell_output docutils container">
 <img alt="_images/ae59e730ae744732460cb0c2e4ebdee0df46fedbf9dc38f47370846df1920628.svg" src="_images/ae59e730ae744732460cb0c2e4ebdee0df46fedbf9dc38f47370846df1920628.svg" /></div>
 </div>
-<p>인과 그래프는 우리가 세상을 어떻게 이해하는지를 표현해줍니다. 또, 교란 편향이 어떻게 작동하는지 이해하는 데에도 유용한 도구입니다. 우리의 첫 번째 예시에서, 교육이 임금을 유발하는 그래프를 얻을 수 있습니다. 더 많은 교육은 더 높은 임금을 초래합니다. 하지만 IQ는 임금도 유발하고 교육도 유발합니다. IQ가 높으면 교육 기간도 임금도 높아지니까요. 우리의 모형이 IQ를 통제하지 않는다면, IQ가 임금에 미치는 영향의 일부가 교육과의 상관관계를 통해 흐를 겁니다. 그러면 교육의 영향을 과대평가하게 되겠죠. 이것은 양의 편향(positive bias)의 한 예입니다.</p>
+<p>인과 그래프는 우리가 세상을 어떻게 이해하는지를 표현해줍니다. 또, 교란 편향이 어떻게 작동하는지 이해하는 데에도 유용한 도구입니다. 위에서 살펴본 첫 번째 예시에서, 교육이 임금을 유발하는 그래프를 얻을 수 있습니다. 더 많은 교육은 더 높은 임금을 받는데 영향을 줍니다. 하지만 IQ는 임금과 교육 두 변수의 원인이 됩니다. IQ가 높으면 교육 기간도 임금도 높아지니까요. 앞서 설계한 모형이 IQ를 통제하지 않는다면, IQ가 임금에 미치는 영향의 일부가 교육과의 상관관계를 통해 흐를 겁니다. 그러면 교육의 영향을 과대평가하게 되겠죠. 이것은 양의 편향(positive bias)의 한 예입니다.</p>
 <p>또 다른 예를 들어볼까요? 이번에는 음의 편향(negative bias)의 예시를 봅시다. 경찰이 도시 폭력에 미치는 영향에 대한 인과 그래프를 생각해봅시다. 우리는 경찰력이 더 많은 도시에 더 많은 폭력 사건이 일어나는 경우가 흔히 있습니다. 이게 경찰이 폭력을 일으킨다는 뜻일까요? 글쎄요, 그럴 수도 있겠죠. 그에 대해 토론을 벌일 필요는 없을 것 같습니다. 하지만 교란 변수로 인해 폭력에 대한 경찰의 영향력을 편향적으로 바라볼 가능성이 더 높을 겁니다. 경찰력이 증가하면 폭력을 감소할 확률이 높습니다. 하지만 ‘범죄’라는 세 번째 변수는 더 많은 폭력과 더 많은 경찰력을 유발합니다. 우리가 그것을 고려하지 않는다면, 폭력에 대한 범죄의 영향은 경찰력을 통해 흘러갈 것입니다. 그럼 경찰력이 폭력을 증가시키는 것처럼 보이겠죠. 이것은 음의 편향의 예시입니다.</p>
 <p>우리는 인과 그래프를 통해 회귀나 RCT가 교란 편향을 보정하는 방식도 확인할 수 있습니다. RCT는 처리 변수에 대한 교란 변수의 연결을 끊어서 그 효과를 보정합니다. 정의상, <span class="math notranslate nohighlight">\(T\)</span>를 랜덤으로 만들면 교란 편향은 사라지니까요.</p>
 <div class="cell tag_hide-input docutils container">
@@ -1429,26 +1429,26 @@ Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
 </section>
 <section id="key-ideas">
 <h2>Key Ideas<a class="headerlink" href="#key-ideas" title="Permalink to this headline">#</a></h2>
-<p>우리는 회귀를 이용해 많은 작업을 해결했습니다. 회귀 분석을 사용하여 A/B 검사를 수행하는 방법을 보았고, 간편하게 신뢰 구간을 얻는 방법도 확인했죠. 그런 다음 회귀 분석으로 이 예측 문제를 해결할 수 있다는 것을 보았습니다. 선형 회귀가 조건부 기대 함수(CEF)에 대한 최상의 선형 근사치죠. 또한 이변량의 경우 회귀 처치 계수가 처치와 결과 사이의 공분산을 처치의 분산으로 나눈 값이라는 것도 보았습니다. 다변량 사례로 확장하자면, 회귀 분석은 처치 계수에 대한 부분적인 해석을 제공하는 방법을 알아냈습니다. 다른 포함된 변수 모두를 일정하게 유지하면서, 처치에 따라 결과가 어떻게 변화하는지로 해석하는 거죠. 경제학자들의  용어로는 *ceteris paribus(다른 조건이 동일하다면)*라고 하는 상황입니다.</p>
-<p>마지막으로, 우리는 편향을 어떻게 이해해야 할지를 다뤘습니다. <code class="docutils literal notranslate"><span class="pre">Short</span> <span class="pre">equals</span> <span class="pre">long</span> <span class="pre">plus</span> <span class="pre">the</span> <span class="pre">effect</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">times</span> <span class="pre">the</span> <span class="pre">regression</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">on</span> <span class="pre">included</span></code>라는 말의 의미를 살펴봤죠. 이것은 편향이 어떻게 생겨났는지를 보여줍니다. 우리는 생략된 변수 편향이 교란 변수 - 처치와 결과에 모두 영향을 미치는 변수 - 때문이라는 걸 알게 되었습니다. 끝으로, 우리는 인과 그래프를 이용해 RCT 및 회귀 분석이 교란을 수정하는 방법을 확인했습니다.</p>
+<p>이번 챕터에서는 회귀분석을 통해 여러가지 문제들을 해결해봤습니다. 회귀 분석을 사용하여 A/B 검사를 수행하는 방법을 보았고, 간편하게 신뢰 구간을 얻는 방법도 확인했죠. 그런 다음 회귀 분석으로 이 예측 문제를 해결할 수 있다는 것을 보았습니다. 선형 회귀가 조건부 기대 함수(CEF)에 대한 최상의 선형 근사치죠. 또한 이변량의 경우 회귀 처치 계수가 처치와 결과 사이의 공분산을 처치의 분산으로 나눈 값이라는 것도 보았습니다. 다변량 사례로 확장하자면, 회귀 분석은 처치 계수에 대한 부분적인 해석을 제공하는 방법을 알아냈습니다. 다른 포함된 변수 모두를 일정하게 유지하면서, 처치에 따라 결과가 어떻게 변화하는지로 해석하는 거죠. 경제학 용어로는 *ceteris paribus(다른 조건이 동일하다면)*라고 하는 상황입니다.</p>
+<p>마지막으로, 편향을 어떻게 이해해야 할지에 대해 배웠습니다. <code class="docutils literal notranslate"><span class="pre">Short</span> <span class="pre">equals</span> <span class="pre">long</span> <span class="pre">plus</span> <span class="pre">the</span> <span class="pre">effect</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">times</span> <span class="pre">the</span> <span class="pre">regression</span> <span class="pre">of</span> <span class="pre">omitted</span> <span class="pre">on</span> <span class="pre">included</span></code>라는 말의 의미를 살펴봤죠. 이 부분을 통해, 편향이 어떻게 생겨났는지를 확인할 수 있었어요. 결론적으로, 생략된 변수 편향이 교란 변수 - 처치와 결과에 모두 영향을 미치는 변수 - 때문이라는 걸 알게 되었습니다. 끝으로, 우리는 인과 그래프를 이용해 RCT 및 회귀 분석이 교란을 수정하는 방법을 확인해 볼 수 있었어요.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
-<p>저는 이 책을 Joshua Angrist, Alberto Abadie 및 Christopher Walters의 대단한 계량 경제학 수업에 대한 찬사라고 생각하고 싶습니다. 이 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 지켜보는 것이 저의 2020년의 힘든 한 해 동안, 온전한 정신을 유지하도록 도와주었어요.</p>
+<p>이 책을 쓰기 위해 Joshua Angrist, Alberto Abadie, Christopher Walters의 대단한 계량 경제학 수업 자료를 많이 참고했습니다. 해당 자료에 있는 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔어요. 이렇게 좋은 참고자료를 보는 것이 2020년의 힘든 한 해를 지탱하게 만들어준 원동력이었다고 생각해요.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2017-webcasts">Cross-Section Econometrics</a></p></li>
 <li><p><a class="reference external" href="https://www.aeaweb.org/conference/cont-ed/2020-webcasts">Mastering Mostly Harmless Econometrics</a></p></li>
 </ul>
-<p>또한 Angrist의 정말 좋은 책들을 참고자료 목록에 담고 싶습니다. 이 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 재미있다는 것을 저에게 보여주었습니다.</p>
+<p>또한, Angrist의 정말 좋은 책들을 참고자료에 넣고 싶어요. 해당 저자가 쓴 책들은 계량경제학(Econometrics) 또는 ‘메트릭스(Metrics, 계량적 분석)’가 매우 유용할 뿐만 아니라 매우 흥미롭다는 걸 알려주었어요.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.mostlyharmlesseconometrics.com/">Mostly Harmless Econometrics</a></p></li>
 <li><p><a class="reference external" href="https://www.masteringmetrics.com/">Mastering ‘Metrics</a></p></li>
 </ul>
-<p>제가 참고한 또다른 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자와 같은 존재였어요.</p>
+<p>마지막으로 참고한 자료는 Miguel Hernan과 Jamie Robins의 책입니다. 이 책들은 제가 대답해야 했던 까다로운 인과적인 질문에서 신뢰할 수 있는 동반자 같은 존재였어요.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Causal Inference Book</a></p></li>
 </ul>
-<p>마지막으로, Scott Cunningham과 인과 추론과 Mixtape 형태를을 결합한 그의 훌륭한 작업에도 찬사를 보냅니다.</p>
+<p>마지막으로, Scott Cunningham과 인과 추론과 Mixtape 형태를을 결합한 훌륭한 자료에도 감사를 전합니다.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.scunning.com/mixtape.html">Causal Inference: The Mixtape</a></p></li>
 </ul>
@@ -1456,9 +1456,9 @@ Wage_i = \alpha + \kappa \ Educ_i + A_i'\beta + u_i
 </section>
 <section id="contribute">
 <h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">#</a></h2>
-<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 지적으로 접근이 가능할 수 있도록 하는 것이 목표입니다. 그리고, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
+<p>Causal Inference for the Brave and True는 인과추론, 통계학에 대한 오픈소스 자료입니다. 이 자료는 금전적으로나 모든 분들이 쉽게 접근하실 수 있도록 하는 것이 목표입니다. 또한, 이 책은 Python 기반의 무료 소프트웨어만 사용해요.
 여러분들께서 이 자료가 가치 있다고 생각하시고, 금전적으로 지원을 원하신다면 <a class="reference external" href="https://www.patreon.com/causal_inference_for_the_brave_and_true">Patreon</a>를 방문해주세요.
-만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">이 책의 Github 자료에 star</a> 부탁드립니다!</p>
+만약 여러분이 금전적으로 기여하기가 쉽지 않으시다면, 오타 수정, 수정 제안, 이해하기 난해한 부분에 대한 피드백 제공 등을 통해 도움을 주실 수 있어요. 이 책의 Github 저장소 <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues">이슈 페이지</a>를 방문해주세요. 마지막으로 이 자료가 여러분의 마음에 드셨다면 도움이 될 수 있는 다른 사람들과 공유해주시고, <a class="reference external" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/stargazers">한국어 번역 자료</a>와 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/stargazers">해당 번역본의 원서</a>에 star 부탁드립니다!</p>
 </section>
 </section>
 
