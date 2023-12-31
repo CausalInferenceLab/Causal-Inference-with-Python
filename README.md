@@ -57,5 +57,6 @@ Part2의 경우, 저자의 부탁에 따라 추후 진행될 예정입니다.
 | 14 | ☑️ | [14. Panel Data and Fixed Effects](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/14-Panel-Data-and-Fixed-Effects.ipynb) | 2022-11-26 | [신진수](https://github.com/jsshin2022) |
 | 15 | ☑️ | [15. Synthetic Control](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo)
 | 16 | ☑️ | [16. Regression Discontinuity Design](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/16-Regression-Discontinuity-Design.ipynb) | 2022-11-22 | [남궁민상](https://github.com/wholmesian) |
+| 21 | ☑️ | [21. Meta Learners](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/21-Meta-Learners.ipynb) | 2023-12-31 | [박병수](https://github.com/Hinterhalter) |
 
 <br>
