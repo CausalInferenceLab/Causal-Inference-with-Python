@@ -110,6 +110,7 @@ format:
     html-math-method: mathjax
     df-print: default
     link-external-newwindow: true
+    back-to-top-navigation: true
     include-after-body: sidebar-resize.html
     include-in-header:
       - text: |
