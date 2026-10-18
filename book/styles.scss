@@ -361,3 +361,128 @@ main:has(.hero) #title-block-header {
   font-weight: 750;
   text-decoration: none;
 }
+
+// ---- 읽기 경험 다듬기 ----
+
+// 데이터프레임 표
+.cell-output-display table {
+  border-collapse: collapse;
+  border: 1px solid $border-color;
+}
+
+.cell-output-display table thead th {
+  background: $lavender-soft;
+  color: $navy;
+  font-weight: 700;
+  border-bottom: 1px solid $border-color;
+}
+
+.cell-output-display table td,
+.cell-output-display table th {
+  padding: 0.35rem 0.7rem;
+}
+
+.cell-output-display table tbody tr:nth-child(even) {
+  background: rgba($lavender-soft, 0.45);
+}
+
+// 접힌 코드 버튼
+details.code-fold {
+  margin: 0.4rem 0 0.6rem;
+}
+
+details.code-fold > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid $border-color;
+  border-radius: 999px;
+  color: $sidebar-fg;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+details.code-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.code-fold > summary::before {
+  content: "</>";
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  color: $lavender;
+}
+
+details.code-fold[open] > summary {
+  color: $indigo;
+  border-color: $lavender;
+}
+
+// 노트 상자
+.callout-note {
+  border-left-color: $indigo !important;
+  border-radius: 8px;
+}
+
+// 이전/다음 장 이동
+.page-navigation {
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid $border-color;
+}
+
+.page-navigation .nav-page a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  color: $navy;
+  font-weight: 650;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.page-navigation .nav-page a:hover {
+  border-color: $lavender;
+  background: $lavender-soft;
+}
+
+// 검색창
+.sidebar-search .aa-Form,
+#quarto-search .aa-Form {
+  border-radius: 10px;
+}
+
+// 본문 인용(원저자 감사의 말 등)
+.content blockquote {
+  border-left: 3px solid $lavender;
+  color: $sidebar-fg;
+  padding-left: 1rem;
+}
+
+// 페이지 하단
+.nav-footer {
+  font-size: 0.85rem;
+}
+
+.nav-footer a {
+  color: $sidebar-fg;
+}
+
+.nav-footer .nav-footer-center a {
+  margin: 0 0.6rem;
+}
+
+// 본문 그림·밈은 가운데 정렬
+main.content p > img,
+main.content .quarto-figure img,
+.cell-output-display img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
