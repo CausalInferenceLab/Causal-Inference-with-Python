@@ -22,52 +22,52 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 
 ## 목차
 
-원서 1부와 2부의 25개 장, 부록 5편을 모두 옮겼습니다. 제목을 누르면 웹북으로, '노트북'을 누르면 원고 파일로 이동합니다.
+원서 1부와 2부의 25개 장, 부록 5편을 모두 옮겼습니다. 제목을 누르면 웹북의 해당 장으로 바로 이동합니다.
 
 ### 1부 인과추론의 기초
 
-| 장 | 제목 | 원고 | 최초 번역 | 번역 담당자 |
-|:-:|---|:-:|:-:|---|
-| 1 | [인과추론 소개](https://causalinferencelab.github.io/Causal-Inference-with-Python/01-Introduction-To-Causality.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/01-Introduction-To-Causality.ipynb) | 2022-08-20 | [신진수](https://github.com/jsshin2022) |
-| 2 | [무작위 실험](https://causalinferencelab.github.io/Causal-Inference-with-Python/02-Randomised-Experiments.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/02-Randomised-Experiments.ipynb) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
-| 3 | [통계 복습: 가장 위험한 수식](https://causalinferencelab.github.io/Causal-Inference-with-Python/03-Stats-Review-The-Most-Dangerous-Equation.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/03-Stats-Review-The-Most-Dangerous-Equation.ipynb) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
-| 4 | [그래프 인과 모델](https://causalinferencelab.github.io/Causal-Inference-with-Python/04-Graphical-Causal-Models.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/04-Graphical-Causal-Models.ipynb) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
-| 5 | [선형회귀의 터무니없는 효과](https://causalinferencelab.github.io/Causal-Inference-with-Python/05-The-Unreasonable-Effectiveness-of-Linear-Regression.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb) | 2022-11-23 | [남궁민상](https://github.com/wholmesian) |
-| 6 | [그룹 회귀와 더미 회귀](https://causalinferencelab.github.io/Causal-Inference-with-Python/06-Grouped-and-Dummy-Regression.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/06-Grouped-and-Dummy-Regression.ipynb) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
-| 7 | [교란 요인을 넘어서](https://causalinferencelab.github.io/Causal-Inference-with-Python/07-Beyond-Confounders.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/07-Beyond-Confounders.ipynb) | 2022-11-26 | [김상돈](https://github.com/SANGDONKIM) |
-| 8 | [도구변수](https://causalinferencelab.github.io/Causal-Inference-with-Python/08-Instrumental-Variables.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/08-Instrumental-Variables.ipynb) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
-| 9 | [불응과 LATE](https://causalinferencelab.github.io/Causal-Inference-with-Python/09-Non-Compliance-and-LATE.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/09-Non-Compliance-and-LATE.ipynb) | 2022-11-19 | [김성수](https://github.com/fenzhantw) |
-| 10 | [매칭](https://causalinferencelab.github.io/Causal-Inference-with-Python/10-Matching.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/10-Matching.ipynb) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) |
-| 11 | [성향점수](https://causalinferencelab.github.io/Causal-Inference-with-Python/11-Propensity-Score.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/11-Propensity-Score.ipynb) | 2022-11-11 | [김성수](https://github.com/fenzhantw) |
-| 12 | [이중 강건 추정](https://causalinferencelab.github.io/Causal-Inference-with-Python/12-Doubly-Robust-Estimation.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/12-Doubly-Robust-Estimation.ipynb) | 2022-10-28 | [홍성철](https://github.com/chulhongsung) |
-| 13 | [이중차분법](https://causalinferencelab.github.io/Causal-Inference-with-Python/13-Difference-in-Differences.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/13-Difference-in-Differences.ipynb) | 2022-08-27 | [신진수](https://github.com/jsshin2022) |
-| 14 | [패널데이터와 고정효과](https://causalinferencelab.github.io/Causal-Inference-with-Python/14-Panel-Data-and-Fixed-Effects.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/14-Panel-Data-and-Fixed-Effects.ipynb) | 2022-11-26 | [신진수](https://github.com/jsshin2022) |
-| 15 | [통제집단합성법](https://causalinferencelab.github.io/Causal-Inference-with-Python/15-Synthetic-Control.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/15-Synthetic-Control.ipynb) | 2022-09-03 | [정호재](https://github.com/wjdghwo) |
-| 16 | [회귀 불연속 설계](https://causalinferencelab.github.io/Causal-Inference-with-Python/16-Regression-Discontinuity-Design.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/16-Regression-Discontinuity-Design.ipynb) | 2022-11-22 | [남궁민상](https://github.com/wholmesian) |
+| 장 | 제목 | 최초 번역 | 번역 담당자 |
+|:-:|---|:-:|---|
+| 1 | [인과추론 소개](https://causalinferencelab.github.io/Causal-Inference-with-Python/01-Introduction-To-Causality.html) | 2022-08-20 | [신진수](https://github.com/jsshin2022) |
+| 2 | [무작위 실험](https://causalinferencelab.github.io/Causal-Inference-with-Python/02-Randomised-Experiments.html) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
+| 3 | [통계 복습: 가장 위험한 수식](https://causalinferencelab.github.io/Causal-Inference-with-Python/03-Stats-Review-The-Most-Dangerous-Equation.html) | 2022-11-10 | [김준영](https://github.com/CptAswadu) |
+| 4 | [그래프 인과 모델](https://causalinferencelab.github.io/Causal-Inference-with-Python/04-Graphical-Causal-Models.html) | 2022-11-23 | [김소희](https://github.com/soheekim911) |
+| 5 | [선형회귀의 터무니없는 효과](https://causalinferencelab.github.io/Causal-Inference-with-Python/05-The-Unreasonable-Effectiveness-of-Linear-Regression.html) | 2022-11-23 | [남궁민상](https://github.com/wholmesian) |
+| 6 | [그룹 회귀와 더미 회귀](https://causalinferencelab.github.io/Causal-Inference-with-Python/06-Grouped-and-Dummy-Regression.html) | 2022-11-05 | [정호재](https://github.com/wjdghwo) |
+| 7 | [교란 요인을 넘어서](https://causalinferencelab.github.io/Causal-Inference-with-Python/07-Beyond-Confounders.html) | 2022-11-26 | [김상돈](https://github.com/SANGDONKIM) |
+| 8 | [도구변수](https://causalinferencelab.github.io/Causal-Inference-with-Python/08-Instrumental-Variables.html) | 2022-12-04 | [최은희](https://github.com/EunHuiChoi) |
+| 9 | [불응과 LATE](https://causalinferencelab.github.io/Causal-Inference-with-Python/09-Non-Compliance-and-LATE.html) | 2022-11-19 | [김성수](https://github.com/fenzhantw) |
+| 10 | [매칭](https://causalinferencelab.github.io/Causal-Inference-with-Python/10-Matching.html) | 2022-11-04 | [김상돈](https://github.com/SANGDONKIM) |
+| 11 | [성향점수](https://causalinferencelab.github.io/Causal-Inference-with-Python/11-Propensity-Score.html) | 2022-11-11 | [김성수](https://github.com/fenzhantw) |
+| 12 | [이중 강건 추정](https://causalinferencelab.github.io/Causal-Inference-with-Python/12-Doubly-Robust-Estimation.html) | 2022-10-28 | [홍성철](https://github.com/chulhongsung) |
+| 13 | [이중차분법](https://causalinferencelab.github.io/Causal-Inference-with-Python/13-Difference-in-Differences.html) | 2022-08-27 | [신진수](https://github.com/jsshin2022) |
+| 14 | [패널데이터와 고정효과](https://causalinferencelab.github.io/Causal-Inference-with-Python/14-Panel-Data-and-Fixed-Effects.html) | 2022-11-26 | [신진수](https://github.com/jsshin2022) |
+| 15 | [통제집단합성법](https://causalinferencelab.github.io/Causal-Inference-with-Python/15-Synthetic-Control.html) | 2022-09-03 | [정호재](https://github.com/wjdghwo) |
+| 16 | [회귀 불연속 설계](https://causalinferencelab.github.io/Causal-Inference-with-Python/16-Regression-Discontinuity-Design.html) | 2022-11-22 | [남궁민상](https://github.com/wholmesian) |
 
 ### 2부 인과추론의 실무 응용
 
-| 장 | 제목 | 원고 | 최초 번역 | 번역 담당자 |
-|:-:|---|:-:|:-:|---|
-| 17 | [예측 모델 101](https://causalinferencelab.github.io/Causal-Inference-with-Python/17-Predictive-Models-101.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/17-Predictive-Models-101.ipynb) | 2023-02-13 | [최은희](https://github.com/EunHuiChoi) |
-| 18 | [이질적 처치효과와 개인화](https://causalinferencelab.github.io/Causal-Inference-with-Python/18-Heterogeneous-Treatment-Effects-and-Personalization.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/18-Heterogeneous-Treatment-Effects-and-Personalization.ipynb) | 2023-02-20 | [김소희](https://github.com/soheekim911) |
-| 19 | [인과 모델 평가](https://causalinferencelab.github.io/Causal-Inference-with-Python/19-Evaluating-Causal-Models.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/19-Evaluating-Causal-Models.ipynb) | 2023-08-13 | [김성수](https://github.com/fenzhantw) |
-| 20 | [플러그 앤 플레이 추정량](https://causalinferencelab.github.io/Causal-Inference-with-Python/20-Plug-and-Play-Estimators.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/20-Plug-and-Play-Estimators.ipynb) | 2023-06-22 | [남궁민상](https://github.com/wholmesian) |
-| 21 | [메타러너](https://causalinferencelab.github.io/Causal-Inference-with-Python/21-Meta-Learners.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/21-Meta-Learners.ipynb) | 2023-12-31 | [박병수](https://github.com/Hinterhalter) |
-| 22 | [편향 제거/직교화 머신러닝](https://causalinferencelab.github.io/Causal-Inference-with-Python/22-Debiased-Orthogonal-Machine-Learning.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/22-Debiased-Orthogonal-Machine-Learning.ipynb) | 2023-11-03 | [홍성철](https://github.com/chulhongsung) |
-| 23 | [효과 이질성과 비선형성](https://causalinferencelab.github.io/Causal-Inference-with-Python/23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.ipynb) | 2024-01-10 | [임종언](https://github.com/limjongun95) |
-| 24 | [이중차분법 사가](https://causalinferencelab.github.io/Causal-Inference-with-Python/24-The-Diff-in-Diff-Saga.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/24-The-Diff-in-Diff-Saga.ipynb) | 2023-06-26 | [박시온](https://github.com/rockgoat95) |
-| 25 | [합성 이중차분법](https://causalinferencelab.github.io/Causal-Inference-with-Python/25-Synthetic-Diff-in-Diff.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/25-Synthetic-Diff-in-Diff.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| 장 | 제목 | 최초 번역 | 번역 담당자 |
+|:-:|---|:-:|---|
+| 17 | [예측 모델 101](https://causalinferencelab.github.io/Causal-Inference-with-Python/17-Predictive-Models-101.html) | 2023-02-13 | [최은희](https://github.com/EunHuiChoi) |
+| 18 | [이질적 처치효과와 개인화](https://causalinferencelab.github.io/Causal-Inference-with-Python/18-Heterogeneous-Treatment-Effects-and-Personalization.html) | 2023-02-20 | [김소희](https://github.com/soheekim911) |
+| 19 | [인과 모델 평가](https://causalinferencelab.github.io/Causal-Inference-with-Python/19-Evaluating-Causal-Models.html) | 2023-08-13 | [김성수](https://github.com/fenzhantw) |
+| 20 | [플러그 앤 플레이 추정량](https://causalinferencelab.github.io/Causal-Inference-with-Python/20-Plug-and-Play-Estimators.html) | 2023-06-22 | [남궁민상](https://github.com/wholmesian) |
+| 21 | [메타러너](https://causalinferencelab.github.io/Causal-Inference-with-Python/21-Meta-Learners.html) | 2023-12-31 | [박병수](https://github.com/Hinterhalter) |
+| 22 | [편향 제거/직교화 머신러닝](https://causalinferencelab.github.io/Causal-Inference-with-Python/22-Debiased-Orthogonal-Machine-Learning.html) | 2023-11-03 | [홍성철](https://github.com/chulhongsung) |
+| 23 | [효과 이질성과 비선형성](https://causalinferencelab.github.io/Causal-Inference-with-Python/23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.html) | 2024-01-10 | [임종언](https://github.com/limjongun95) |
+| 24 | [이중차분법 사가](https://causalinferencelab.github.io/Causal-Inference-with-Python/24-The-Diff-in-Diff-Saga.html) | 2023-06-26 | [박시온](https://github.com/rockgoat95) |
+| 25 | [합성 이중차분법](https://causalinferencelab.github.io/Causal-Inference-with-Python/25-Synthetic-Diff-in-Diff.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
 
 ### 부록
 
-| 장 | 제목 | 원고 | 최초 번역 | 번역 담당자 |
-|:-:|---|:-:|:-:|---|
-| A | [직교화로 편향 제거하기](https://causalinferencelab.github.io/Causal-Inference-with-Python/Debiasing-with-Orthogonalization.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/Debiasing-with-Orthogonalization.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
-| B | [성향점수로 편향 제거하기](https://causalinferencelab.github.io/Causal-Inference-with-Python/Debiasing-with-Propensity-Score.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/Debiasing-with-Propensity-Score.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
-| C | [예측이 실패할 때](https://causalinferencelab.github.io/Causal-Inference-with-Python/When-Prediction-Fails.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/When-Prediction-Fails.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
-| D | [예측 지표가 인과 모델에 위험한 이유](https://causalinferencelab.github.io/Causal-Inference-with-Python/Prediction-Metrics-For-Causal-Models.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/Prediction-Metrics-For-Causal-Models.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
-| E | [통제집단합성법의 컨포멀 추론](https://causalinferencelab.github.io/Causal-Inference-with-Python/Conformal-Inference-for-Synthetic-Control.html) | [노트북](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/Conformal-Inference-for-Synthetic-Control.ipynb) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| 장 | 제목 | 최초 번역 | 번역 담당자 |
+|:-:|---|:-:|---|
+| A | [직교화로 편향 제거하기](https://causalinferencelab.github.io/Causal-Inference-with-Python/Debiasing-with-Orthogonalization.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| B | [성향점수로 편향 제거하기](https://causalinferencelab.github.io/Causal-Inference-with-Python/Debiasing-with-Propensity-Score.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| C | [예측이 실패할 때](https://causalinferencelab.github.io/Causal-Inference-with-Python/When-Prediction-Fails.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| D | [예측 지표가 인과 모델에 위험한 이유](https://causalinferencelab.github.io/Causal-Inference-with-Python/Prediction-Metrics-For-Causal-Models.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
+| E | [통제집단합성법의 컨포멀 추론](https://causalinferencelab.github.io/Causal-Inference-with-Python/Conformal-Inference-for-Synthetic-Control.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
 
 <br>
 
