@@ -1,20 +1,41 @@
 /*-- scss:defaults --*/
-$body-color: #e6e3dc;
-$body-bg: #1b1d21;
-$primary: #e3a27a;
-$link-color: #e3a27a;
-$code-color: #e3a27a;
-$code-bg: #25282d;
-$border-color: #34373d;
-$sidebar-bg: #202227;
-$sidebar-fg: #b9b6ae;
-$sidebar-hl: #e3a27a;
-$toc-color: #e3a27a;
-$footer-bg: #202227;
+$body-color: #e4e5ee;
+$body-bg: #14151f;
+$primary: #b4a5ea;
+$link-color: #b4a5ea;
+$code-color: #c9b8ff;
+$code-bg: #1d1f2c;
+$border-color: #2b2e40;
+$sidebar-bg: #171926;
+$sidebar-fg: #b3b6c8;
+$sidebar-hl: #b4a5ea;
+$toc-color: #b4a5ea;
+$footer-bg: #171926;
 
 /*-- scss:rules --*/
-// 그래프 출력은 흰 배경으로 그려졌으므로 다크 모드에서도 흰 바탕 유지
+h1, h2, h3, h4, .title, .sidebar-title,
+.sidebar-item-section > .sidebar-item-container .sidebar-item-text {
+  color: #eceaff;
+}
+
+.chapter-number {
+  background: rgba(180, 165, 234, 0.16);
+  color: #c9bcf5;
+}
+
+.callout.callout-style-simple.callout-tip {
+  background: rgba(169, 150, 214, 0.12);
+}
+
+.toc-cards .card-item {
+  background: #1b1d2a;
+}
+
+.toc-cards .card-item .card-title {
+  color: #eceaff;
+}
+
+// 그래프는 흰 배경으로 그려졌으므로 흰 바탕 유지
 .cell-output-display img {
   background: #fff;
-  border-radius: 4px;
 }
