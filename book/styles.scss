@@ -682,3 +682,36 @@ mjx-container[display="true"] {
   overflow-y: hidden;
   max-width: 100%;
 }
+
+// 장 제목: 번호 배지와 제목 사이 간격을 줄이고 배지를 제목 크기에 맞춤
+h1.title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 0.15em;
+}
+
+h1.title .chapter-number {
+  margin-right: 0.2em;
+  font-size: 0.8em;
+}
+
+// 모바일 상단 경로: 부 이름은 숨기고 장 제목만 한 줄로
+@media (max-width: 991.98px) {
+  .quarto-secondary-nav .breadcrumb {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .quarto-secondary-nav .breadcrumb-item:not(:last-child) {
+    display: none;
+  }
+  .quarto-secondary-nav .breadcrumb-item:last-child {
+    padding-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .quarto-secondary-nav .breadcrumb-item:last-child::before {
+    display: none;
+  }
+}
