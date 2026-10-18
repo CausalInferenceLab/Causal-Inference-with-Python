@@ -11,19 +11,19 @@ $indigo: #3d3f9e;
 $lavender: #a996d6;
 $lavender-soft: #f3f0fb;
 
-$body-color: #1f2330;
-$body-bg: #ffffff;
-$primary: $indigo;
-$link-color: $indigo;
-$code-color: #6b4fb8;
-$code-bg: #f5f6fa;
-$border-color: #e8e9f0;
+$body-color: #1f2330 !default;
+$body-bg: #ffffff !default;
+$primary: $indigo !default;
+$link-color: $indigo !default;
+$code-color: #6b4fb8 !default;
+$code-bg: #f5f6fa !default;
+$border-color: #e8e9f0 !default;
 
-$sidebar-bg: #fafafc;
-$sidebar-fg: #4b5163;
-$sidebar-hl: $indigo;
-$toc-color: $indigo;
-$footer-bg: #fafafc;
+$sidebar-bg: #fafafc !default;
+$sidebar-fg: #4b5163 !default;
+$sidebar-hl: $indigo !default;
+$toc-color: $indigo !default;
+$footer-bg: #fafafc !default;
 $callout-color-note: $indigo;
 $callout-color-tip: $lavender;
 
@@ -88,10 +88,6 @@ a {
 }
 
 // 사이드바
-.sidebar-logo {
-  max-height: 64px;
-  margin: 0.4rem 0 0.2rem;
-}
 
 .sidebar-title {
   font-weight: 750;
@@ -170,13 +166,6 @@ details.code-fold > summary {
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
 }
 
-.hero .hero-kicker {
-  margin: 0 0 0.6rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.75);
-}
 
 .hero .hero-title {
   margin: 0;
@@ -257,18 +246,19 @@ details.code-fold > summary {
   color: $navy;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .hero {
     padding: 1.8rem 1.4rem;
   }
   .hero .hero-mark {
-    width: 80px;
-    right: 1rem;
-    top: 1rem;
+    display: none;
   }
   .hero .hero-title {
     font-size: 1.8rem;
-    padding-right: 4rem;
+  }
+  .hero .hero-brand {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
   }
 }
 
@@ -304,4 +294,70 @@ main:has(.hero) #title-block-header {
 .cell-output-display p:has(> img),
 .quarto-figure {
   text-align: center;
+}
+
+// 사이드바 상단: 가짜연구소 × 인과추론팀
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.3rem 0 0.9rem;
+  text-decoration: none;
+}
+
+.brand-lockup .brand-pseudolab {
+  height: 26px;
+  width: auto;
+}
+
+.brand-lockup .brand-divider {
+  width: 1px;
+  height: 26px;
+  background: $border-color;
+}
+
+.brand-lockup .brand-causal {
+  height: 34px;
+  width: auto;
+}
+
+.only-dark {
+  display: none;
+}
+
+// 첫 화면 브랜드 줄
+.hero .hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.4rem;
+}
+
+.hero .hero-pseudolab {
+  height: 24px;
+  width: auto;
+}
+
+.hero .hero-brand-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero .hero-brand-team {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.01em;
+}
+
+.hero .hero-brand-team b {
+  font-weight: 700;
+  color: #fff;
+}
+
+.sidebar-title a,
+.sidebar-title a:hover {
+  color: $navy;
+  font-weight: 750;
+  text-decoration: none;
 }
