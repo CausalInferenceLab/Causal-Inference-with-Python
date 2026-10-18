@@ -3,7 +3,6 @@
 Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) 한국어판입니다.
 
 [![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCausalInferenceLab%2FCausal-Inference-with-Python&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 **[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
 
