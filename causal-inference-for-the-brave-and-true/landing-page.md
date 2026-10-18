@@ -22,7 +22,7 @@
 
 ## 감사의 말 (원저자)
 
-> 이 시리즈 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 훌륭한 계량경제학 강의에 바치는 헌사로 생각합니다. Part I의 아이디어는 대부분 이들이 전미경제학회(American Economic Association)에서 한 강의에서 가져왔습니다. 2020년이라는 힘든 해를 버틸 수 있었던 것도 이 강의 덕분이었습니다.
+> 이 시리즈 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 훌륭한 계량경제학 강의에 바치는 헌사로 생각합니다. Part I의 아이디어는 대부분 이들이 미국경제학회(American Economic Association)에서 한 강의에서 가져왔습니다. 2020년이라는 힘든 해를 버틸 수 있었던 것도 이 강의 덕분이었습니다.
 
 * [Cross-Section Econometrics](https://www.aeaweb.org/conference/cont-ed/2017-webcasts)
 * [Mastering Mostly Harmless Econometrics](https://www.aeaweb.org/conference/cont-ed/2020-webcasts)
