@@ -9,6 +9,7 @@
 - 원문에 없는 설명이 꼭 필요하면 `> 옮긴이:`로 시작하는 인용문으로 따로 표시합니다. 본문에 섞지 않습니다.
 - 수식(`$...$`, `$$...$$`), 이미지 경로, 링크 주소, 인라인 코드(`` `price` ``)는 손대지 않습니다.
 - 참고 문헌 목록은 원문 그대로 둡니다.
+- 원문 자체에 오류가 있을 때: 오타나 지칭 실수처럼 뜻이 분명한 것은 뜻대로 옮기고 `> 옮긴이:`로 밝힙니다. 논리·수치 오류는 본문을 원문대로 옮기고 옮긴이 주로 짚습니다. 수식은 어떤 경우에도 고치지 않습니다.
 
 ## 2. 문체
 
@@ -113,6 +114,8 @@
 | orthogonalization | 직교화 | |
 | de-meaning | 평균 제거 | |
 | standard error | 표준오차 | 붙여 씀 |
+| consistency | 일치성 | |
+| partialling out | 부분 제거 | |
 | standard deviation | 표준편차 | |
 | confidence interval | 신뢰구간 | 붙여 씀 |
 | hypothesis test | 가설검정 | |
@@ -170,6 +173,8 @@
 | running variable | 배정변수 | `실행 변수` 쓰지 않음 |
 | threshold, cutoff | 임곗값 | `임계값` 쓰지 않음 |
 | placebo test | 위약 검정 | |
+| sharp / fuzzy RD | 계단형 RD / 경사형 RD | |
+| subclassification estimator | 층화 추정량 | |
 | event study | 이벤트 스터디 | |
 
 ### 머신러닝과 CATE
@@ -201,6 +206,11 @@
 | importance sampling | 중요도 샘플링 | |
 | curse of dimensionality | 차원의 저주 | |
 | nudge | 넛지 | |
+| latent outcome | 잠재 결과 | potential outcome(잠재적 결과)과 구분 |
+| noise | 잡음 | `노이즈` 쓰지 않음 |
+| ground truth | 참값 | |
+| training / test set | 훈련 셋 / 테스트 셋 | |
+| band (예측값 구간) | 구간 | 신뢰구간과 헷갈리지 않게 문맥 표현 |
 | conversion | 전환 | |
 
 ## 4. 작업 순서
