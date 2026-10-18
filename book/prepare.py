@@ -4,7 +4,7 @@
 직접 고치지 않고, book/ 아래에 빌드 전용 사본을 만들어 다음만 바꾼다.
 
 - 장 제목: 원문 영어 H1을 지우고 한국어 장 제목을 front matter로 넣는다.
-- 수식: 한 줄에 `$`만 있는 블록 수식을 `$$`로 바꾼다(Pandoc은 단일 `$` 블록을 수식으로 읽지 않는다).
+- 수식: 한 줄에 `$`만 있는 블록 수식을 `$$`로 바꾸고, 인라인 수식 안쪽 공백(`$ x $`)을 지운다(Pandoc은 둘 다 수식으로 읽지 않는다).
 - `hide-input` 태그: 코드를 접어 두는 Quarto 옵션(code-fold)으로 바꾼다.
 - 대체 텍스트가 `img`뿐인 이미지: 그림 캡션으로 찍히지 않게 비운다.
 - `{note}` 지시문과 `> 옮긴이:` 인용문: Quarto 콜아웃으로 바꾼다.
@@ -64,11 +64,24 @@ def set_text(cell, text):
     cell["source"] = [line + "\n" for line in lines[:-1]] + [lines[-1]]
 
 
+PROTECT = re.compile(r"(```.*?```|`[^`\n]*`|\$\$.*?\$\$)", re.S)
+INLINE = re.compile(r"(?<![\\$])\$(?!\$)([^$\n]+?)(?<![\\$])\$(?!\$)")
+
+
+def fix_inline_math(text):
+    parts = PROTECT.split(text)
+    for i in range(0, len(parts), 2):
+        parts[i] = INLINE.sub(lambda m: "$" + m.group(1).strip() + "$", parts[i])
+    return "".join(parts)
+
+
 def fix_markdown(text):
     # 대체 텍스트가 "img"뿐인 이미지는 캡션으로 찍히지 않게 비운다
     text = re.sub(r"!\[img\]\(", "![](", text)
     # 한 줄짜리 `$` 블록 수식 → `$$`
     text = re.sub(r"(?m)^[ \t]*\$[ \t]*$", "$$", text)
+    # 인라인 수식 `$ x $`처럼 안쪽에 공백이 있으면 Pandoc이 수식으로 읽지 않으므로 공백을 지운다
+    text = fix_inline_math(text)
     # MyST {note} → Quarto 콜아웃
     text = re.sub(r"```\{note\}\n(.*?)\n```", r"::: {.callout-note}\n\1\n:::", text, flags=re.S)
     # 원문의 잘못된 note 펜스(```note)도 같은 콜아웃으로

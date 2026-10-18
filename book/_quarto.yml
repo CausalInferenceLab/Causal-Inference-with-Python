@@ -24,6 +24,12 @@ book:
   repo-actions: [issue]
   favicon: assets/causal-lab-mark.png
   search: true
+  reader-mode: true
+  open-graph:
+    image: assets/og-image.png
+    locale: ko_KR
+  twitter-card:
+    image: assets/og-image.png
   page-navigation: true
   sidebar:
     style: docked
@@ -36,10 +42,16 @@ book:
         <img class="brand-causal" src="assets/causal-lab-mark.png" alt="인과추론팀 Causal-Lab">
       </a>
   page-footer:
-    left: "[가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김 · 원서 © Matheus Facure"
+    left: "[가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김 · 원서 © [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)"
+    center:
+      - text: 번역 가이드
+        href: https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/TRANSLATION_GUIDE.md
+      - text: 오류 제보
+        href: https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues
     right:
       - icon: github
         href: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
+        aria-label: GitHub 저장소
   chapters:
     - index.qmd
     - part: "1부 인과추론의 기초"
@@ -80,6 +92,7 @@ book:
 
 crossref:
   chapters: true
+  appendix-delim: ":"
 
 format:
   html:
@@ -102,3 +115,4 @@ format:
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+          <script>document.addEventListener("DOMContentLoaded",function(){document.title=document.title.replace(" – "," | ");});</script>
