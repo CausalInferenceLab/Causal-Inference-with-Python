@@ -1,0 +1,11 @@
+# prepare.py가 만드는 빌드용 사본
+*.ipynb
+*.py
+!prepare.py
+data/
+_book/
+.quarto/
+*_files/
+
+/.quarto/
+**/*.quarto_ipynb

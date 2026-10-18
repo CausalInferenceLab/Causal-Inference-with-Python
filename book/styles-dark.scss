@@ -1,0 +1,20 @@
+/*-- scss:defaults --*/
+$body-color: #e6e3dc;
+$body-bg: #1b1d21;
+$primary: #e3a27a;
+$link-color: #e3a27a;
+$code-color: #e3a27a;
+$code-bg: #25282d;
+$border-color: #34373d;
+$sidebar-bg: #202227;
+$sidebar-fg: #b9b6ae;
+$sidebar-hl: #e3a27a;
+$toc-color: #e3a27a;
+$footer-bg: #202227;
+
+/*-- scss:rules --*/
+// 그래프 출력은 흰 배경으로 그려졌으므로 다크 모드에서도 흰 바탕 유지
+.cell-output-display img {
+  background: #fff;
+  border-radius: 4px;
+}
