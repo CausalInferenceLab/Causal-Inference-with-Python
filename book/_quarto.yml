@@ -3,6 +3,7 @@ project:
   output-dir: _book
   resources:
     - data/img/**
+    - assets/**
 
 lang: ko
 
@@ -21,13 +22,13 @@ book:
   repo-url: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
   repo-subdir: causal-inference-for-the-brave-and-true
   repo-actions: [issue]
-  cover-image: data/img/brave-and-true.png
-  favicon: data/img/brave-and-true.png
+  favicon: assets/causal-lab-mark.png
   search: true
   page-navigation: true
   sidebar:
-    style: floating
-    collapse-level: 1
+    style: docked
+    logo: assets/causal-lab-mark.png
+    collapse-level: 2
   page-footer:
     left: "원서 © Matheus Facure · 한국어판 가짜연구소 인과추론팀"
     right:
@@ -95,4 +96,4 @@ format:
       - text: |
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
           <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">

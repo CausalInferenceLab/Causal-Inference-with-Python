@@ -1,73 +1,123 @@
 /*-- scss:defaults --*/
-$font-family-sans-serif: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+// 가짜연구소 인과추론팀(Causal-Lab) 로고의 남색·라벤더를 기본색으로, Quarto처럼 밝고 가벼운 화면
+$font-family-sans-serif: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 $font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-$headings-font-family: "Noto Serif KR", "Pretendard Variable", serif;
-$font-size-root: 17px;
-$line-height-base: 1.85;
+$headings-font-family: $font-family-sans-serif;
+$font-size-root: 16.5px;
+$line-height-base: 1.8;
 
-$body-color: #23272f;
-$body-bg: #fdfcf9;
-$primary: #8a3b12;      // 표지 주황빛에 맞춘 차분한 갈색
-$link-color: #8a3b12;
-$code-color: #8a3b12;
-$code-bg: #f4f1ea;
-$border-color: #e6e1d6;
+$navy: #232766;
+$indigo: #3d3f9e;
+$lavender: #a996d6;
+$lavender-soft: #f3f0fb;
 
-$sidebar-bg: #f7f4ee;
-$sidebar-fg: #4a4f59;
-$sidebar-hl: #8a3b12;
-$toc-color: #8a3b12;
-$footer-bg: #f7f4ee;
+$body-color: #1f2330;
+$body-bg: #ffffff;
+$primary: $indigo;
+$link-color: $indigo;
+$code-color: #6b4fb8;
+$code-bg: #f5f6fa;
+$border-color: #e8e9f0;
+
+$sidebar-bg: #fafafc;
+$sidebar-fg: #4b5163;
+$sidebar-hl: $indigo;
+$toc-color: $indigo;
+$footer-bg: #fafafc;
+$callout-color-note: $indigo;
+$callout-color-tip: $lavender;
 
 /*-- scss:rules --*/
 body {
   word-break: keep-all;
   overflow-wrap: break-word;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
-// 본문 폭을 책 판형처럼
 #quarto-content main.content {
-  max-width: 760px;
+  max-width: 780px;
 }
 
-h1, h2, h3, .title {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+h1, h2, h3, h4, .title {
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  color: $navy;
 }
 
 h1.title {
-  font-size: 2.1rem;
-  margin-bottom: 0.4rem;
+  font-size: 2.15rem;
+  line-height: 1.3;
 }
 
-// 장 제목의 "13장" 번호
 .chapter-number {
-  color: $primary;
-  font-weight: 600;
-  margin-right: 0.35em;
+  display: inline-block;
+  min-width: 1.9em;
+  margin-right: 0.45em;
+  padding: 0.05em 0.35em;
+  border-radius: 0.4em;
+  background: $lavender-soft;
+  color: $indigo;
+  font-weight: 700;
+  text-align: center;
 }
 
 h2 {
-  margin-top: 2.6rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid $border-color;
+  margin-top: 2.8rem;
+  font-size: 1.55rem;
+  border-bottom: none;
+}
+
+h2::before {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 4px;
+  margin-bottom: 0.7rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, $indigo, $lavender);
 }
 
 p {
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.1rem;
 }
 
-// 사이드바의 부 제목
+a {
+  text-decoration-color: rgba($indigo, 0.35);
+  text-underline-offset: 0.18em;
+}
+
+// 사이드바
+.sidebar-logo {
+  max-height: 64px;
+  margin: 0.4rem 0 0.2rem;
+}
+
+.sidebar-title {
+  font-weight: 750;
+  color: $navy;
+  letter-spacing: -0.02em;
+}
+
 .sidebar-item-section > .sidebar-item-container .sidebar-item-text {
   font-weight: 700;
-  color: $body-color;
+  color: $navy;
 }
 
-// 코드 셀과 출력
+.sidebar-navigation .sidebar-item .sidebar-link.active,
+.sidebar-navigation .sidebar-item .sidebar-link.active .menu-text {
+  font-weight: 700;
+}
+
+// 코드와 출력
 div.sourceCode, pre.sourceCode {
-  border-radius: 6px;
   border: 1px solid $border-color;
+  border-radius: 10px;
+  background: $code-bg;
+}
+
+.cell-output pre {
+  border-radius: 10px;
 }
 
 .cell-output-display table {
@@ -75,11 +125,14 @@ div.sourceCode, pre.sourceCode {
   font-variant-numeric: tabular-nums;
   display: block;
   overflow-x: auto;
+  border-radius: 8px;
 }
 
-.cell-output-display img {
+.cell-output-display img,
+.quarto-figure img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
 }
 
 details.code-fold > summary {
@@ -87,38 +140,168 @@ details.code-fold > summary {
   font-size: 0.85rem;
 }
 
-// 옮긴이 콜아웃
+// 옮긴이 상자
 .callout.callout-style-simple.callout-tip {
-  border-left-color: $primary;
-  background: lighten($code-bg, 1%);
+  border-left: 4px solid $lavender;
+  border-radius: 8px;
+  background: $lavender-soft;
   font-size: 0.95rem;
 }
 
-.callout-tip .callout-title-container {
+// 들어가며 첫 화면
+.hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0.5rem 0 2.5rem;
+  padding: 2.4rem 2.4rem 2.2rem;
+  border-radius: 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 85% 20%, rgba($lavender, 0.55), transparent 45%),
+    linear-gradient(135deg, $navy 0%, $indigo 60%, #5a4fb0 100%);
+}
+
+.hero .hero-mark {
+  position: absolute;
+  right: 1.6rem;
+  top: 1.4rem;
+  width: 130px;
+  opacity: 0.95;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+}
+
+.hero .hero-kicker {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero .hero-title {
+  margin: 0;
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.hero .hero-sub {
+  max-width: 30rem;
+  margin: 0.8rem 0 1.6rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero .hero-actions a {
+  display: inline-block;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.hero .hero-actions a.primary {
+  background: #fff;
+  color: $navy;
+}
+
+.hero .hero-actions a.ghost {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.hero .hero-actions a:hover {
+  opacity: 0.9;
+}
+
+.toc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin: 1.2rem 0 2rem;
+}
+
+.toc-cards .card-item {
+  padding: 1.1rem 1.2rem;
+  border: 1px solid $border-color;
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.toc-cards .card-item:hover {
+  border-color: $lavender;
+  transform: translateY(-2px);
+}
+
+.toc-cards .card-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: $sidebar-fg;
+}
+
+.toc-cards .card-item .card-label {
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  color: $indigo;
 }
 
-// 표지(index) 영역
-.cover-hero {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  margin: 1rem 0 2.5rem;
-}
-
-.cover-hero img {
-  width: 220px;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(60, 40, 20, 0.18);
-}
-
-.cover-hero .cover-meta p {
+.toc-cards .card-item .card-title {
   margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 750;
+  color: $navy;
 }
 
 @media (max-width: 640px) {
-  .cover-hero {
-    flex-direction: column;
-    align-items: flex-start;
+  .hero {
+    padding: 1.8rem 1.4rem;
   }
+  .hero .hero-mark {
+    width: 80px;
+    right: 1rem;
+    top: 1rem;
+  }
+  .hero .hero-title {
+    font-size: 1.8rem;
+    padding-right: 4rem;
+  }
+}
+
+// 들어가며: 히어로가 제목을 대신하므로 기본 제목 블록은 숨김
+main:has(.hero) #title-block-header {
+  display: none;
+}
+
+// 사이드바의 장 번호는 작은 숫자로, 제목이 줄바꿈돼도 들여쓰기 유지
+.sidebar .menu-text {
+  display: flex;
+  gap: 0.55em;
+  align-items: baseline;
+}
+
+.sidebar .chapter-number {
+  min-width: 1.4em;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: $lavender;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sidebar .sidebar-link.active .chapter-number {
+  color: $indigo;
+}
+
+// 본문 그림은 가운데
+.cell-output-display p:has(> img),
+.quarto-figure {
+  text-align: center;
 }
