@@ -19,7 +19,7 @@
 
 
 
-이 책은 Joshua Angrist, Alberto Abadie, Christopher Walters, Miguel Hernan 및 Jamie Robins 등을 포함한 많은 연구자들의 계량 경제학 수업과 바탕으로 하고 있으며, 대부분의 아이디어는 전미경제학회(American Economic Association)의 수업에서 가져왔습니다. 이 책을 작성하기 위해 참고한 자료와 서적은 아래와 같습니다.   
+이 책은 Joshua Angrist, Alberto Abadie, Christopher Walters, Miguel Hernan 및 Jamie Robins 등을 포함한 많은 연구자들의 계량 경제학 수업과 바탕으로 하고 있으며, 대부분의 아이디어는 미국경제학회(American Economic Association)의 수업에서 가져왔습니다. 이 책을 작성하기 위해 참고한 자료와 서적은 아래와 같습니다.   
 
 * [Cross-Section Econometrics](https://www.aeaweb.org/conference/cont-ed/2017-webcasts)
 * [Mastering Mostly Harmless Econometrics](https://www.aeaweb.org/conference/cont-ed/2020-webcasts)
