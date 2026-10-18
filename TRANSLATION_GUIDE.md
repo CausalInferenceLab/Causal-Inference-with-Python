@@ -24,6 +24,8 @@
 - 핵심 용어는 장마다 처음 나올 때 `한국어(English)`로 한 번 병기하고, 그 뒤로는 한국어만 씁니다.
 - ATE, CATE, DID, OLS 같은 약어는 처음에 `평균 처치효과(ATE)`처럼 풀어 쓰고 이후에는 약어를 써도 됩니다.
 - 장 제목(H1)은 원문 영어 제목을 유지하고, 그 아래 절 제목은 한국어로 옮깁니다. `Key Ideas`는 `핵심 요약`, `References`는 `참고 자료`, `Contribute`는 `기여하기`로 통일합니다.
+- 문장은 `-습니다`로 맺습니다. 평서문을 `-죠.`, `-네요.`로 끝내지 않습니다. 독자에게 되묻는 `~죠?`는 써도 됩니다.
+- white collar / blue collar는 `사무직` / `생산직`으로 옮깁니다.
 - 브라질 화폐는 `5헤알`처럼 쓰고, 장마다 처음 나올 때만 `5헤알(BRL)`로 병기합니다.
 - 인명은 원어 표기를 기본으로 합니다(예: Joshua Angrist). 본문 흐름상 한글 표기가 자연스러우면 『실무로 통하는 인과추론』의 표기(조슈아 앵그리스트, 알베르토 아바디, 주데아 펄)를 따릅니다.
 
@@ -47,6 +49,7 @@
 | counterfactual | 반사실 / 반사실적 결과 | |
 | factual outcome | 사실적 결과 | |
 | treatment effect | 처치효과 | 붙여 씀 |
+| be treated | 처치받다 | 붙여 씀(`처치받은`, `처치받지`). 목적격을 쓰면 `처치를 받다` |
 | individual treatment effect (ITE) | 개별 처치효과(ITE) | |
 | average treatment effect (ATE) | 평균 처치효과(ATE) | |
 | average treatment effect on the treated (ATT) | 실험군에 대한 평균 처치효과(ATT) | |
@@ -63,6 +66,7 @@
 | estimand / causal quantity | 인과 추정량 | |
 | estimator | 추정량 | |
 | parameter | 매개변수 | `모수`, `파라미터` 쓰지 않음. nuisance parameter는 장애모수, parametric은 모수적 |
+| hyperparameter | 하이퍼파라미터 | 머신러닝 관례를 따름. parameter 항목의 예외 |
 | estimate (명사) | 추정값 | `추정치` 쓰지 않음 |
 | SUTVA | SUTVA | |
 | spillover | 파급 효과 | |
