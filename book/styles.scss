@@ -157,13 +157,130 @@ details.code-fold > summary {
     linear-gradient(135deg, $navy 0%, $indigo 60%, #5a4fb0 100%);
 }
 
+.hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.hero .hero-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hero .hero-aside {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
 .hero .hero-mark {
-  position: absolute;
-  right: 1.6rem;
-  top: 1.4rem;
   width: 130px;
   opacity: 0.95;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+}
+
+.hero .hero-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.hero .hero-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.hero .hero-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.hero .hero-links .tag {
+  flex: none;
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: $navy;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.hero .hero-links .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 들어가며: 함께 보면 좋은 자료
+.further {
+  margin: 1.6rem 0 2.2rem;
+  padding: 1.3rem 1.4rem 1.4rem;
+  border-radius: 16px;
+  background: $lavender-soft;
+  border: 1px solid rgba($lavender, 0.45);
+}
+
+.further .further-lead {
+  margin: 0 0 1rem;
+  font-weight: 600;
+  color: $navy;
+}
+
+.further .further-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.8rem;
+}
+
+.further .further-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  background: $body-bg;
+  border: 1px solid rgba($indigo, 0.15);
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.further .further-card:hover {
+  border-color: $indigo;
+  box-shadow: 0 8px 22px rgba($navy, 0.12);
+  transform: translateY(-2px);
+}
+
+.further .further-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $indigo;
+}
+
+.further .further-title {
+  font-weight: 750;
+  color: $navy;
+  line-height: 1.4;
+}
+
+.further .further-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: $body-color;
 }
 
 
@@ -250,8 +367,23 @@ details.code-fold > summary {
   .hero {
     padding: 1.8rem 1.4rem;
   }
+  .hero {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .hero .hero-aside {
+    flex: none;
+    width: 100%;
+  }
   .hero .hero-mark {
     display: none;
+  }
+  .hero .hero-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .hero .hero-links a {
+    flex: 1 1 180px;
   }
   .hero .hero-title {
     font-size: 1.8rem;
@@ -485,4 +617,68 @@ main.content .quarto-figure img,
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+// 목차 너비 조절: 넓은 화면에서만, 손잡이를 끌어 바꾸고 브라우저에 기억
+@media (min-width: 992px) {
+  body.docked #quarto-content.page-columns {
+    grid-template-columns:
+      [screen-start] var(--sidebar-w, 290px)
+      [screen-start-inset page-start page-start-inset body-start-outset] 1.5em
+      [body-start] 1.5em
+      [body-content-start] minmax(500px, calc(1000px - 3em))
+      [body-content-end] 1.5em
+      [body-end] 50px
+      [body-end-outset] minmax(50px, 100px)
+      [page-end-inset] 50px
+      [page-end] 5fr
+      [screen-end-inset] 1.5em
+      [screen-end];
+  }
+  body.docked .sidebar.sidebar-navigation {
+    grid-column: screen-start / screen-start-inset;
+  }
+  #quarto-sidebar .sidebar-menu-container {
+    min-width: 0;
+    white-space: normal;
+  }
+  .sidebar-resizer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--sidebar-w, 290px) - 4px);
+    width: 8px;
+    cursor: col-resize;
+    z-index: 1040;
+  }
+  .sidebar-resizer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 3px;
+    width: 2px;
+    background: transparent;
+    transition: background 0.15s ease;
+  }
+  .sidebar-resizer:hover::after,
+  body.sidebar-resizing .sidebar-resizer::after {
+    background: $lavender;
+  }
+  body.sidebar-resizing {
+    cursor: col-resize;
+    user-select: none;
+  }
+}
+@media (max-width: 991.98px) {
+  .sidebar-resizer {
+    display: none;
+  }
+}
+
+// 폭이 넓은 수식은 본문 밖으로 넘치지 않고 가로로 스크롤
+mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
 }
