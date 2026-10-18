@@ -37,12 +37,12 @@ aliases:
 ```{=html}
 <div class="toc-cards">
   <a class="card-item" href="01-Introduction-To-Causality.html" style="text-decoration:none">
-    <div class="card-label">1부 · 1–16장</div>
+    <div class="card-label">1부 · 1~16장</div>
     <div class="card-title">인과추론의 기초</div>
     <p>잠재적 결과, 인과 그래프, 편향부터 회귀분석, 도구변수, 매칭, 성향점수, 이중차분법, 통제집단합성법, 회귀 불연속 설계까지.</p>
   </a>
   <a class="card-item" href="17-Predictive-Models-101.html" style="text-decoration:none">
-    <div class="card-label">2부 · 17–25장</div>
+    <div class="card-label">2부 · 17~25장</div>
     <div class="card-title">인과추론의 실무 응용</div>
     <p>이질적 처치효과와 개인화, 인과 모델 평가, 메타러너, 이중 머신러닝, 이중차분법의 최근 논의와 합성 이중차분법.</p>
   </a>
