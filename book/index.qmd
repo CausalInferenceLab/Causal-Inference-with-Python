@@ -6,18 +6,26 @@ aliases:
 
 ```{=html}
 <div class="hero">
-  <img class="hero-mark" src="assets/causal-lab-mark.png" alt="가짜연구소 인과추론팀 로고">
-  <div class="hero-brand">
-    <img class="hero-pseudolab" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
-    <span class="hero-brand-divider"></span>
-    <span class="hero-brand-team">인과추론팀 <b>Causal-Lab</b></span>
+  <div class="hero-main">
+    <div class="hero-brand">
+      <img class="hero-pseudolab" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
+      <span class="hero-brand-divider"></span>
+      <span class="hero-brand-team">인과추론팀 <b>Causal-Lab</b></span>
+    </div>
+    <p class="hero-title">Python으로 하는<br>인과추론</p>
+    <p class="hero-sub">Causal Inference for The Brave and True 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
+    <div class="hero-actions">
+      <a class="primary" href="01-Introduction-To-Causality.html">1장부터 읽기</a>
+      <a class="ghost" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">GitHub</a>
+      <a class="ghost" href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">원서 보기</a>
+    </div>
   </div>
-  <p class="hero-title">Python으로 하는<br>인과추론</p>
-  <p class="hero-sub">Causal Inference for The Brave and True 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
-  <div class="hero-actions">
-    <a class="primary" href="01-Introduction-To-Causality.html">1장부터 읽기</a>
-    <a class="ghost" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">GitHub</a>
-    <a class="ghost" href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">원서 보기</a>
+  <div class="hero-aside">
+    <img class="hero-mark" src="assets/causal-lab-mark.png" alt="가짜연구소 인과추론팀 로고">
+    <div class="hero-links">
+      <a href="https://product.kyobobook.co.kr/detail/S000212577153"><span class="tag">도서</span><span class="name">실무로 통하는 인과추론</span></a>
+      <a href="https://www.hanbit.co.kr/product/C0781073345"><span class="tag">강의</span><span class="name">AI 인과추론 실무</span></a>
+    </div>
   </div>
 </div>
 ```
@@ -29,6 +37,24 @@ aliases:
 이 책은 Matheus Facure의 『Causal Inference for The Brave and True』를 가짜연구소 인과추론팀이 원저자의 동의를 받아 우리말로 옮긴 것입니다. 인과추론은 "이 정책이, 이 할인이, 이 기능이 정말 효과가 있었을까?"라는 질문에 데이터로 답하는 방법입니다. 그런데 막상 공부하려고 하면 한국어로 된 자료, 특히 코드와 함께 손으로 따라 해 볼 수 있는 자료가 많지 않습니다. 이 책이 그 빈자리를 채우는 길잡이가 되면 좋겠습니다.
 
 원서는 가볍지만 엄밀하게 효과 추정을 배우는 책입니다. 모든 실습을 파이썬으로 하고, 저자가 찾을 수 있는 밈은 최대한 넣었습니다. 딱딱한 교과서보다는 옆자리 동료가 설명해 주는 느낌으로 읽어 주세요.
+
+```{=html}
+<div class="further">
+  <p class="further-lead">이 책으로 기본기를 다진 뒤 실무 사례와 함께 더 깊이 들어가고 싶다면, 같은 저자의 책과 그 책을 바탕으로 한 강의를 함께 보세요.</p>
+  <div class="further-cards">
+    <a class="further-card" href="https://product.kyobobook.co.kr/detail/S000212577153">
+      <span class="further-tag">도서 · 한빛미디어</span>
+      <span class="further-title">실무로 통하는 인과추론 with 파이썬</span>
+      <span class="further-desc">Matheus Facure의 『Causal Inference in Python』 번역서입니다. 이 웹북과 같은 용어를 쓰고, 회사에서 자주 마주치는 문제를 인과추론으로 푸는 과정을 더 자세히 다룹니다.</span>
+    </a>
+    <a class="further-card" href="https://www.hanbit.co.kr/product/C0781073345">
+      <span class="further-tag">강의 · 한빛+</span>
+      <span class="further-title">데이터 실무자의 사고력 강화: AI 인과추론 실무</span>
+      <span class="further-desc">번역서의 역자 신진수가 진행합니다. A/B 테스트의 한계, 준실험, 매칭과 성향점수, 이중차분법, 도구변수, 인과 머신러닝을 실제 분석 사례와 함께 풀고, 실험 결과를 의사결정으로 잇는 방법까지 다룹니다.</span>
+    </a>
+  </div>
+</div>
+```
 
 ## 이 책의 구성
 
