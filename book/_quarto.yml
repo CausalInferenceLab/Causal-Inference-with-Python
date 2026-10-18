@@ -1,0 +1,98 @@
+project:
+  type: book
+  output-dir: _book
+  resources:
+    - data/img/**
+
+lang: ko
+
+execute:
+  enabled: false
+
+book:
+  title: "Python으로 하는 인과추론"
+  subtitle: "Causal Inference for The Brave and True 한국어판"
+  author:
+    - name: Matheus Facure
+      role: 지은이
+    - name: 가짜연구소 인과추론팀
+      role: 옮긴이
+  site-url: https://causalinferencelab.github.io/Causal-Inference-with-Python/
+  repo-url: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
+  repo-subdir: causal-inference-for-the-brave-and-true
+  repo-actions: [issue]
+  cover-image: data/img/brave-and-true.png
+  favicon: data/img/brave-and-true.png
+  search: true
+  page-navigation: true
+  sidebar:
+    style: floating
+    collapse-level: 1
+  page-footer:
+    left: "원서 © Matheus Facure · 한국어판 가짜연구소 인과추론팀"
+    right:
+      - icon: github
+        href: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
+  chapters:
+    - index.qmd
+    - part: "1부 인과추론의 기초"
+      chapters:
+        - 01-Introduction-To-Causality.ipynb
+        - 02-Randomised-Experiments.ipynb
+        - 03-Stats-Review-The-Most-Dangerous-Equation.ipynb
+        - 04-Graphical-Causal-Models.ipynb
+        - 05-The-Unreasonable-Effectiveness-of-Linear-Regression.ipynb
+        - 06-Grouped-and-Dummy-Regression.ipynb
+        - 07-Beyond-Confounders.ipynb
+        - 08-Instrumental-Variables.ipynb
+        - 09-Non-Compliance-and-LATE.ipynb
+        - 10-Matching.ipynb
+        - 11-Propensity-Score.ipynb
+        - 12-Doubly-Robust-Estimation.ipynb
+        - 13-Difference-in-Differences.ipynb
+        - 14-Panel-Data-and-Fixed-Effects.ipynb
+        - 15-Synthetic-Control.ipynb
+        - 16-Regression-Discontinuity-Design.ipynb
+    - part: "2부 인과추론의 실무 응용"
+      chapters:
+        - 17-Predictive-Models-101.ipynb
+        - 18-Heterogeneous-Treatment-Effects-and-Personalization.ipynb
+        - 19-Evaluating-Causal-Models.ipynb
+        - 20-Plug-and-Play-Estimators.ipynb
+        - 21-Meta-Learners.ipynb
+        - 22-Debiased-Orthogonal-Machine-Learning.ipynb
+        - 23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.ipynb
+        - 24-The-Diff-in-Diff-Saga.ipynb
+        - 25-Synthetic-Diff-in-Diff.ipynb
+  appendices:
+    - Debiasing-with-Orthogonalization.ipynb
+    - Debiasing-with-Propensity-Score.ipynb
+    - When-Prediction-Fails.ipynb
+    - Prediction-Metrics-For-Causal-Models.ipynb
+    - Conformal-Inference-for-Synthetic-Control.ipynb
+
+crossref:
+  chapters: true
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [cosmo, styles.scss, styles-dark.scss]
+    respect-user-color-scheme: true
+    toc: true
+    toc-depth: 2
+    toc-title: 이 장의 내용
+    number-sections: true
+    number-depth: 1
+    code-copy: true
+    code-overflow: wrap
+    code-tools: false
+    html-math-method: mathjax
+    df-print: default
+    link-external-newwindow: true
+    include-in-header:
+      - text: |
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">

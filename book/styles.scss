@@ -1,0 +1,124 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+$headings-font-family: "Noto Serif KR", "Pretendard Variable", serif;
+$font-size-root: 17px;
+$line-height-base: 1.85;
+
+$body-color: #23272f;
+$body-bg: #fdfcf9;
+$primary: #8a3b12;      // 표지 주황빛에 맞춘 차분한 갈색
+$link-color: #8a3b12;
+$code-color: #8a3b12;
+$code-bg: #f4f1ea;
+$border-color: #e6e1d6;
+
+$sidebar-bg: #f7f4ee;
+$sidebar-fg: #4a4f59;
+$sidebar-hl: #8a3b12;
+$toc-color: #8a3b12;
+$footer-bg: #f7f4ee;
+
+/*-- scss:rules --*/
+body {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  letter-spacing: -0.005em;
+}
+
+// 본문 폭을 책 판형처럼
+#quarto-content main.content {
+  max-width: 760px;
+}
+
+h1, h2, h3, .title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1.title {
+  font-size: 2.1rem;
+  margin-bottom: 0.4rem;
+}
+
+// 장 제목의 "13장" 번호
+.chapter-number {
+  color: $primary;
+  font-weight: 600;
+  margin-right: 0.35em;
+}
+
+h2 {
+  margin-top: 2.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid $border-color;
+}
+
+p {
+  margin-bottom: 1.15rem;
+}
+
+// 사이드바의 부 제목
+.sidebar-item-section > .sidebar-item-container .sidebar-item-text {
+  font-weight: 700;
+  color: $body-color;
+}
+
+// 코드 셀과 출력
+div.sourceCode, pre.sourceCode {
+  border-radius: 6px;
+  border: 1px solid $border-color;
+}
+
+.cell-output-display table {
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  display: block;
+  overflow-x: auto;
+}
+
+.cell-output-display img {
+  max-width: 100%;
+  height: auto;
+}
+
+details.code-fold > summary {
+  color: $sidebar-fg;
+  font-size: 0.85rem;
+}
+
+// 옮긴이 콜아웃
+.callout.callout-style-simple.callout-tip {
+  border-left-color: $primary;
+  background: lighten($code-bg, 1%);
+  font-size: 0.95rem;
+}
+
+.callout-tip .callout-title-container {
+  font-weight: 700;
+}
+
+// 표지(index) 영역
+.cover-hero {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin: 1rem 0 2.5rem;
+}
+
+.cover-hero img {
+  width: 220px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(60, 40, 20, 0.18);
+}
+
+.cover-hero .cover-meta p {
+  margin-bottom: 0.4rem;
+}
+
+@media (max-width: 640px) {
+  .cover-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,58 @@
+name: Book
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: book-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 노트북은 실행하지 않고 저장된 출력을 그대로 렌더링하므로 jupyter만 있으면 됩니다.
+      - name: Install Jupyter
+        run: pip install jupyter
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.8.25
+
+      - name: Prepare book sources
+        run: python book/prepare.py
+
+      - name: Render book
+        working-directory: book
+        run: quarto render --to html
+
+      - name: Upload preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-preview
+          path: book/_book
+          retention-days: 7
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: book/_book
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "Deploy book"
