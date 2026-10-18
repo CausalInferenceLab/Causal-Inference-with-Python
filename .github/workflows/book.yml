@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: book-${{ github.ref }}
@@ -47,12 +49,21 @@ jobs:
           path: book/_book
           retention-days: 7
 
-      - name: Deploy to GitHub Pages
+      # gh-pages 브랜치에 push하지 않고 Pages에 직접 배포합니다(브랜치 보호 규칙과 무관).
+      - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: book/_book
-          publish_branch: gh-pages
-          force_orphan: true
-          commit_message: "Deploy book"
+          path: book/_book
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
