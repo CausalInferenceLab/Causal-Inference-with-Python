@@ -27,10 +27,16 @@ book:
   page-navigation: true
   sidebar:
     style: docked
-    logo: assets/causal-lab-mark.png
     collapse-level: 2
+    header: |
+      <a class="brand-lockup" href="https://pseudo-lab.com/" target="_blank" rel="noopener" aria-label="가짜연구소">
+        <img class="brand-pseudolab only-light" src="assets/pseudolab-dark.png" alt="가짜연구소 Pseudo Lab">
+        <img class="brand-pseudolab only-dark" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
+        <span class="brand-divider"></span>
+        <img class="brand-causal" src="assets/causal-lab-mark.png" alt="인과추론팀 Causal-Lab">
+      </a>
   page-footer:
-    left: "원서 © Matheus Facure · 한국어판 가짜연구소 인과추론팀"
+    left: "[가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김 · 원서 © Matheus Facure"
     right:
       - icon: github
         href: https://github.com/CausalInferenceLab/Causal-Inference-with-Python
@@ -80,7 +86,6 @@ format:
     theme:
       light: [cosmo, styles.scss]
       dark: [cosmo, styles.scss, styles-dark.scss]
-    respect-user-color-scheme: true
     toc: true
     toc-depth: 2
     toc-title: 이 장의 내용

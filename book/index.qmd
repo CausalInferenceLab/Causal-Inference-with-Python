@@ -7,7 +7,11 @@ aliases:
 ```{=html}
 <div class="hero">
   <img class="hero-mark" src="assets/causal-lab-mark.png" alt="가짜연구소 인과추론팀 로고">
-  <p class="hero-kicker">가짜연구소 인과추론팀 · Causal-Lab</p>
+  <div class="hero-brand">
+    <img class="hero-pseudolab" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
+    <span class="hero-brand-divider"></span>
+    <span class="hero-brand-team">인과추론팀 <b>Causal-Lab</b></span>
+  </div>
   <p class="hero-title">Python으로 하는<br>인과추론</p>
   <p class="hero-sub">Causal Inference for The Brave and True 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
   <div class="hero-actions">
