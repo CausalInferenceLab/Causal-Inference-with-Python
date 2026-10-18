@@ -1,0 +1,44 @@
+<script>
+(function () {
+  var KEY = "cil-sidebar-width", MIN = 220, MAX = 480;
+  var root = document.documentElement;
+  try {
+    var saved = parseInt(localStorage.getItem(KEY), 10);
+    if (saved >= MIN && saved <= MAX) root.style.setProperty("--sidebar-w", saved + "px");
+  } catch (e) {}
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!document.body.classList.contains("docked") || !document.getElementById("quarto-sidebar")) return;
+    var bar = document.createElement("div");
+    bar.className = "sidebar-resizer";
+    bar.setAttribute("role", "separator");
+    bar.setAttribute("aria-orientation", "vertical");
+    bar.title = "끌어서 목차 너비 조절 (두 번 누르면 원래대로)";
+    document.body.appendChild(bar);
+    var dragging = false;
+    function setW(w) {
+      w = Math.max(MIN, Math.min(MAX, Math.round(w)));
+      root.style.setProperty("--sidebar-w", w + "px");
+      return w;
+    }
+    bar.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      bar.setPointerCapture(e.pointerId);
+      document.body.classList.add("sidebar-resizing");
+      e.preventDefault();
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (dragging) setW(e.clientX);
+    });
+    bar.addEventListener("pointerup", function (e) {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("sidebar-resizing");
+      try { localStorage.setItem(KEY, setW(e.clientX)); } catch (err) {}
+    });
+    bar.addEventListener("dblclick", function () {
+      root.style.removeProperty("--sidebar-w");
+      try { localStorage.removeItem(KEY); } catch (err) {}
+    });
+  });
+})();
+</script>
