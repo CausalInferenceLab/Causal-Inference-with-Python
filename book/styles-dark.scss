@@ -128,3 +128,19 @@ body {
   background: #1b1d2a;
   color: #eceaff;
 }
+
+.gloss-table thead th {
+  background: #14151f;
+  color: #c9bcf5;
+}
+.gloss-table strong,
+.ch-chip {
+  color: #eceaff !important;
+}
+.ch-chip {
+  background: rgba(169, 150, 214, 0.12);
+  border-color: rgba(169, 150, 214, 0.25);
+}
+.ch-chip b {
+  color: #c9bcf5;
+}
