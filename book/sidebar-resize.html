@@ -12,6 +12,13 @@
   if (get(KEY_R) === "1") root.classList.add("toc-collapsed");
 
   document.addEventListener("DOMContentLoaded", function () {
+    // 용어집은 부록 묶음 밖, 목차 맨 아래에 둔다
+    var gl = document.querySelector('#quarto-sidebar a.sidebar-link[href$="glossary.html"]');
+    var top = document.querySelector("#quarto-sidebar .sidebar-menu-container > ul");
+    if (gl && top) {
+      var li = gl.closest("li.sidebar-item");
+      if (li && li.parentElement !== top) { li.classList.add("sidebar-glossary"); top.appendChild(li); }
+    }
     var sidebar = document.getElementById("quarto-sidebar");
     if (!document.body.classList.contains("docked") || !sidebar) return;
 
