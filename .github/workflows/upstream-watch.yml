@@ -3,7 +3,7 @@ name: Upstream watch
 # 원서 저장소에 새 변경이 생기면 메인테이너에게 배정된 검토 이슈를 만든다.
 on:
   schedule:
-    - cron: "17 0 * * *"  # 매일 오전 9시 17분(KST)
+    - cron: "17 0 1 * *"  # 매월 1일 오전 9시 17분(KST)
   workflow_dispatch:
   push:
     branches: [main]

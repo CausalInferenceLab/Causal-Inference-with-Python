@@ -204,7 +204,7 @@ def report(base, head, commits, files, upstream, titles):
         "2. 반영할 장은 번역 가이드에 따라 고친 뒤 PR을 엽니다. PR에서 `.github/upstream.json`의 `synced_sha`를 이 이슈의 원서 최신 커밋으로, `synced_at`을 날짜로 바꿉니다.",
         "3. 메인테이너가 PR을 검토하고 머지하면 웹북에 배포되고, 다음 점검 때 이 이슈가 자동으로 닫힙니다.",
         "",
-        "이 이슈는 `Upstream watch` 워크플로가 매일 자동으로 갱신합니다.",
+        "이 이슈는 `Upstream watch` 워크플로가 매월 1일 자동으로 갱신합니다.",
     ]
     body = "\n".join(lines)
     return body[:60000]
