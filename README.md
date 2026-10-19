@@ -23,7 +23,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
   <a href="https://doi.org/10.5281/zenodo.4445778"><img src="https://img.shields.io/badge/%EC%9B%90%EC%84%9C%20DOI-10.5281%2Fzenodo.4445778-blue" alt="원서 DOI"></a>
 </p>
 
-**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
+**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [인과추론 허브](https://causalinferencelab.github.io/) · [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
 
 <br>
 
@@ -34,6 +34,8 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 『Causal Inference for The Brave and True』는 Nubank의 데이터 과학자 Matheus Facure가 쓴 인과추론 입문서입니다. 잠재적 결과와 무작위 실험 같은 기본 개념에서 시작해 이중차분법, 통제집단합성법, 메타러너, 직교화 머신러닝까지 다루고, 모든 장을 Python 코드로 직접 따라 할 수 있습니다. 인과추론을 처음 공부하는 분에게도, 실무 사례를 찾는 분에게도 좋은 출발점이 되리라 생각해 우리말로 옮겼습니다.
 
 번역은 전문 번역가가 아니라 데이터 분석가, 데이터 과학자, 연구자들이 함께 했습니다. 용어는 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄고, 핵심 용어는 처음 나올 때 영어를 함께 적었습니다. 어색한 문장이나 잘못된 번역을 발견하면 언제든 알려 주세요.
+
+이 책은 인과추론팀의 오픈소스를 학습 단계와 트랙별로 엮은 [인과추론 허브](https://causalinferencelab.github.io/) 서가에도 올라 있습니다. 허브의 노선도에서 이 책 앞뒤로 이어지는 자료를 찾을 수 있습니다.
 
 <br>
 
