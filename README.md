@@ -104,6 +104,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 
 ## 함께 만들기
 
+- 웹북의 각 장 끝 '의견 나누기'에서 GitHub 계정으로 로그인해 댓글을 남길 수 있습니다. 댓글은 장별로 [GitHub Discussions](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/discussions)에 모입니다.
 - 오역, 오탈자, 깨진 수식이나 그림은 [이슈](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)로 알려 주세요.
 - 직접 고치고 싶다면 [번역 가이드](TRANSLATION_GUIDE.md)를 읽고 PR을 보내 주세요. 원고는 `causal-inference-for-the-brave-and-true/` 폴더의 노트북입니다.
 - 그 밖의 문의는 메인테이너 [신진수](https://github.com/jsshin2022)에게 부탁드립니다.
