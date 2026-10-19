@@ -122,7 +122,7 @@ python book/prepare.py
 cd book && quarto preview
 ```
 
-`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 검색 결과 미리보기의 수식 기호를 읽기 쉽게 정리합니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
+`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 렌더링이 끝난 뒤 웹북 검색 색인(`search-index.json`)을 만듭니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
 
 <br>
 
