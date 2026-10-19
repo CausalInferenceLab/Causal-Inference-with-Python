@@ -11,3 +11,4 @@ _book/
 /.quarto/
 **/*.quarto_ipynb
 glossary.qmd
+comments.html
