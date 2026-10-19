@@ -715,3 +715,96 @@ h1.title .chapter-number {
     display: none;
   }
 }
+
+// 좁은 화면용 '이 장의 내용' (기본으로 펼침)
+.inline-toc {
+  display: none;
+  margin: 0 0 1.8rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  background: $lavender-soft;
+  border: 1px solid rgba($lavender, 0.45);
+}
+.inline-toc summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: $navy;
+}
+.inline-toc ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+}
+.inline-toc li {
+  margin: 0;
+  line-height: 1.75;
+}
+.inline-toc a {
+  text-decoration: none;
+}
+@media (max-width: 991.98px) {
+  .inline-toc {
+    display: block;
+  }
+  #quarto-margin-sidebar {
+    display: none !important;
+  }
+}
+
+// 태블릿 폭(768~991px)에서도 왼쪽 목차를 접지 않고 늘 보여 줌
+@media (min-width: 768px) and (max-width: 991.98px) {
+  body.docked #quarto-content.page-columns {
+    display: grid;
+    grid-template-columns:
+      [screen-start] 250px
+      [screen-start-inset page-start page-start-inset body-start-outset] 1.5em
+      [body-start body-content-start] minmax(0, 1fr)
+      [body-content-end body-end] 1.5em
+      [body-end-outset page-end-inset page-end screen-end-inset screen-end];
+  }
+  body.docked #quarto-sidebar.collapse,
+  body.docked #quarto-sidebar.collapsing {
+    display: flex !important;
+    visibility: visible !important;
+    position: sticky !important;
+    top: 0;
+    width: 250px !important;
+    height: 100vh !important;
+    max-height: 100vh;
+    transform: none !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    padding: 0 0.6rem 1rem;
+    grid-column: screen-start / screen-start-inset;
+    grid-row: content-top / page-bottom;
+    z-index: 1;
+    box-shadow: none;
+  }
+  #quarto-sidebar .sidebar-menu-container {
+    min-width: 0;
+    white-space: normal;
+  }
+  .quarto-secondary-nav .quarto-btn-toggle {
+    display: none;
+  }
+  #quarto-sidebar-glass {
+    display: none !important;
+  }
+}
+
+// 휴대폰: 목차 버튼에 글자를 붙여 찾기 쉽게
+@media (max-width: 767.98px) {
+  .quarto-secondary-nav .quarto-btn-toggle::after {
+    content: "목차";
+    margin-left: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $navy;
+  }
+}
+
+// 검색 결과 창을 본문 쪽으로 넓혀 미리보기를 읽기 쉽게
+@media (min-width: 992px) {
+  .aa-Panel {
+    min-width: min(560px, calc(100vw - 2rem));
+  }
+}

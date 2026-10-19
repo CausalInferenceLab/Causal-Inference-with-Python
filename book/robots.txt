@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://causalinferencelab.github.io/Causal-Inference-with-Python/sitemap.xml

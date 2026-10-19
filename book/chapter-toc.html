@@ -1,0 +1,22 @@
+<script>
+// 좁은 화면(오른쪽 목차가 사라지는 폭)에서는 장 첫머리에 '이 장의 내용'을 펼친 채로 보여 준다.
+document.addEventListener("DOMContentLoaded", function () {
+  var toc = document.querySelector("nav#TOC > ul");
+  var header = document.getElementById("title-block-header");
+  if (!toc || !header || !document.querySelector("main h2")) return;
+  var box = document.createElement("details");
+  box.className = "inline-toc";
+  box.open = true;
+  var summary = document.createElement("summary");
+  summary.textContent = "이 장의 내용";
+  box.appendChild(summary);
+  var list = toc.cloneNode(true);
+  list.removeAttribute("id");
+  list.classList.remove("collapse");
+  list.querySelectorAll(".collapse").forEach(function (el) { el.classList.remove("collapse"); });
+  list.querySelectorAll("[id]").forEach(function (el) { el.removeAttribute("id"); });
+  list.querySelectorAll("a").forEach(function (a) { a.classList.remove("active"); a.removeAttribute("data-scroll-target"); });
+  box.appendChild(list);
+  header.insertAdjacentElement("afterend", box);
+});
+</script>
