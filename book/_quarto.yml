@@ -11,6 +11,9 @@ execute:
   enabled: false
 
 book:
+  google-analytics:
+    tracking-id: "G-BEBVKYH8HL"
+    anonymize-ip: true
   title: "Python으로 하는 인과추론"
   subtitle: "Causal Inference for The Brave and True 한국어판"
   author:
