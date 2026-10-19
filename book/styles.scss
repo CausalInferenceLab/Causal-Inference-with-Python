@@ -619,28 +619,36 @@ main.content .quarto-figure img,
   margin-right: auto;
 }
 
-// 목차 너비 조절: 넓은 화면에서만, 손잡이를 끌어 바꾸고 브라우저에 기억
+// 넓은 화면 레이아웃: 왼쪽 목차 | 본문 | 이 장의 내용
+// 본문은 왼쪽 목차 바로 옆에서 시작하므로, 목차 너비를 바꾸면 본문이 손잡이를 따라 움직인다.
 @media (min-width: 992px) {
   body.docked #quarto-content.page-columns {
     grid-template-columns:
       [screen-start] var(--sidebar-w, 290px)
-      [screen-start-inset page-start page-start-inset body-start-outset] 1.5em
-      [body-start] 1.5em
-      [body-content-start] minmax(500px, calc(1000px - 3em))
-      [body-content-end] 1.5em
-      [body-end] 50px
-      [body-end-outset] minmax(50px, 100px)
-      [page-end-inset] 50px
-      [page-end] 5fr
-      [screen-end-inset] 1.5em
+      [screen-start-inset page-start page-start-inset body-start-outset] clamp(1.5rem, 3vw, 3rem)
+      [body-start body-content-start] minmax(0, 52rem)
+      [body-content-end] clamp(1.5rem, 3vw, 3rem)
+      [body-end body-end-outset] minmax(150px, 240px)
+      [page-end-inset] 1.5rem
+      [page-end] 1fr
+      [screen-end-inset] 0
       [screen-end];
   }
   body.docked .sidebar.sidebar-navigation {
     grid-column: screen-start / screen-start-inset;
   }
+  #quarto-sidebar {
+    transition: none;
+  }
   #quarto-sidebar .sidebar-menu-container {
     min-width: 0;
     white-space: normal;
+  }
+  html.sidebar-collapsed {
+    --sidebar-w: 72px !important;
+  }
+  html.sidebar-collapsed #quarto-sidebar {
+    display: none !important;
   }
   .sidebar-resizer {
     position: fixed;
@@ -650,6 +658,7 @@ main.content .quarto-figure img,
     width: 8px;
     cursor: col-resize;
     z-index: 1040;
+    touch-action: none;
   }
   .sidebar-resizer::after {
     content: "";
@@ -665,15 +674,59 @@ main.content .quarto-figure img,
   body.sidebar-resizing .sidebar-resizer::after {
     background: $lavender;
   }
+  html.sidebar-collapsed .sidebar-resizer {
+    display: none;
+  }
   body.sidebar-resizing {
     cursor: col-resize;
     user-select: none;
   }
 }
 @media (max-width: 991.98px) {
-  .sidebar-resizer {
-    display: none;
+  .sidebar-resizer,
+  .panel-toggle {
+    display: none !important;
   }
+}
+
+// 목차 접기·펼치기 버튼 (기본은 펼침)
+.panel-toggle {
+  position: fixed;
+  top: 0.75rem;
+  z-index: 1045;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba($indigo, 0.2);
+  border-radius: 999px;
+  background: $body-bg;
+  color: $navy;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba($navy, 0.08);
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+.panel-toggle:hover,
+.panel-toggle:focus-visible {
+  opacity: 1;
+}
+.panel-toggle.left {
+  left: calc(var(--sidebar-w, 290px) - 1.1rem);
+}
+html.sidebar-collapsed .panel-toggle.left {
+  left: 0.6rem;
+  opacity: 1;
+}
+html.toc-collapsed #quarto-margin-sidebar nav#TOC > ul,
+html.toc-collapsed #quarto-margin-sidebar .toc-actions {
+  display: none;
+}
+html.toc-collapsed #quarto-margin-sidebar #toc-title {
+  opacity: 0.6;
 }
 
 // 폭이 넓은 수식은 본문 밖으로 넘치지 않고 가로로 스크롤
@@ -768,8 +821,10 @@ h1.title .chapter-number {
     position: sticky !important;
     top: 0;
     width: 250px !important;
-    height: 100vh !important;
-    max-height: 100vh;
+    height: calc(100vh - 37px) !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 37px) !important;
+    align-self: start;
     transform: none !important;
     flex-direction: column !important;
     overflow-y: auto !important;
@@ -829,3 +884,203 @@ span[id^="term-"]:target {
   border-radius: 4px;
   padding: 0 0.2rem;
 }
+
+// '이 장의 내용' 제목 옆 접기 버튼
+.toc-toggle {
+  float: right;
+  margin-top: 0.1rem;
+  border: 0;
+  background: none;
+  padding: 0 0.1rem;
+  color: $lavender;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.toc-toggle:hover {
+  color: $indigo;
+}
+
+// 웹북 검색
+.cil-search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: calc(100% - 1rem);
+  margin: 0.6rem 0.5rem 0.8rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba($indigo, 0.18);
+  border-radius: 10px;
+  background: $body-bg;
+  color: rgba($sidebar-fg, 0.9);
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+}
+.cil-search-trigger:hover {
+  border-color: $lavender;
+}
+.cil-search-trigger span {
+  flex: 1;
+}
+.cil-search-trigger kbd,
+.cil-search-close {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba($indigo, 0.18);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba($sidebar-fg, 0.8);
+  font-family: inherit;
+  font-size: 0.72rem;
+  box-shadow: none;
+}
+.cil-search-mobile {
+  margin-left: auto;
+  border: 0;
+  background: none;
+  color: $navy;
+  padding: 0.2rem 0.4rem;
+}
+@media (min-width: 992px) {
+  .cil-search-mobile {
+    display: none;
+  }
+}
+html.cil-search-open {
+  overflow: hidden;
+}
+.cil-search {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+}
+.cil-search[hidden] {
+  display: none;
+}
+.cil-search-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 21, 40, 0.45);
+  backdrop-filter: blur(2px);
+}
+.cil-search-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(720px, calc(100vw - 2rem));
+  max-height: min(80vh, 760px);
+  margin: 8vh auto 0;
+  border-radius: 16px;
+  background: $body-bg;
+  box-shadow: 0 24px 60px rgba(20, 21, 40, 0.35);
+  overflow: hidden;
+}
+.cil-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba($indigo, 0.12);
+  color: $indigo;
+}
+.cil-search-bar input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: $body-color;
+  font-size: 1.05rem;
+}
+.cil-search-close {
+  cursor: pointer;
+}
+.cil-search-results {
+  overflow-y: auto;
+  padding: 0.4rem;
+}
+.cil-search-count {
+  padding: 0.3rem 0.7rem 0.4rem;
+  color: rgba($body-color, 0.55);
+  font-size: 0.78rem;
+}
+.cil-search-item {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  color: $body-color !important;
+  text-decoration: none !important;
+}
+.cil-search-item:hover,
+.cil-search-item.active {
+  background: $lavender-soft;
+}
+.cil-search-where {
+  display: block;
+  color: $indigo;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.cil-search-where span {
+  color: $lavender;
+  font-weight: 400;
+}
+.cil-search-snippet {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba($body-color, 0.85);
+}
+.cil-search-snippet mark {
+  padding: 0 0.1rem;
+  border-radius: 3px;
+  background: rgba($lavender, 0.45);
+  color: inherit;
+}
+.cil-search-empty {
+  padding: 1rem 0.8rem;
+  color: rgba($body-color, 0.75);
+  font-size: 0.92rem;
+}
+.cil-search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.cil-search-chips button {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba($indigo, 0.18);
+  border-radius: 999px;
+  background: $lavender-soft;
+  color: $navy;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.cil-search-foot {
+  display: flex;
+  gap: 1rem;
+  padding: 0.55rem 1rem;
+  border-top: 1px solid rgba($indigo, 0.12);
+  color: rgba($body-color, 0.55);
+  font-size: 0.75rem;
+}
+.cil-search-foot a {
+  margin-left: auto;
+}
+@media (max-width: 575.98px) {
+  .cil-search-panel {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+  .cil-search-foot span {
+    display: none;
+  }
+}
+
+// 검색 미리보기의 수식은 평문이므로 줄바꿈이 자연스럽게
+.cil-search-snippet { word-break: keep-all; overflow-wrap: anywhere; }
+.cil-search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }

@@ -1,20 +1,28 @@
 <script>
+// 왼쪽 목차: 너비 조절(끌기, 두 번 누르면 원래대로)과 접기. 이 장의 내용: 접기. 기본은 모두 펼침이고 선택은 브라우저에 기억한다.
 (function () {
-  var KEY = "cil-sidebar-width", MIN = 220, MAX = 480;
-  var root = document.documentElement;
-  try {
-    var saved = parseInt(localStorage.getItem(KEY), 10);
-    if (saved >= MIN && saved <= MAX) root.style.setProperty("--sidebar-w", saved + "px");
-  } catch (e) {}
+  var KEY_W = "cil-sidebar-width", KEY_L = "cil-sidebar-collapsed", KEY_R = "cil-toc-collapsed";
+  var MIN = 220, MAX = 480, root = document.documentElement;
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
+  try { localStorage.removeItem("quarto-reader-mode"); } catch (e) {}
+  var saved = parseInt(get(KEY_W), 10);
+  if (saved >= MIN && saved <= MAX) root.style.setProperty("--sidebar-w", saved + "px");
+  if (get(KEY_L) === "1") root.classList.add("sidebar-collapsed");
+  if (get(KEY_R) === "1") root.classList.add("toc-collapsed");
+
   document.addEventListener("DOMContentLoaded", function () {
-    if (!document.body.classList.contains("docked") || !document.getElementById("quarto-sidebar")) return;
+    var sidebar = document.getElementById("quarto-sidebar");
+    if (!document.body.classList.contains("docked") || !sidebar) return;
+
+    // 너비 조절 손잡이
     var bar = document.createElement("div");
     bar.className = "sidebar-resizer";
     bar.setAttribute("role", "separator");
     bar.setAttribute("aria-orientation", "vertical");
     bar.title = "끌어서 목차 너비 조절 (두 번 누르면 원래대로)";
     document.body.appendChild(bar);
-    var dragging = false;
+    var dragging = false, frame = 0, lastX = 0;
     function setW(w) {
       w = Math.max(MIN, Math.min(MAX, Math.round(w)));
       root.style.setProperty("--sidebar-w", w + "px");
@@ -27,18 +35,63 @@
       e.preventDefault();
     });
     bar.addEventListener("pointermove", function (e) {
-      if (dragging) setW(e.clientX);
+      if (!dragging) return;
+      lastX = e.clientX;
+      if (!frame) frame = requestAnimationFrame(function () { frame = 0; setW(lastX); });
     });
-    bar.addEventListener("pointerup", function (e) {
+    function stop(e) {
       if (!dragging) return;
       dragging = false;
       document.body.classList.remove("sidebar-resizing");
-      try { localStorage.setItem(KEY, setW(e.clientX)); } catch (err) {}
-    });
+      set(KEY_W, String(setW(e.clientX)));
+    }
+    bar.addEventListener("pointerup", stop);
+    bar.addEventListener("pointercancel", stop);
     bar.addEventListener("dblclick", function () {
       root.style.removeProperty("--sidebar-w");
-      try { localStorage.removeItem(KEY); } catch (err) {}
+      set(KEY_W, null);
     });
+
+    // 왼쪽 목차 접기
+    var left = document.createElement("button");
+    left.type = "button";
+    left.className = "panel-toggle left";
+    function paintLeft() {
+      var c = root.classList.contains("sidebar-collapsed");
+      left.textContent = c ? "목차 ›" : "‹";
+      left.title = c ? "목차 펼치기" : "목차 접기";
+      left.setAttribute("aria-label", left.title);
+      left.setAttribute("aria-expanded", String(!c));
+    }
+    left.addEventListener("click", function () {
+      var c = root.classList.toggle("sidebar-collapsed");
+      set(KEY_L, c ? "1" : null);
+      paintLeft();
+    });
+    paintLeft();
+    document.body.appendChild(left);
+
+    // 이 장의 내용 접기
+    var toc = document.getElementById("quarto-margin-sidebar");
+    var tocTitle = document.getElementById("toc-title");
+    if (toc && tocTitle) {
+      var right = document.createElement("button");
+      right.type = "button";
+      right.className = "toc-toggle";
+      function paintRight() {
+        var c = root.classList.contains("toc-collapsed");
+        right.textContent = c ? "펼치기" : "접기";
+        right.setAttribute("aria-expanded", String(!c));
+        right.setAttribute("aria-label", c ? "이 장의 내용 펼치기" : "이 장의 내용 접기");
+      }
+      right.addEventListener("click", function () {
+        var c = root.classList.toggle("toc-collapsed");
+        set(KEY_R, c ? "1" : null);
+        paintRight();
+      });
+      paintRight();
+      tocTitle.appendChild(right);
+    }
   });
 })();
 </script>
