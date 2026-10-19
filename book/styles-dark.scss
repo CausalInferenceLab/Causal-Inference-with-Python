@@ -108,3 +108,23 @@ body {
 .quarto-secondary-nav .quarto-btn-toggle::after {
   color: #eceaff;
 }
+
+.cil-search-panel,
+.cil-search-trigger {
+  background: #1b1d2a;
+}
+.cil-search-item:hover,
+.cil-search-item.active,
+.cil-search-chips button {
+  background: rgba(169, 150, 214, 0.14);
+}
+.cil-search-where,
+.cil-search-bar,
+.cil-search-chips button,
+.cil-search-mobile {
+  color: #c9bcf5;
+}
+.panel-toggle {
+  background: #1b1d2a;
+  color: #eceaff;
+}
