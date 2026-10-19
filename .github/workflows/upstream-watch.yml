@@ -1,0 +1,33 @@
+name: Upstream watch
+
+# 원서 저장소에 새 변경이 생기면 메인테이너에게 배정된 검토 이슈를 만든다.
+on:
+  schedule:
+    - cron: "17 0 * * *"  # 매일 오전 9시 17분(KST)
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/upstream.json"]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: upstream-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Compare with upstream and update review issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .github/scripts/check_upstream.py
