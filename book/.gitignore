@@ -2,6 +2,7 @@
 *.ipynb
 *.py
 !prepare.py
+!postrender.py
 data/
 _book/
 .quarto/
@@ -9,3 +10,4 @@ _book/
 
 /.quarto/
 **/*.quarto_ipynb
+glossary.qmd
