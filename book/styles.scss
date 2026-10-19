@@ -1084,3 +1084,163 @@ html.cil-search-open {
 // 검색 미리보기의 수식은 평문이므로 줄바꿈이 자연스럽게
 .cil-search-snippet { word-break: keep-all; overflow-wrap: anywhere; }
 .cil-search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+
+// 용어집 표
+.gloss-table {
+  width: 100%;
+  margin: 0.6rem 0 2rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.93rem;
+}
+.gloss-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 2px solid rgba($indigo, 0.25);
+  background: $body-bg;
+  color: $indigo;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: left;
+}
+.gloss-table td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid rgba($indigo, 0.1);
+  vertical-align: top;
+}
+.gloss-table td:nth-child(1) {
+  width: 24%;
+}
+.gloss-table td:nth-child(2) {
+  width: 22%;
+  color: rgba($body-color, 0.8);
+}
+.gloss-table tr:target td {
+  background: rgba($lavender, 0.18);
+}
+.gloss-table strong {
+  color: $navy;
+}
+.gloss-table .term-link {
+  margin-right: 0.35rem;
+}
+.gloss-alias {
+  display: block;
+  margin-top: 0.2rem;
+  color: rgba($body-color, 0.6);
+  font-size: 0.8rem;
+}
+.ch-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  margin: 0 0.3rem 0.3rem 0;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid rgba($indigo, 0.15);
+  border-radius: 999px;
+  background: $lavender-soft;
+  color: $navy !important;
+  font-size: 0.8rem;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+.ch-chip b {
+  color: $indigo;
+}
+.ch-chip:hover {
+  border-color: $indigo;
+}
+.gloss-none {
+  color: rgba($body-color, 0.45);
+  font-size: 0.8rem;
+}
+@media (max-width: 767.98px) {
+  .gloss-table thead {
+    display: none;
+  }
+  .gloss-table,
+  .gloss-table tbody,
+  .gloss-table tr,
+  .gloss-table td {
+    display: block;
+    width: 100% !important;
+  }
+  .gloss-table tr {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba($indigo, 0.12);
+  }
+  .gloss-table td {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+  .gloss-table td:nth-child(2)::before,
+  .gloss-table td:nth-child(3)::before {
+    content: attr(data-label);
+    display: inline-block;
+    min-width: 4.5rem;
+    color: $lavender;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .ch-chip {
+    white-space: normal;
+  }
+}
+
+// 왼쪽 목차: 장 사이 간격을 넉넉하게
+#quarto-sidebar .sidebar-item .sidebar-item-container > a,
+#quarto-sidebar .sidebar-item > .sidebar-link {
+  padding-top: 0.32rem;
+  padding-bottom: 0.32rem;
+}
+#quarto-sidebar .sidebar-item-section {
+  margin-top: 0.5rem;
+}
+#quarto-sidebar .sidebar-item .menu-text {
+  line-height: 1.45;
+}
+
+// 목차 맨 아래 용어집
+#quarto-sidebar li.sidebar-glossary {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba($indigo, 0.12);
+}
+#quarto-sidebar li.sidebar-glossary .menu-text {
+  font-weight: 700;
+  color: $navy;
+}
+#quarto-sidebar li.sidebar-glossary .chapter-number {
+  display: none;
+}
+
+// 장 끝 댓글
+.cil-comments {
+  margin: 3rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba($indigo, 0.15);
+}
+.cil-comments-title {
+  margin-top: 0 !important;
+}
+.cil-comments-lead {
+  color: rgba($body-color, 0.75);
+  font-size: 0.92rem;
+}
+.cil-comments-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+.cil-comments-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: $navy;
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}

@@ -13,9 +13,11 @@
 
 실행: python book/prepare.py
 """
+import html
 import json
 import re
 import shutil
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -137,6 +139,30 @@ SPACED = {
 }
 
 
+def chapter_chip(key):
+    keys = list(CHAPTERS)
+    i = keys.index(key)
+    num = f"{i + 1}장" if i < 25 else f"부록 {chr(65 + i - 25)}"
+    return (f'<a class="ch-chip" href="{key}.html" title="{html.escape(CHAPTERS[key])}">'
+            f'<b>{num}</b> {html.escape(CHAPTERS[key])}</a>')
+
+
+def gloss_table(items):
+    rows = []
+    for anchor, ko, en, others, top in items:
+        alias = (f'<span class="gloss-alias">다른 표기: {html.escape(", ".join(others))}</span>' if others else "")
+        chips = "".join(chapter_chip(k) for k in top) or '<span class="gloss-none">이 책 밖의 용어</span>'
+        rows.append(
+            f'<tr id="{anchor}">'
+            f'<td data-label="번역어"><a class="term-link" href="#{anchor}" aria-label="{html.escape(ko)} 링크">#</a>'
+            f'<strong>{html.escape(ko)}</strong>{alias}</td>'
+            f'<td data-label="원어" lang="en">{html.escape(en)}</td>'
+            f'<td data-label="나오는 장">{chips}</td></tr>'
+        )
+    return ('<table class="gloss-table"><thead><tr><th>번역어</th><th>원어</th><th>주로 나오는 장</th></tr></thead><tbody>'
+            + "".join(rows) + "</tbody></table>")
+
+
 def build_glossary():
     """번역 가이드 용어표로 용어집 페이지를 만든다."""
     guide = (ROOT / "TRANSLATION_GUIDE.md").read_text(encoding="utf-8")
@@ -153,8 +179,9 @@ def build_glossary():
         "번역어는 『실무로 통하는 인과추론 with 파이썬』을 기준으로 하고, 이 책에 나오지 않는 온라인 실험 용어는 "
         "가짜연구소 인과추론팀이 함께 정해 나가고 있습니다.",
         "",
-        "용어마다 원어와 다른 표기, 그 용어를 주로 다루는 장을 붙였습니다. 다른 자료에서 본 표기(예: 처치군, 통제군)나 "
-        "띄어 쓴 표기로 검색해도 이 페이지에서 찾을 수 있고, 용어 이름 옆 링크를 복사하면 그 용어로 바로 이동하는 주소가 됩니다.",
+        "표마다 번역어, 원어(영어), 그 용어가 많이 나오는 장을 차례로 적었습니다. 장 이름을 누르면 그 장으로 이동합니다. "
+        "다른 자료에서 본 표기(예: 처치군, 통제군)나 띄어 쓴 표기로 검색해도 이 페이지에서 찾을 수 있고, "
+        "용어 앞의 `#`을 복사하면 그 용어로 바로 이동하는 주소가 됩니다.",
         "",
         f"::: {{.callout-tip appearance=\"simple\" title=\"용어 제안하기\"}}\n빠진 용어나 더 자연스러운 번역어가 있다면 [용어 제안 이슈]({propose})로 알려 주세요. 논의를 거쳐 번역 가이드와 이 용어집에 함께 반영합니다.\n:::",
         "",
@@ -183,24 +210,93 @@ def build_glossary():
                 return n / max(len(text), 1) * 10000 + (5 if intro else 0)
 
             scores = {k: score(k) for k in order}
-            top = sorted((k for k in order if scores[k]), key=lambda k: -scores[k])[:3]
+            top = sorted((k for k in order if scores[k]), key=lambda k: -scores[k])[:4]
             top.sort(key=order.index)
             others = [a for a in re.findall(r"`([^`]+)`", note) if "쓰지" in note]
-            anchor = "term-" + re.sub(r"[^0-9A-Za-z가-힣]+", "-", ko).strip("-")
-            line_out = f"- [**{ko}**]{{#{anchor}}} [#](#{anchor}){{.term-link aria-label=\"{ko} 링크\"}} · {en}"
             for w, spaced in SPACED.items():
                 if w in ko:
                     alias = re.sub(r"\s*\([^)]*\)", "", ko.replace(w, spaced)).strip()
                     if alias not in others:
                         others.append(alias)
-            if others:
-                line_out += f" · 다른 표기: {', '.join(others)}"
-            if top:
-                line_out += " · " + ", ".join(f"[{label(k)}]({k}.html)" for k in top)
-            items.append(line_out)
+            anchor = "term-" + re.sub(r"[^0-9A-Za-z가-힣]+", "-", ko).strip("-")
+            items.append((anchor, ko, en, others, top))
         if items:
-            out += [f"## {heading.strip()}", ""] + ([" ".join(intro), ""] if intro else []) + items + [""]
+            out += [f"## {heading.strip()}", ""] + ([" ".join(intro), ""] if intro else [])
+            out += ["```{=html}", gloss_table(items), "```", ""]
     (OUT / "glossary.qmd").write_text("\n".join(out), encoding="utf-8")
+
+
+REPO = "CausalInferenceLab/Causal-Inference-with-Python"
+REPO_ID = "R_kgDOHkGCqg"
+COMMENT_CATEGORIES = ("웹북 댓글", "Comments", "General")
+
+
+def giscus_category():
+    """giscus 앱이 설치되어 있으면 댓글을 모을 Discussions 카테고리 (이름, ID)를 돌려준다."""
+    try:
+        url = f"https://giscus.app/api/discussions/categories?repo={REPO}"
+        with urllib.request.urlopen(url, timeout=15) as res:
+            data = json.loads(res.read().decode())
+        cats = {c["name"]: c["id"] for c in data.get("categories", [])}
+        for name in COMMENT_CATEGORIES:
+            if name in cats:
+                return name, cats[name]
+    except Exception:
+        pass
+    return None
+
+
+def build_comments():
+    """장마다 붙일 댓글 영역(include-after-body)을 만든다.
+
+    giscus(GitHub Discussions)가 준비되어 있으면 GitHub 로그인 댓글을, 아니면 Discussions로 가는 안내만 넣는다.
+    """
+    cat = giscus_category()
+    discussions = f"https://github.com/{REPO}/discussions"
+    head = (
+        '<section id="cil-comments" class="cil-comments" aria-label="댓글">'
+        '<h2 class="cil-comments-title">의견 나누기</h2>'
+        '<p class="cil-comments-lead">번역이 어색한 곳, 더 쉬운 설명, 궁금한 점을 남겨 주세요. '
+        'GitHub 계정으로 로그인하면 댓글을 달 수 있고, 남긴 의견은 '
+        f'<a href="{discussions}">GitHub Discussions</a>에 장별로 모입니다.</p>'
+    )
+    if cat:
+        name, cid = cat
+        body = (
+            '<div class="giscus"></div>'
+            '<script src="https://giscus.app/client.js"'
+            f' data-repo="{REPO}" data-repo-id="{REPO_ID}"'
+            f' data-category="{html.escape(name)}" data-category-id="{cid}"'
+            ' data-mapping="pathname" data-strict="1" data-reactions-enabled="1"'
+            ' data-emit-metadata="0" data-input-position="top" data-lang="ko" data-loading="lazy"'
+            ' data-theme="light" crossorigin="anonymous" async></script>'
+        )
+    else:
+        body = (
+            '<p class="cil-comments-fallback">'
+            f'<a class="cil-comments-button" href="{discussions}">GitHub Discussions에서 의견 남기기</a> '
+            f'<a href="https://github.com/{REPO}/issues/new">오류 제보하기</a></p>'
+        )
+    script = """<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var box = document.getElementById("cil-comments");
+  var main = document.getElementById("quarto-document-content");
+  if (!box || !main || document.querySelector(".hero") || location.pathname.endsWith("/404.html")) {
+    if (box) box.remove();
+    return;
+  }
+  main.appendChild(box);
+  function theme() { return document.body.classList.contains("quarto-dark") ? "dark_dimmed" : "light"; }
+  var s = box.querySelector("script[src*='giscus']");
+  if (s) s.setAttribute("data-theme", theme());
+  new MutationObserver(function () {
+    var f = document.querySelector("iframe.giscus-frame");
+    if (f) f.contentWindow.postMessage({ giscus: { setConfig: { theme: theme() } } }, "https://giscus.app");
+  }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+});
+</script>"""
+    (OUT / "comments.html").write_text(head + body + "</section>\n" + script + "\n", encoding="utf-8")
+    print("comments:", f"giscus ({cat[0]})" if cat else "Discussions 링크 (giscus 미설치)")
 
 
 def prepare_notebook(key, title):
@@ -235,6 +331,7 @@ def main():
     for key, title in CHAPTERS.items():
         prepare_notebook(key, title)
     build_glossary()
+    build_comments()
     # 이미지·데이터와 노트북이 import하는 보조 모듈
     data = OUT / "data"
     if data.is_symlink() or data.exists():
