@@ -31,7 +31,7 @@
 
 ## 3. 용어표
 
-『실무로 통하는 인과추론 with 파이썬』 찾아보기와 본문에서 쓴 번역어입니다. 띄어쓰기도 표기대로 맞춥니다. 이 표는 웹북의 [용어 찾아보기](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) 페이지로 자동 반영되므로, 용어를 바꾸거나 추가할 때는 이 표만 고치면 됩니다. 비고에 '`표기` 쓰지 않음'으로 적은 표기는 '다른 표기'로 함께 실려 검색에 걸립니다.
+『실무로 통하는 인과추론 with 파이썬』 찾아보기와 본문에서 쓴 번역어입니다. 띄어쓰기도 표기대로 맞춥니다. 이 표는 웹북의 [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) 페이지로 자동 반영되므로, 용어를 바꾸거나 추가할 때는 이 표만 고치면 됩니다. 비고에 '`표기` 쓰지 않음'으로 적은 표기는 '다른 표기'로 함께 실려 검색에 걸립니다.
 
 ### 기본 개념
 
@@ -218,6 +218,35 @@
 | training / test set | 훈련 셋 / 테스트 셋 | |
 | band (예측값 구간) | 구간 | 신뢰구간과 헷갈리지 않게 문맥 표현 |
 | conversion | 전환 | |
+
+### 온라인 실험
+
+이 책보다 넓은 범위로, 가짜연구소 인과추론팀이 온라인 실험과 제품 분석 자료에서 함께 쓰려고 정리하는 표기입니다. 새 용어나 더 나은 번역어는 [용어 제안 이슈](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?template=term-proposal.yml)로 알려 주세요.
+
+| 원어 | 번역어 | 비고 |
+|---|---|---|
+| online controlled experiment | 온라인 통제 실험 | |
+| A/B test / A/A test | A/B 테스트 / A/A 테스트 | |
+| randomization unit | 무작위 배정 단위 | 사용자, 세션, 지역 등 |
+| variant / arm | 실험 조건 | 대조 조건과 실험 조건으로 씀 |
+| holdout group | 홀드아웃 집단 | 장기 효과를 보려고 처치를 주지 않고 남겨 둔 집단 |
+| metric | 지표 | |
+| primary / secondary metric | 핵심 지표 / 보조 지표 | |
+| guardrail metric | 가드레일 지표 | 실험 때문에 나빠지면 안 되는 지표 |
+| north star metric | 북극성 지표 | |
+| overall evaluation criterion (OEC) | 종합 평가 기준(OEC) | |
+| minimum detectable effect (MDE) | 최소 검출 효과(MDE) | |
+| sample size calculation | 표본 크기 계산 | |
+| sample ratio mismatch (SRM) | 표본 비율 불일치(SRM) | |
+| variance reduction / CUPED | 분산 감소 / CUPED | |
+| novelty effect / primacy effect | 신기 효과 / 초두 효과 | |
+| interference / network effect | 간섭 / 네트워크 효과 | SUTVA 위반 |
+| switchback experiment | 스위치백 실험 | |
+| ramp-up | 단계적 확대 | |
+| peeking | 중간 결과 엿보기 | |
+| sequential testing | 순차 검정 | |
+| multiple testing / false discovery rate (FDR) | 다중 검정 / 거짓 발견률(FDR) | |
+| quasi-experiment | 준실험 | |
 
 ## 4. 작업 순서
 
