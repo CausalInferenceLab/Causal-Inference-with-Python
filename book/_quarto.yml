@@ -1,9 +1,11 @@
 project:
   type: book
   output-dir: _book
+  post-render: python postrender.py
   resources:
     - data/img/**
     - assets/**
+    - robots.txt
 
 lang: ko
 
@@ -11,6 +13,9 @@ execute:
   enabled: false
 
 book:
+  google-analytics:
+    tracking-id: "G-BEBVKYH8HL"
+    anonymize-ip: true
   title: "Python으로 하는 인과추론"
   subtitle: "Causal Inference for The Brave and True 한국어판"
   author:
@@ -23,7 +28,14 @@ book:
   repo-subdir: causal-inference-for-the-brave-and-true
   repo-actions: [issue]
   favicon: assets/causal-lab-mark.png
-  search: true
+  search:
+    location: sidebar
+    type: textbox
+    limit: 50
+    collapse-after: 3
+    copy-button: true
+    show-item-context: true
+    keyboard-shortcut: ["/", "k"]
   reader-mode: true
   open-graph:
     image: assets/og-image.png
@@ -33,7 +45,7 @@ book:
   page-navigation: true
   sidebar:
     style: docked
-    collapse-level: 2
+    collapse-level: 3
     header: |
       <a class="brand-lockup" href="https://pseudo-lab.com/" target="_blank" rel="noopener" aria-label="가짜연구소">
         <img class="brand-pseudolab only-light" src="assets/pseudolab-dark.png" alt="가짜연구소 Pseudo Lab">
@@ -83,6 +95,7 @@ book:
         - 23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.ipynb
         - 24-The-Diff-in-Diff-Saga.ipynb
         - 25-Synthetic-Diff-in-Diff.ipynb
+    - glossary.qmd
   appendices:
     - Debiasing-with-Orthogonalization.ipynb
     - Debiasing-with-Propensity-Score.ipynb
@@ -111,7 +124,9 @@ format:
     df-print: default
     link-external-newwindow: true
     back-to-top-navigation: true
-    include-after-body: sidebar-resize.html
+    include-after-body:
+      - sidebar-resize.html
+      - chapter-toc.html
     include-in-header:
       - text: |
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">

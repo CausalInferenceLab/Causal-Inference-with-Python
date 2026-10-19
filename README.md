@@ -2,11 +2,28 @@
 
 Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) 한국어판입니다.
 
-<a href="https://causalinferencelab.github.io/Causal-Inference-with-Python/"><img src="book/assets/readme-banner.png" alt="Python으로 하는 인과추론 웹북" width="100%"></a>
+<p align="center">
+  <a href="https://causalinferencelab.github.io/Causal-Inference-with-Python/"><img src="book/assets/readme/banner.png" alt="Python으로 하는 인과추론 웹북" width="100%"></a>
+</p>
 
-[![DOI](https://zenodo.org/badge/255903310.svg)](https://zenodo.org/badge/latestdoi/255903310)
+<p align="center">
+  <a href="https://causalinferencelab.github.io/Causal-Inference-with-Python/01-Introduction-To-Causality.html"><img src="book/assets/readme/btn-read.png" alt="웹북에서 1장부터 읽기" height="40"></a>
+  <a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html"><img src="book/assets/readme/btn-original.png" alt="원서 보기" height="40"></a>
+  <a href="https://product.kyobobook.co.kr/detail/S000212577153"><img src="book/assets/readme/btn-book.png" alt="도서: 실무로 통하는 인과추론" height="40"></a>
+  <a href="https://www.hanbit.co.kr/product/C0781073345"><img src="book/assets/readme/btn-course.png" alt="강의: AI 인과추론 실무" height="40"></a>
+</p>
 
-**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
+<p align="center">
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/stargazers"><img src="https://img.shields.io/github/stars/CausalInferenceLab/Causal-Inference-with-Python?color=3d3f9e" alt="Stars"></a>
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/network/members"><img src="https://img.shields.io/github/forks/CausalInferenceLab/Causal-Inference-with-Python?color=3d3f9e" alt="Forks"></a>
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/pulls"><img src="https://img.shields.io/github/issues-pr/CausalInferenceLab/Causal-Inference-with-Python?color=a996d6" alt="Pull Requests"></a>
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues"><img src="https://img.shields.io/github/issues/CausalInferenceLab/Causal-Inference-with-Python?color=a996d6" alt="Issues"></a>
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/graphs/contributors"><img src="https://img.shields.io/github/contributors/CausalInferenceLab/Causal-Inference-with-Python?color=2b9348" alt="Contributors"></a>
+  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/actions/workflows/book.yml"><img src="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/actions/workflows/book.yml/badge.svg" alt="웹북 빌드"></a>
+  <a href="https://doi.org/10.5281/zenodo.4445778"><img src="https://img.shields.io/badge/%EC%9B%90%EC%84%9C%20DOI-10.5281%2Fzenodo.4445778-blue" alt="원서 DOI"></a>
+</p>
+
+**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
 
 <br>
 
@@ -105,7 +122,13 @@ python book/prepare.py
 cd book && quarto preview
 ```
 
-`book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
+`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 검색 결과 미리보기의 수식 기호를 읽기 쉽게 정리합니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
+
+<br>
+
+## 원서 변경 반영
+
+원서가 바뀌면 GitHub Actions(`Upstream watch`)가 매월 1일 확인해 바뀐 장과 본문 변경을 정리한 이슈를 메인테이너에게 배정합니다. 번역을 고친 PR이 메인테이너 검토를 거쳐 머지되면 웹북에 반영되고 이슈는 자동으로 닫힙니다. 자세한 절차는 [번역 가이드](TRANSLATION_GUIDE.md#5-원서-변경-반영)에 있습니다.
 
 <br>
 

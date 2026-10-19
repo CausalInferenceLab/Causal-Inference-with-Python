@@ -31,7 +31,7 @@
 
 ## 3. 용어표
 
-『실무로 통하는 인과추론 with 파이썬』 찾아보기와 본문에서 쓴 번역어입니다. 띄어쓰기도 표기대로 맞춥니다.
+『실무로 통하는 인과추론 with 파이썬』 찾아보기와 본문에서 쓴 번역어입니다. 띄어쓰기도 표기대로 맞춥니다. 이 표는 웹북의 [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) 페이지로 자동 반영되므로, 용어를 바꾸거나 추가할 때는 이 표만 고치면 됩니다. 비고에 '`표기` 쓰지 않음'으로 적은 표기는 '다른 표기'로 함께 실려 검색에 걸립니다.
 
 ### 기본 개념
 
@@ -219,6 +219,35 @@
 | band (예측값 구간) | 구간 | 신뢰구간과 헷갈리지 않게 문맥 표현 |
 | conversion | 전환 | |
 
+### 온라인 실험
+
+이 책보다 넓은 범위로, 가짜연구소 인과추론팀이 온라인 실험과 제품 분석 자료에서 함께 쓰려고 정리하는 표기입니다. 새 용어나 더 나은 번역어는 [용어 제안 이슈](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?template=term-proposal.yml)로 알려 주세요.
+
+| 원어 | 번역어 | 비고 |
+|---|---|---|
+| online controlled experiment | 온라인 통제 실험 | |
+| A/B test / A/A test | A/B 테스트 / A/A 테스트 | |
+| randomization unit | 무작위 배정 단위 | 사용자, 세션, 지역 등 |
+| variant / arm | 실험 조건 | 대조 조건과 실험 조건으로 씀 |
+| holdout group | 홀드아웃 집단 | 장기 효과를 보려고 처치를 주지 않고 남겨 둔 집단 |
+| metric | 지표 | |
+| primary / secondary metric | 핵심 지표 / 보조 지표 | |
+| guardrail metric | 가드레일 지표 | 실험 때문에 나빠지면 안 되는 지표 |
+| north star metric | 북극성 지표 | |
+| overall evaluation criterion (OEC) | 종합 평가 기준(OEC) | |
+| minimum detectable effect (MDE) | 최소 검출 효과(MDE) | |
+| sample size calculation | 표본 크기 계산 | |
+| sample ratio mismatch (SRM) | 표본 비율 불일치(SRM) | |
+| variance reduction / CUPED | 분산 감소 / CUPED | |
+| novelty effect / primacy effect | 신기 효과 / 초두 효과 | |
+| interference / network effect | 간섭 / 네트워크 효과 | SUTVA 위반 |
+| switchback experiment | 스위치백 실험 | |
+| ramp-up | 단계적 확대 | |
+| peeking | 중간 결과 엿보기 | |
+| sequential testing | 순차 검정 | |
+| multiple testing / false discovery rate (FDR) | 다중 검정 / 거짓 발견률(FDR) | |
+| quasi-experiment | 준실험 | |
+
 ## 4. 작업 순서
 
 1. 원문 저장소의 해당 노트북을 내려받아 코드 셀과 출력은 그대로 둡니다.
@@ -226,3 +255,15 @@
 3. 수식, 이미지, 링크 개수가 원문과 같은지 확인합니다.
 4. `python book/prepare.py && cd book && quarto preview`로 웹북 렌더링을 확인합니다. 새 노트북을 추가했다면 `book/prepare.py`의 장 제목 목록과 `book/_quarto.yml` 목차에도 넣어 주세요.
 5. PR에는 원문 커밋과 바뀐 셀을 적어 주세요.
+
+## 5. 원서 변경 반영
+
+원서 저장소(matheusfacure/python-causality-handbook)가 바뀌면 한국어판도 따라가야 합니다. 이 과정은 자동 알림과 메인테이너 검토로 이루어집니다.
+
+1. `Upstream watch` 워크플로가 매월 1일 원서 최신 커밋을 `.github/upstream.json`의 `synced_sha`와 비교합니다.
+2. 새 커밋이 있으면 `upstream-sync` 라벨이 붙은 이슈를 만들어 메인테이너에게 배정합니다. 이슈에는 새 커밋 목록, 바뀐 장, 장별 본문 변경(바뀐 단어와 앞뒤 문맥), 웹북과 원서 비교 링크가 들어갑니다. 원서가 다시 바뀌면 같은 이슈를 갱신하고 댓글로 알립니다.
+3. 같은 날 검토 이슈가 생긴 경우에만 정리 작업이 이어집니다. 바뀐 장마다 번역에 반영할 문장(기존 번역 → 수정안)과, 원서에서 새로 발견한 오류와 그 수정 방법(원서 저장소에 올릴 PR·이슈 초안 포함)을 문서로 정리해 검토 이슈에 댓글로 연결합니다. 변경이 없는 달에는 아무 알림도 가지 않습니다.
+4. 반영할 장을 이 가이드대로 고치고 PR을 엽니다. 같은 PR에서 `synced_sha`를 원서 최신 커밋으로, `synced_at`을 날짜로 바꿉니다. 오탈자나 링크만 바뀌어 번역을 고칠 필요가 없을 때도 `synced_sha`만 올리는 PR을 열어 기록을 남깁니다.
+5. 메인테이너가 검토해 머지하면 웹북이 배포되고, 워크플로가 다시 돌아 이슈를 자동으로 닫습니다.
+
+로컬에서 미리 보려면 원서를 clone한 뒤 `python .github/scripts/check_upstream.py --git-dir <원서 경로> --dry-run`을 실행합니다.

@@ -1,0 +1,9 @@
+{
+  "repo": "matheusfacure/python-causality-handbook",
+  "branch": "master",
+  "path": "causal-inference-for-the-brave-and-true",
+  "synced_sha": "4df1445987d3b6f9824d508863a1a2f0a503e888",
+  "synced_at": "2026-10-18",
+  "reviewers": ["jsshin2022"],
+  "label": "upstream-sync"
+}

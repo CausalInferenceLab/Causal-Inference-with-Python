@@ -58,7 +58,7 @@ aliases:
 
 ## 이 책의 구성
 
-원서의 25개 장과 부록 5편을 모두 옮겼습니다.
+원서의 25개 장과 부록 5편을 모두 옮겼고, 인과추론과 온라인 실험 용어를 모은 용어집을 함께 둡니다.
 
 ```{=html}
 <div class="toc-cards">
@@ -77,6 +77,11 @@ aliases:
     <div class="card-title">더 깊이 보기</div>
     <p>직교화와 성향점수로 편향 제거하기, 예측이 실패하는 경우, 예측 지표의 함정, 컨포멀 추론.</p>
   </a>
+  <a class="card-item" href="glossary.html" style="text-decoration:none">
+    <div class="card-label">용어집</div>
+    <div class="card-title">한국어 용어 찾기</div>
+    <p>인과추론과 온라인 실험 용어의 번역어와 원어, 그 용어를 다루는 장을 한곳에 모았습니다.</p>
+  </a>
 </div>
 ```
 
@@ -86,7 +91,7 @@ aliases:
 
 각 장은 원서의 주피터 노트북을 그대로 옮긴 것이라 코드와 출력이 원서와 같습니다. 노트북 파일은 [GitHub 저장소](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/tree/main/causal-inference-for-the-brave-and-true)에서 내려받아 직접 실행해 볼 수 있습니다. 그래프를 그리는 코드처럼 길어서 접어 둔 셀은 **코드**를 눌러 펼치면 됩니다.
 
-용어는 같은 저자의 책을 옮긴 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄습니다. 두 책을 함께 보셔도 용어가 헷갈리지 않습니다. 번역 원칙과 용어표는 [번역 가이드](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/TRANSLATION_GUIDE.md)에 정리해 두었습니다.
+용어는 같은 저자의 책을 옮긴 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄습니다. 두 책을 함께 보셔도 용어가 헷갈리지 않습니다. 용어의 원어와 그 용어를 다루는 장은 [용어집](glossary.html)에서 찾을 수 있습니다. 검색창(단축키 `/`)에 한국어나 영어 용어를 넣어도 됩니다. 번역 원칙과 용어표는 [번역 가이드](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/TRANSLATION_GUIDE.md)에 정리해 두었습니다.
 
 ## 함께 만들어 주세요
 
