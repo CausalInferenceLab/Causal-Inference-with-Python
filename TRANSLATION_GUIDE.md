@@ -255,3 +255,14 @@
 3. 수식, 이미지, 링크 개수가 원문과 같은지 확인합니다.
 4. `python book/prepare.py && cd book && quarto preview`로 웹북 렌더링을 확인합니다. 새 노트북을 추가했다면 `book/prepare.py`의 장 제목 목록과 `book/_quarto.yml` 목차에도 넣어 주세요.
 5. PR에는 원문 커밋과 바뀐 셀을 적어 주세요.
+
+## 5. 원서 변경 반영
+
+원서 저장소(matheusfacure/python-causality-handbook)가 바뀌면 한국어판도 따라가야 합니다. 이 과정은 자동 알림과 메인테이너 검토로 이루어집니다.
+
+1. `Upstream watch` 워크플로가 매일 원서 최신 커밋을 `.github/upstream.json`의 `synced_sha`와 비교합니다.
+2. 새 커밋이 있으면 `upstream-sync` 라벨이 붙은 이슈를 만들어 메인테이너에게 배정합니다. 이슈에는 새 커밋 목록, 바뀐 장, 장별 본문 변경(바뀐 단어와 앞뒤 문맥), 웹북과 원서 비교 링크가 들어갑니다. 원서가 다시 바뀌면 같은 이슈를 갱신하고 댓글로 알립니다.
+3. 반영할 장을 이 가이드대로 고치고 PR을 엽니다. 같은 PR에서 `synced_sha`를 원서 최신 커밋으로, `synced_at`을 날짜로 바꿉니다. 오탈자나 링크만 바뀌어 번역을 고칠 필요가 없을 때도 `synced_sha`만 올리는 PR을 열어 기록을 남깁니다.
+4. 메인테이너가 검토해 머지하면 웹북이 배포되고, 워크플로가 다시 돌아 이슈를 자동으로 닫습니다.
+
+로컬에서 미리 보려면 원서를 clone한 뒤 `python .github/scripts/check_upstream.py --git-dir <원서 경로> --dry-run`을 실행합니다.
