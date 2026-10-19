@@ -428,6 +428,49 @@ main:has(.hero) #title-block-header {
   text-align: center;
 }
 
+// 사이드바 맨 위: 인과추론 허브로 돌아가는 길
+.hub-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.1rem 0 0.8rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: $lavender-soft;
+  color: $indigo;
+  font-size: 0.8rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.hub-back:hover {
+  background: rgba($lavender, 0.32);
+  color: $navy;
+}
+
+// 첫 화면 위치 표시: 인과추론 허브 › 서가
+.hero .hero-crumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero .hero-crumb a {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.hero .hero-crumb a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
 // 사이드바 상단: 가짜연구소 × 인과추론팀
 .brand-lockup {
   display: flex;

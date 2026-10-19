@@ -144,3 +144,13 @@ body {
 .ch-chip b {
   color: #c9bcf5;
 }
+
+.hub-back {
+  background: rgba(180, 165, 234, 0.14);
+  color: #c9bcf5;
+}
+
+.hub-back:hover {
+  background: rgba(180, 165, 234, 0.24);
+  color: #eceaff;
+}
