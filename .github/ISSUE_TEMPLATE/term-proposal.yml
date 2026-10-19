@@ -1,0 +1,40 @@
+name: 용어 제안
+description: 인과추론·온라인 실험 용어의 번역어를 제안하거나 고치자고 제안합니다.
+title: "[용어] "
+labels: ["glossary"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제안해 주셔서 고맙습니다. 논의를 거쳐 정해진 용어는 번역 가이드의 용어표와 웹북 용어집에 함께 반영합니다.
+  - type: input
+    id: original
+    attributes:
+      label: 원어
+      placeholder: "예: sample ratio mismatch (SRM)"
+    validations:
+      required: true
+  - type: input
+    id: proposal
+    attributes:
+      label: 제안하는 번역어
+      placeholder: "예: 표본 비율 불일치(SRM)"
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: 지금 쓰는 표기 (있다면)
+      placeholder: "예: 용어집에 없음 / 현재 '샘플 비율 불일치'"
+  - type: textarea
+    id: reason
+    attributes:
+      label: 제안 이유와 근거
+      description: 다른 책, 논문, 업계에서 쓰는 예가 있으면 함께 적어 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: 쓰임 예시
+      placeholder: "예: 실험을 분석하기 전에 표본 비율 불일치(SRM)가 없는지 먼저 확인합니다."
