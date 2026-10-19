@@ -9,7 +9,7 @@
 - 대체 텍스트가 `img`뿐인 이미지: 그림 캡션으로 찍히지 않게 비운다.
 - `{note}` 지시문과 `> 옮긴이:` 인용문: Quarto 콜아웃으로 바꾼다.
 - 장 설명: 첫 문단을 front matter `description`으로 넣어 검색엔진과 공유 카드에 쓴다.
-- 용어 찾아보기: TRANSLATION_GUIDE.md 용어표로 glossary.qmd를 만들고, 용어가 많이 나오는 장을 잇는다.
+- 용어집: TRANSLATION_GUIDE.md 용어표로 glossary.qmd를 만들고, 용어가 많이 나오는 장을 잇는다.
 
 실행: python book/prepare.py
 """
@@ -127,7 +127,7 @@ def label(key):
     return f"부록 {chr(65 + i - 25)} {CHAPTERS[key]}"
 
 
-# 검색할 때 띄어 쓰는 경우가 많은 용어. 용어 찾아보기에 함께 적어 두면 띄어 써서 검색해도 찾힌다.
+# 검색할 때 띄어 쓰는 경우가 많은 용어. 용어집에 함께 적어 두면 띄어 써서 검색해도 찾힌다.
 SPACED = {
     "도구변수": "도구 변수", "성향점수": "성향 점수", "처치효과": "처치 효과", "패널데이터": "패널 데이터",
     "이중차분법": "이중 차분법", "통제집단합성법": "통제 집단 합성법", "회귀분석": "회귀 분석",
@@ -138,24 +138,31 @@ SPACED = {
 
 
 def build_glossary():
-    """번역 가이드 용어표로 용어 찾아보기 페이지를 만든다."""
+    """번역 가이드 용어표로 용어집 페이지를 만든다."""
     guide = (ROOT / "TRANSLATION_GUIDE.md").read_text(encoding="utf-8")
     body = guide.split("## 3. 용어표", 1)[1].split("\n## ", 1)[0]
+    propose = "https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?template=term-proposal.yml"
     out = [
         "---",
-        'description: "이 책에서 쓴 인과추론 용어의 번역어와 원어, 그 용어를 주로 다루는 장을 모았습니다."',
+        'description: "인과추론과 온라인 실험에서 쓰는 한국어 용어집. 번역어와 원어, 다른 표기, 그 용어를 다루는 장을 함께 정리했습니다."',
         "---",
         "",
-        "# 용어 찾아보기 {.unnumbered}",
+        "# 용어집 {.unnumbered}",
         "",
-        "이 책에서 쓴 번역어와 원어, 그 용어가 많이 나오는 장을 모았습니다. "
-        "번역어는 『실무로 통하는 인과추론 with 파이썬』과 같습니다. "
-        "다른 책이나 자료에서 본 표기(예: 처치군, 통제군)로 검색해도 이 페이지에서 찾을 수 있습니다.",
+        "인과추론과 온라인 실험을 한국어로 공부하고 이야기할 때 쓸 수 있는 용어를 모았습니다. "
+        "번역어는 『실무로 통하는 인과추론 with 파이썬』을 기준으로 하고, 이 책에 나오지 않는 온라인 실험 용어는 "
+        "가짜연구소 인과추론팀이 함께 정해 나가고 있습니다.",
+        "",
+        "용어마다 원어와 다른 표기, 그 용어를 주로 다루는 장을 붙였습니다. 다른 자료에서 본 표기(예: 처치군, 통제군)나 "
+        "띄어 쓴 표기로 검색해도 이 페이지에서 찾을 수 있고, 용어 이름 옆 링크를 복사하면 그 용어로 바로 이동하는 주소가 됩니다.",
+        "",
+        f"::: {{.callout-tip appearance=\"simple\" title=\"용어 제안하기\"}}\n빠진 용어나 더 자연스러운 번역어가 있다면 [용어 제안 이슈]({propose})로 알려 주세요. 논의를 거쳐 번역 가이드와 이 용어집에 함께 반영합니다.\n:::",
         "",
     ]
     order = list(CHAPTERS)
     for section in re.split(r"(?m)^### ", body)[1:]:
         heading, _, rest = section.partition("\n")
+        intro = [l for l in rest.split("\n|", 1)[0].splitlines() if l.strip()]
         items = []
         for line in rest.splitlines():
             cols = [c.strip() for c in line.strip().strip("|").split("|")]
@@ -179,7 +186,8 @@ def build_glossary():
             top = sorted((k for k in order if scores[k]), key=lambda k: -scores[k])[:3]
             top.sort(key=order.index)
             others = [a for a in re.findall(r"`([^`]+)`", note) if "쓰지" in note]
-            line_out = f"- **{ko}** · {en}"
+            anchor = "term-" + re.sub(r"[^0-9A-Za-z가-힣]+", "-", ko).strip("-")
+            line_out = f"- [**{ko}**]{{#{anchor}}} [#](#{anchor}){{.term-link aria-label=\"{ko} 링크\"}} · {en}"
             for w, spaced in SPACED.items():
                 if w in ko:
                     alias = re.sub(r"\s*\([^)]*\)", "", ko.replace(w, spaced)).strip()
@@ -191,7 +199,7 @@ def build_glossary():
                 line_out += " · " + ", ".join(f"[{label(k)}]({k}.html)" for k in top)
             items.append(line_out)
         if items:
-            out += [f"## {heading.strip()}", ""] + items + [""]
+            out += [f"## {heading.strip()}", ""] + ([" ".join(intro), ""] if intro else []) + items + [""]
     (OUT / "glossary.qmd").write_text("\n".join(out), encoding="utf-8")
 
 

@@ -325,7 +325,7 @@ details.code-fold > summary {
 
 .toc-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 0.9rem;
   margin: 1.2rem 0 2rem;
 }
@@ -807,4 +807,25 @@ h1.title .chapter-number {
   .aa-Panel {
     min-width: min(560px, calc(100vw - 2rem));
   }
+}
+
+// 용어집: 용어 옆 링크 표시는 마우스를 올릴 때만 또렷하게
+.term-link {
+  margin-left: 0.15rem;
+  color: $lavender !important;
+  font-size: 0.85em;
+  text-decoration: none !important;
+  opacity: 0.35;
+}
+li:hover > .term-link,
+.term-link:focus {
+  opacity: 1;
+}
+:target {
+  scroll-margin-top: 1.5rem;
+}
+span[id^="term-"]:target {
+  background: rgba($lavender, 0.25);
+  border-radius: 4px;
+  padding: 0 0.2rem;
 }

@@ -23,7 +23,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
   <a href="https://doi.org/10.5281/zenodo.4445778"><img src="https://img.shields.io/badge/%EC%9B%90%EC%84%9C%20DOI-10.5281%2Fzenodo.4445778-blue" alt="원서 DOI"></a>
 </p>
 
-**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [용어 찾아보기](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
+**[웹북으로 읽기](https://causalinferencelab.github.io/Causal-Inference-with-Python/)** · [용어집](https://causalinferencelab.github.io/Causal-Inference-with-Python/glossary.html) · [번역 가이드](TRANSLATION_GUIDE.md) · [오류 제보](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)
 
 <br>
 
@@ -122,7 +122,7 @@ python book/prepare.py
 cd book && quarto preview
 ```
 
-`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어 찾아보기' 페이지를 만들고, `book/postrender.py`는 검색 결과 미리보기의 수식 기호를 읽기 쉽게 정리합니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
+`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 검색 결과 미리보기의 수식 기호를 읽기 쉽게 정리합니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
 
 <br>
 
