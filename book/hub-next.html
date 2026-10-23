@@ -1,0 +1,33 @@
+<script>
+// 장 끝에 Causal Inference Hub에서 이어 볼 자료를 한 장의 카드로 보여 준다. 의견 나누기(comments.html)보다 먼저 붙는다.
+document.addEventListener("DOMContentLoaded", function () {
+  var main = document.getElementById("quarto-document-content");
+  if (!main || document.querySelector(".hero")) return;
+  var page = location.pathname.split("/").pop().replace(/\.html$/, "");
+  var hub = "https://causalinferencelab.github.io/";
+  var next = {
+    oce: ["OCE-Materials", "온라인 통제 실험", "이 장의 무작위 실험을 실무의 A/B 테스트로 잇는 스터디 자료입니다."],
+    practice: ["causal-inference-practice", "산업 사례 템플릿", "인과 그래프부터 회귀 불연속 설계까지, 기법마다 산업 사례를 붙인 템플릿입니다. 이 장의 기법을 실제 문제에 적용해 볼 수 있습니다."],
+    causalml: ["causal-inference-with-causalML", "CausalML 스터디", "이 책의 이론을 uber/causalml 코드로 다시 구현하며 이론에서 코드까지 잇는 스터디입니다."]
+  };
+  var n = parseInt(page, 10), pick;
+  if (n === 2) pick = next.oce;
+  else if (n >= 17 && n <= 23) pick = next.causalml;
+  else if (n >= 1 && n <= 25) pick = next.practice;
+  else if (/^(Debiasing|When-Prediction|Prediction-Metrics)/.test(page)) pick = next.causalml;
+  else if (/^Conformal/.test(page)) pick = next.practice;
+  if (!pick) return;
+  var box = document.createElement("aside");
+  box.className = "hub-next";
+  box.setAttribute("aria-label", "Causal Inference Hub에서 이어 보기");
+  box.innerHTML =
+    '<p class="hub-next-k"><img src="assets/causal-lab-mark.png" alt="" width="18" height="21"><span>Causal Inference Hub에서 이어 보기</span></p>' +
+    '<p class="hub-next-t">' + pick[1] + '</p>' +
+    '<p class="hub-next-d">' + pick[2] + '</p>' +
+    '<p class="hub-next-a">' +
+    '<a class="primary" href="' + hub + '#station=' + pick[0] + '">허브에서 보기</a>' +
+    '<a href="' + hub + '#station=Causal-Inference-with-Python">허브에서 이 책의 자리</a>' +
+    '</p>';
+  main.appendChild(box);
+});
+</script>

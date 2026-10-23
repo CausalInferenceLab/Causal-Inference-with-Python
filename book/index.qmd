@@ -10,7 +10,7 @@ aliases:
     <nav class="hero-crumb" aria-label="위치">
       <a href="https://causalinferencelab.github.io/">인과추론 허브</a>
       <span aria-hidden="true">›</span>
-      <a href="https://causalinferencelab.github.io/#books">서가</a>
+      <a href="https://causalinferencelab.github.io/#station=Causal-Inference-with-Python">커리큘럼 L1</a>
     </nav>
     <div class="hero-brand">
       <img class="hero-pseudolab" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
@@ -92,11 +92,18 @@ aliases:
 
 1부는 학계에서 자리 잡은 내용이라 인과적 질문을 다룰 때 기댈 수 있는 튼튼한 토대가 됩니다. 2부는 저자가 핀테크 회사에서 쌓은 실무 경험에서 나온 내용이 많아 더 실험적이고, 그만큼 현업에 바로 가져다 쓸 거리가 많습니다.
 
-## 인과추론 허브에서 이 책의 자리
+## 인과추론 허브에서 이어 가기
 
-이 책은 가짜연구소 인과추론팀의 [인과추론 허브](https://causalinferencelab.github.io/) 서가에 놓인 책입니다. 허브는 팀이 만든 오픈소스를 학습 단계와 트랙에 따라 지하철 노선도처럼 엮어 둔 곳이고, 이 책은 L1 구역('어떻게 추정하나')에 있는 1호선 본선의 두 번째 역입니다.
+이 책은 가짜연구소 인과추론팀의 [Causal Inference Hub](https://causalinferencelab.github.io/)에 있는 자료입니다. 허브는 팀이 2022년부터 만든 오픈소스와 자료를 L0부터 L4까지 커리큘럼으로 엮어 둔 곳이고, 이 책은 L1('어떻게 추정하나')의 중심 자료입니다. 허브에서는 이 책을 'Brave & True 인과추론 번역서'로 소개합니다.
 
-처음이라 개념부터 가볍게 잡고 싶다면 바로 앞 역인 [영상으로 여는 인과추론](https://causalinferencelab.github.io/causal-studio)을 먼저 보셔도 좋습니다. 이 책을 마친 뒤에는 다음 역인 『실무로 통하는 인과추론 with 파이썬』 [예제 코드](https://github.com/CausalInferenceLab/causal-inference-in-python-code)로 이어 가면 됩니다. 2부의 메타러너와 이중 머신러닝이 더 궁금하다면 2호선 ML선으로, 헬스케어와 규제 연구가 궁금하다면 3호선 연구선으로 갈아탈 수 있습니다. 노선마다 다음 역은 [노선도](https://causalinferencelab.github.io/#map)에서 확인할 수 있습니다.
+인과추론이 처음이라면 L0의 [영상으로 여는 인과추론](https://causalinferencelab.github.io/causal-studio/)으로 먼저 감을 잡고 넘어와도 좋습니다. 책을 마친 뒤에는 관심에 따라 이렇게 이어 갈 수 있습니다.
+
+- 내 데이터에 적용해 보고 싶다면: [산업 사례 템플릿](https://causalinferencelab.github.io/#station=causal-inference-practice), [책 예제 코드](https://causalinferencelab.github.io/#station=causal-inference-in-python-code)
+- 메타러너와 이중 머신러닝을 코드로 더 익히고 싶다면: ML 트랙의 [CausalML 스터디](https://causalinferencelab.github.io/#station=causal-inference-with-causalML)
+- A/B 테스트를 제대로 하고 싶다면: 실험 트랙의 [온라인 통제 실험](https://causalinferencelab.github.io/#station=OCE-Materials)
+- 헬스케어와 규제 연구가 궁금하다면: 연구 트랙의 [RWE 규제 가이드라인](https://causalinferencelab.github.io/#station=Bridging-Causal-Inference-and-Real-World-Evidence-A-Study-of-FDA-and-Other-Regulatory-Guidelines)
+
+각 장 끝에도 그 장 다음에 보면 좋은 허브 자료를 하나씩 붙여 두었습니다. 전체 흐름은 [허브에서 이 책의 자리](https://causalinferencelab.github.io/#station=Causal-Inference-with-Python)를 열어 보면 앞뒤 자료와 함께 한눈에 보입니다.
 
 ## 이렇게 읽어 주세요
 
