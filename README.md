@@ -35,7 +35,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 
 번역은 전문 번역가가 아니라 데이터 분석가, 데이터 과학자, 연구자들이 함께 했습니다. 용어는 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄고, 핵심 용어는 처음 나올 때 영어를 함께 적었습니다. 어색한 문장이나 잘못된 번역을 발견하면 언제든 알려 주세요.
 
-이 책은 인과추론팀의 오픈소스를 학습 단계와 트랙별로 엮은 [인과추론 허브](https://causalinferencelab.github.io/) 서가에도 올라 있습니다. 허브의 노선도에서 이 책 앞뒤로 이어지는 자료를 찾을 수 있습니다.
+이 책은 인과추론팀의 오픈소스와 자료를 L0–L4 커리큘럼으로 엮은 [Causal Inference Hub](https://causalinferencelab.github.io/)의 L1 중심 자료입니다. [허브에서 이 책의 자리](https://causalinferencelab.github.io/#station=Causal-Inference-with-Python)를 열면 앞뒤로 이어지는 자료를 볼 수 있습니다.
 
 <br>
 

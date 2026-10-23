@@ -123,6 +123,7 @@ format:
       - sidebar-resize.html
       - chapter-toc.html
       - site-search.html
+      - hub-next.html
       - comments.html
     include-in-header:
       - text: |

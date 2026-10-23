@@ -471,6 +471,77 @@ main:has(.hero) #title-block-header {
   border-bottom-color: #fff;
 }
 
+// 장 끝: Causal Inference Hub에서 이어 볼 자료
+.hub-next {
+  margin: 2.6rem 0 0;
+  padding: 1.2rem 1.3rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba($indigo, 0.18);
+  background: linear-gradient(135deg, $lavender-soft 0%, #fff 70%);
+}
+
+.hub-next p {
+  margin: 0;
+}
+
+.hub-next .hub-next-k {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $indigo;
+}
+
+.hub-next .hub-next-k img {
+  display: block;
+  flex: none;
+  width: 18px;
+  height: auto;
+  margin: 0;
+}
+
+.hub-next .hub-next-t {
+  margin-top: 0.45rem;
+  font-size: 1.12rem;
+  font-weight: 750;
+  color: $navy;
+}
+
+.hub-next .hub-next-d {
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.hub-next .hub-next-a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.hub-next .hub-next-a a {
+  display: inline-block;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba($indigo, 0.3);
+  font-size: 0.86rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.hub-next .hub-next-a a.primary {
+  background: $indigo;
+  border-color: $indigo;
+  color: #fff;
+}
+
+.hub-next .hub-next-a a:hover {
+  opacity: 0.88;
+}
+
 // 사이드바 상단: 가짜연구소 × 인과추론팀
 .brand-lockup {
   display: flex;

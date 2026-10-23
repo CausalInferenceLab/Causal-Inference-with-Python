@@ -154,3 +154,26 @@ body {
   background: rgba(180, 165, 234, 0.24);
   color: #eceaff;
 }
+
+.hub-next {
+  border-color: #2b2e40;
+  background: linear-gradient(135deg, rgba(180, 165, 234, 0.12) 0%, #14151f 75%);
+}
+
+.hub-next .hub-next-k {
+  color: #c9bcf5;
+}
+
+.hub-next .hub-next-t {
+  color: #eceaff;
+}
+
+.hub-next .hub-next-a a {
+  border-color: rgba(180, 165, 234, 0.35);
+}
+
+.hub-next .hub-next-a a.primary {
+  background: #b4a5ea;
+  border-color: #b4a5ea;
+  color: #14151f;
+}
