@@ -183,7 +183,7 @@ def build_glossary():
         "다른 자료에서 본 표기(예: 처치군, 통제군)나 띄어 쓴 표기로 검색해도 이 페이지에서 찾을 수 있고, "
         "용어 앞의 `#`을 복사하면 그 용어로 바로 이동하는 주소가 됩니다.",
         "",
-        f"::: {{.callout-tip appearance=\"simple\" title=\"용어 제안하기\"}}\n빠진 용어나 더 자연스러운 번역어가 있다면 [용어 제안 이슈]({propose})로 알려 주세요. 논의를 거쳐 번역 가이드와 이 용어집에 함께 반영합니다.\n:::",
+        f"::: {{.callout-tip appearance=\"simple\" title=\"용어 제안하기\"}}\n빠진 용어나 더 자연스러운 번역어가 있다면 [용어 제안 이슈]({propose})로 알려 주세요. 논의를 거쳐 번역 가이드와 이 용어집에 함께 반영합니다. 주요 용어를 왜 이렇게 정했는지는 허브 연재 [번역하며 정한 인과추론 용어](https://causalinferencelab.github.io/article.html#brave-true-terms-02)에 정리했습니다.\n:::",
         "",
     ]
     order = list(CHAPTERS)
