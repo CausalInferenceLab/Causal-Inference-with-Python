@@ -1,12 +1,19 @@
 <!-- Google Analytics 4 (웹북). 허브는 따로 G-C5V0X2SGD3을 쓴다. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BEBVKYH8HL"></script>
 <script>
+  // 배포된 웹북에서만 집계한다(로컬·PR 미리보기 제외). 허브와 같은 설정: Google 신호·광고 개인화 끔.
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BEBVKYH8HL', { anonymize_ip: true, page_location: location.href });
-  // 유입 정보(utm_*)는 page_location으로 GA에 넘기고, 주소창에서는 지워 공유되는 링크를 깔끔하게 둔다
   (function () {
+    var ID = "G-BEBVKYH8HL";
+    if (location.hostname === "causalinferencelab.github.io") {
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+      document.head.appendChild(s);
+      gtag("js", new Date());
+      gtag("config", ID, { page_location: location.href, allow_google_signals: false, allow_ad_personalization_signals: false });
+    }
+    // 유입 정보(utm_*)는 page_location으로 GA에 넘기고, 주소창에서는 지워 공유되는 링크를 깔끔하게 둔다
     try {
       var u = new URL(location.href), drop = [];
       u.searchParams.forEach(function (v, k) { if (k.indexOf("utm_") === 0) drop.push(k); });

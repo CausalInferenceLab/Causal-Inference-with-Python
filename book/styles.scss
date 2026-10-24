@@ -659,6 +659,19 @@ main:has(.hero) #title-block-header {
   margin-top: 2.8rem;
 }
 
+.cil-end-stamp {
+  margin: 0 0 0.8rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(#2b8a5a, 0.08);
+  border: 1px solid rgba(#2b8a5a, 0.25);
+  font-size: 0.9rem;
+}
+
+.cil-end-stamp a {
+  font-weight: 700;
+}
+
 .cil-end-row {
   display: flex;
   flex-wrap: wrap;

@@ -5,7 +5,9 @@
   var HUB = "https://causalinferencelab.github.io/";
   var BOOK_PATH = "/Causal-Inference-with-Python/";
   var NB = "https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/causal-inference-for-the-brave-and-true/";
-  var KEY_READ = "cil-read", KEY_LAST = "cil-last", KEY_VOTE = "cil-vote";
+  // 같은 도메인의 허브와 저장소를 함께 쓰므로 웹북 기록은 cil-book-* 이름을 쓴다. 허브는 이 기록으로 진도와 여권 스탬프를 보여 준다.
+  var KEY_READ = "cil-book-read", KEY_LAST = "cil-book-last", KEY_VOTE = "cil-book-vote";
+  var HUB_PAGES = /^\/(?:$|index\.html$|article\.html$|game\.html$|lab\.html$|404\.html$|articles\/|builders\/|badges\/)/;
 
   function get(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function put(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -27,8 +29,7 @@
     var u;
     try { u = new URL(a.href, location.href); } catch (err) { return; }
     if (u.origin !== new URL(HUB).origin || u.pathname.indexOf(BOOK_PATH) === 0) return;
-    var site = u.pathname.split("/")[1];
-    site = site && !/\.html$/.test(site) ? site : "hub";
+    var site = HUB_PAGES.test(u.pathname) ? "hub" : u.pathname.split("/")[1];
     var where = placement(a);
     if (!u.searchParams.has("utm_source")) {
       u.searchParams.set("utm_source", "webbook");
@@ -112,7 +113,7 @@
 
     if (!main || idx < 0 || document.querySelector(".hero")) return;
     var ch = chapters[idx];
-    put(KEY_LAST, { slug: ch.slug, t: Date.now() });
+    put(KEY_LAST, { slug: ch.slug, label: label(ch), total: chapters.length, t: Date.now() });
 
     // ---------- 장 첫머리: 분량, 위치, 노트북 ----------
     var header = document.getElementById("title-block-header");
@@ -172,6 +173,7 @@
     end.className = "cil-end";
     end.setAttribute("aria-label", "이 장을 마치며");
     end.innerHTML =
+      '<p class="cil-end-stamp" hidden>처음으로 한 장을 끝까지 읽었습니다. 허브 활동 여권에 <b>웹북 독자</b> 스탬프가 찍혔어요. <a href="' + HUB + '#passport">여권 보기</a></p>' +
       '<div class="cil-end-row">' +
         '<div class="cil-end-vote" role="group" aria-label="이 장 평가">' +
           '<span class="q">이 장, 도움이 됐나요?</span>' +
@@ -221,6 +223,7 @@
       if (!b) return;
       var v = b.getAttribute("data-vote");
       if (votes[ch.slug] === v) return;
+      votes = get(KEY_VOTE, {});
       votes[ch.slug] = v;
       put(KEY_VOTE, votes);
       paintVote(v);
@@ -230,12 +233,15 @@
     // 끝까지 내려왔고 30초 이상 머물렀으면 읽은 장으로 기록
     var start = Date.now(), timer = 0;
     function complete() {
+      read = get(KEY_READ, {}); // 다른 탭에서 읽은 장을 덮어쓰지 않도록 다시 읽는다
       if (read[ch.slug]) return;
       read[ch.slug] = Date.now();
       put(KEY_READ, read);
       paintSidebar();
       paintProgress();
-      track("chapter_complete", { chapter: ch.slug, chapter_index: idx + 1, read_count: readCount() });
+      var n = readCount();
+      if (n === 1) end.querySelector(".cil-end-stamp").hidden = false;
+      track("chapter_complete", { chapter: ch.slug, chapter_index: idx + 1, read_count: n });
     }
     if ("IntersectionObserver" in window && !read[ch.slug]) {
       var io = new IntersectionObserver(function (entries) {
