@@ -1,0 +1,19 @@
+<!-- Google Analytics 4 (웹북). 허브는 따로 G-C5V0X2SGD3을 쓴다. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BEBVKYH8HL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BEBVKYH8HL', { anonymize_ip: true, page_location: location.href });
+  // 유입 정보(utm_*)는 page_location으로 GA에 넘기고, 주소창에서는 지워 공유되는 링크를 깔끔하게 둔다
+  (function () {
+    try {
+      var u = new URL(location.href), drop = [];
+      u.searchParams.forEach(function (v, k) { if (k.indexOf("utm_") === 0) drop.push(k); });
+      if (drop.length) {
+        drop.forEach(function (k) { u.searchParams.delete(k); });
+        history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+      }
+    } catch (e) {}
+  })();
+</script>

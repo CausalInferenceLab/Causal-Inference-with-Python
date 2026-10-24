@@ -145,14 +145,66 @@ body {
   color: #c9bcf5;
 }
 
-.hub-back {
-  background: rgba(180, 165, 234, 0.14);
+.hub-card {
+  border-color: #2b2e40;
+  background: rgba(180, 165, 234, 0.1);
+  color: #eceaff;
+}
+
+.hub-card:hover {
+  background: rgba(180, 165, 234, 0.18);
+  color: #eceaff;
+}
+
+.hub-card .hub-card-arrow {
+  background: #1d1f2c;
   color: #c9bcf5;
 }
 
-.hub-back:hover {
-  background: rgba(180, 165, 234, 0.24);
+.cil-hub-mobile {
+  background: rgba(180, 165, 234, 0.14);
   color: #eceaff;
+}
+
+.cil-chapter-meta {
+  color: #9a9db0;
+}
+
+.cil-chapter-meta a {
+  color: #b4a5ea;
+}
+
+.cil-chapter-meta .cil-read-badge,
+#quarto-sidebar .sidebar-link.is-read .menu-text::after {
+  color: #6fcf97;
+}
+
+.cil-end-row {
+  border-top-color: #2b2e40;
+}
+
+.cil-end-vote .q {
+  color: #eceaff;
+}
+
+.cil-end-vote button {
+  border-color: rgba(180, 165, 234, 0.3);
+  color: #e4e5ee;
+}
+
+.cil-end-vote button[aria-pressed="true"] {
+  background: #b4a5ea;
+  border-color: #b4a5ea;
+  color: #14151f;
+}
+
+.cil-end-vote .thanks,
+.cil-end-progress {
+  color: #9a9db0;
+}
+
+.cil-end-progress .bar {
+  background: rgba(180, 165, 234, 0.16);
 }
 
 .hub-next {
