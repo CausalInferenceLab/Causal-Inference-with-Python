@@ -13,9 +13,6 @@ execute:
   enabled: false
 
 book:
-  google-analytics:
-    tracking-id: "G-BEBVKYH8HL"
-    anonymize-ip: true
   title: "Python으로 하는 인과추론"
   subtitle: "Causal Inference for The Brave and True 한국어판"
   author:
@@ -39,7 +36,7 @@ book:
     style: docked
     collapse-level: 3
     header: |
-      <a class="hub-back" href="https://causalinferencelab.github.io/"><span aria-hidden="true">←</span> 인과추론 허브로 가기</a>
+      <a class="hub-card" href="https://causalinferencelab.github.io/"><span class="hub-card-arrow" aria-hidden="true">←</span><span class="hub-card-text"><b>Causal Inference Hub</b><small>인과추론팀 커리큘럼과 오픈소스</small></span></a>
       <a class="brand-lockup" href="https://pseudo-lab.com/" target="_blank" rel="noopener" aria-label="가짜연구소">
         <img class="brand-pseudolab only-light" src="assets/pseudolab-dark.png" alt="가짜연구소 Pseudo Lab">
         <img class="brand-pseudolab only-dark" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
@@ -118,14 +115,16 @@ format:
     html-math-method: mathjax
     df-print: default
     link-external-newwindow: true
+    link-external-filter: '^(?:https?:)\/\/causalinferencelab\.github\.io\/'
     back-to-top-navigation: true
     include-after-body:
       - sidebar-resize.html
       - chapter-toc.html
       - site-search.html
-      - hub-next.html
+      - reader.html
       - comments.html
     include-in-header:
+      - analytics.html
       - text: |
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
           <link rel="preconnect" href="https://fonts.googleapis.com">

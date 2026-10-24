@@ -18,11 +18,11 @@ aliases:
       <span class="hero-brand-team">인과추론팀 <b>Causal-Lab</b></span>
     </div>
     <p class="hero-title">Python으로 하는<br>인과추론</p>
-    <p class="hero-sub">Causal Inference for The Brave and True 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
+    <p class="hero-sub"><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
     <div class="hero-actions">
       <a class="primary" href="01-Introduction-To-Causality.html">1장부터 읽기</a>
+      <a class="ghost" href="https://causalinferencelab.github.io/">인과추론 허브</a>
       <a class="ghost" href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python">GitHub</a>
-      <a class="ghost" href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">원서 보기</a>
     </div>
   </div>
   <div class="hero-aside">
@@ -94,6 +94,18 @@ aliases:
 
 ## 인과추론 허브에서 이어 가기
 
+```{=html}
+<a class="hub-banner" href="https://causalinferencelab.github.io/">
+  <img src="assets/causal-lab-mark.png" alt="" width="56" height="64">
+  <span class="hub-banner-text">
+    <span class="hub-banner-k">가짜연구소 인과추론팀</span>
+    <span class="hub-banner-t">Causal Inference Hub</span>
+    <span class="hub-banner-d">웹북, 영상, 스터디 자료, 데이터 에이전트까지. 팀이 만든 오픈소스를 L0–L4 커리큘럼으로 엮었습니다.</span>
+  </span>
+  <span class="hub-banner-go">허브 둘러보기 <span aria-hidden="true">→</span></span>
+</a>
+```
+
 이 책은 가짜연구소 인과추론팀의 [Causal Inference Hub](https://causalinferencelab.github.io/)에 있는 자료입니다. 허브는 팀이 2022년부터 만든 오픈소스와 자료를 L0부터 L4까지 커리큘럼으로 엮어 둔 곳이고, 이 책은 L1('어떻게 추정하나')의 중심 자료입니다. 허브에서는 이 책을 'Brave & True 인과추론 번역서'로 소개합니다.
 
 인과추론이 처음이라면 L0의 [영상으로 여는 인과추론](https://causalinferencelab.github.io/causal-studio/)으로 먼저 감을 잡고 넘어와도 좋습니다. 책을 마친 뒤에는 관심에 따라 이렇게 이어 갈 수 있습니다.
@@ -107,7 +119,7 @@ aliases:
 
 ## 이렇게 읽어 주세요
 
-각 장은 원서의 주피터 노트북을 그대로 옮긴 것이라 코드와 출력이 원서와 같습니다. 노트북 파일은 [GitHub 저장소](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/tree/main/causal-inference-for-the-brave-and-true)에서 내려받아 직접 실행해 볼 수 있습니다. 그래프를 그리는 코드처럼 길어서 접어 둔 셀은 **코드**를 눌러 펼치면 됩니다.
+각 장은 원서의 주피터 노트북을 그대로 옮긴 것이라 코드와 출력이 원서와 같습니다. 노트북 파일은 [GitHub 저장소](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/tree/main/causal-inference-for-the-brave-and-true)에서 내려받아 직접 실행해 볼 수 있습니다. 그래프를 그리는 코드처럼 길어서 접어 둔 셀은 **코드**를 눌러 펼치면 됩니다. 끝까지 읽은 장은 왼쪽 목차에 ✓ 표시가 붙고, 다음에 오면 첫 화면에서 이어 읽을 수 있습니다. 이 기록은 지금 쓰는 브라우저에만 남습니다.
 
 용어는 같은 저자의 책을 옮긴 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄습니다. 두 책을 함께 보셔도 용어가 헷갈리지 않습니다. 용어의 원어와 그 용어를 다루는 장은 [용어집](glossary.html)에서 찾을 수 있습니다. 왼쪽 위 검색(단축키 `/` 또는 `Ctrl+K`)에 한국어나 영어 용어를 넣어도 됩니다. 띄어쓰기는 달라도 찾아 줍니다. 번역 원칙과 용어표는 [번역 가이드](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/blob/main/TRANSLATION_GUIDE.md)에 정리해 두었습니다.
 

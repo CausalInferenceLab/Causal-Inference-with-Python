@@ -17,6 +17,14 @@
   var input = document.getElementById("cil-search-input");
   var list = document.getElementById("cil-search-results");
   var data = null, loading = null, items = [], active = -1, timer = 0;
+  var reported = "";
+  // 무엇을 찾는지 GA4 'search' 이벤트로 남긴다(결과를 열 때, 또는 찾다가 닫을 때 한 번)
+  function report(how) {
+    var q = input.value.trim();
+    if (norm(q).length < 2 || q === reported) return;
+    reported = q;
+    try { if (typeof window.gtag === "function") window.gtag("event", "search", { search_term: q, results: items.length, how: how }); } catch (e) {}
+  }
   var SUGGEST = ["잠재적 결과", "성향점수", "이중차분법", "도구변수", "평행 추세", "메타러너", "A/B 테스트"];
 
   function norm(s) {
@@ -133,6 +141,7 @@
   }
   function close() {
     if (box.hidden) return;
+    report("close");
     box.hidden = true;
     document.documentElement.classList.remove("cil-search-open");
     input.blur();
@@ -150,14 +159,14 @@
     else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
     else if (e.key === "Enter") {
       var target = items[active >= 0 ? active : 0];
-      if (target) { e.preventDefault(); window.location.href = target.getAttribute("href"); close(); }
+      if (target) { e.preventDefault(); report("open"); window.location.href = target.getAttribute("href"); close(); }
     } else if (e.key === "Escape") { close(); }
   });
   box.addEventListener("click", function (e) {
     if (e.target.closest("[data-close]")) close();
     var chip = e.target.closest("[data-q]");
     if (chip) { input.value = chip.getAttribute("data-q"); render(input.value); input.focus(); }
-    if (e.target.closest(".cil-search-item")) close();
+    if (e.target.closest(".cil-search-item")) { report("open"); close(); }
   });
   document.addEventListener("keydown", function (e) {
     var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
