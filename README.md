@@ -127,6 +127,8 @@ cd book && quarto preview
 
 `book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 렌더링이 끝난 뒤 웹북 검색 색인(`search-index.json`)을 만듭니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
 
+읽기 기능(읽은 장 기록, 이어 읽기, 장 끝 평가, 허브로 가는 링크)은 `book/reader.html`, GA4 설정은 `book/analytics.html`에 있습니다. 읽은 장 기록은 독자의 브라우저(`localStorage`의 `cil-book-*`)에만 남고, 같은 도메인의 [Causal Inference Hub](https://causalinferencelab.github.io/)가 이 기록으로 진도와 활동 여권 스탬프를 보여 줍니다.
+
 <br>
 
 ## 원서 변경 반영
