@@ -428,6 +428,472 @@ main:has(.hero) #title-block-header {
   text-align: center;
 }
 
+// 사이드바 맨 위: Causal Inference Hub로 가는 카드
+.hub-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.1rem 0 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba($indigo, 0.16);
+  background: $lavender-soft;
+  color: $navy;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.hub-card:hover {
+  border-color: rgba($indigo, 0.45);
+  background: rgba($lavender, 0.24);
+  color: $navy;
+}
+
+.hub-card .hub-card-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: #fff;
+  color: $indigo;
+  font-weight: 700;
+  transition: transform 0.15s ease;
+}
+
+.hub-card:hover .hub-card-arrow {
+  transform: translateX(-2px);
+}
+
+.hub-card .hub-card-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.hub-card b {
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.hub-card small {
+  font-size: 0.72rem;
+  color: $sidebar-fg;
+}
+
+// 좁은 화면 상단 막대의 허브 바로가기
+.cil-hub-mobile {
+  display: inline-flex;
+  flex: none;
+  align-self: center;
+  align-items: center;
+  line-height: 1.2;
+  gap: 0.3rem;
+  margin: 0 0.15rem 0 0.4rem;
+  padding: 0.22rem 0.6rem 0.22rem 0.45rem;
+  border-radius: 999px;
+  background: $lavender-soft;
+  color: $navy;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cil-hub-mobile img {
+  width: 16px;
+  height: auto;
+  margin: 0;
+}
+
+@media (min-width: 992px) {
+  .cil-hub-mobile {
+    display: none;
+  }
+}
+
+// 첫 화면 위치 표시: 인과추론 허브 › 서가
+.hero .hero-crumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero .hero-crumb a {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.hero .hero-crumb a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+// 장 첫머리: 분량, 위치, 노트북
+.cil-chapter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.9rem;
+  margin: 0.55rem 0 0.2rem;
+  font-size: 0.84rem;
+  color: lighten($body-color, 30%);
+}
+
+.cil-chapter-meta > * + *::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin: 0 0.9rem 0.2em -0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  vertical-align: middle;
+}
+
+.cil-chapter-meta a {
+  color: $indigo;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cil-chapter-meta a:hover {
+  text-decoration: underline;
+}
+
+.cil-chapter-meta .cil-read-badge {
+  color: #2b8a5a;
+  font-weight: 700;
+}
+
+// 읽기 진행 막대
+.cil-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  height: 3px;
+  pointer-events: none;
+}
+
+.cil-progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, $indigo, $lavender);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+// 왼쪽 목차: 읽은 장
+#quarto-sidebar .sidebar-link.is-read .menu-text::after {
+  content: "✓";
+  margin-left: auto;
+  padding-left: 0.4rem;
+  color: #2b8a5a;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+// 첫 화면: 이어 읽기와 진도
+.hero .hero-actions a.primary span {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.hero .hero-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero .hero-progress a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero .hero-sub a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero .hero-sub a:hover {
+  color: #fff;
+  text-decoration-color: #fff;
+}
+
+.hero .hero-progress .bar {
+  flex: none;
+  width: 90px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.hero .hero-progress .bar i {
+  display: block;
+  height: 100%;
+  background: #fff;
+}
+
+// 장 끝 마무리: 평가와 진도
+.cil-end {
+  margin-top: 2.8rem;
+}
+
+.cil-end-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1.4rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba($indigo, 0.15);
+}
+
+.cil-end-vote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cil-end-vote .q {
+  margin-right: 0.3rem;
+  font-weight: 700;
+  color: $navy;
+}
+
+.cil-end-vote button {
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba($indigo, 0.28);
+  background: transparent;
+  color: $body-color;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cil-end-vote button:hover {
+  border-color: $indigo;
+}
+
+.cil-end-vote button[aria-pressed="true"] {
+  background: $indigo;
+  border-color: $indigo;
+  color: #fff;
+}
+
+.cil-end-vote .thanks {
+  flex-basis: 100%;
+  font-size: 0.86rem;
+  color: lighten($body-color, 25%);
+}
+
+.cil-end-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  color: lighten($body-color, 25%);
+}
+
+.cil-end-progress .bar {
+  width: 110px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba($indigo, 0.12);
+  overflow: hidden;
+}
+
+.cil-end-progress .bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, $indigo, $lavender);
+  transition: width 0.4s ease;
+}
+
+.cil-end .hub-next {
+  margin-top: 0.6rem;
+}
+
+// 들어가며: 허브 배너
+a.hub-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin: 0.4rem 0 1.4rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: 16px;
+  color: #fff;
+  text-decoration: none;
+  background:
+    radial-gradient(circle at 90% 10%, rgba($lavender, 0.5), transparent 50%),
+    linear-gradient(135deg, $navy 0%, $indigo 70%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+a.hub-banner:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba($navy, 0.25);
+}
+
+.hub-banner img {
+  flex: none;
+  width: 52px;
+  height: auto;
+  margin: 0;
+}
+
+.hub-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.hub-banner-k {
+  font-size: 0.76rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.hub-banner-t {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.hub-banner-d {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  opacity: 0.88;
+}
+
+.hub-banner-go {
+  flex: none;
+  margin-left: auto;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: #fff;
+  color: $navy;
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hub-banner-t {
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  a.hub-banner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0.8rem 0.9rem;
+  }
+  .hub-banner img {
+    width: 40px;
+  }
+  .hub-banner-go {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-left: 0;
+  }
+}
+
+// 장 끝: Causal Inference Hub에서 이어 볼 자료
+.hub-next {
+  margin: 2.6rem 0 0;
+  padding: 1.2rem 1.3rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba($indigo, 0.18);
+  background: linear-gradient(135deg, $lavender-soft 0%, #fff 70%);
+}
+
+.hub-next p {
+  margin: 0;
+}
+
+.hub-next .hub-next-k {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $indigo;
+}
+
+.hub-next .hub-next-k img {
+  display: block;
+  flex: none;
+  width: 18px;
+  height: auto;
+  margin: 0;
+}
+
+.hub-next .hub-next-t {
+  margin-top: 0.45rem;
+  font-size: 1.12rem;
+  font-weight: 750;
+  color: $navy;
+}
+
+.hub-next .hub-next-d {
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.hub-next .hub-next-a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.hub-next .hub-next-a a {
+  display: inline-block;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba($indigo, 0.3);
+  font-size: 0.86rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.hub-next .hub-next-a a.primary {
+  background: $indigo;
+  border-color: $indigo;
+  color: #fff;
+}
+
+.hub-next .hub-next-a a:hover {
+  opacity: 0.88;
+}
+
 // 사이드바 상단: 가짜연구소 × 인과추론팀
 .brand-lockup {
   display: flex;
@@ -751,6 +1217,14 @@ h1.title .chapter-number {
 
 // 모바일 상단 경로: 부 이름은 숨기고 장 제목만 한 줄로
 @media (max-width: 991.98px) {
+  .quarto-secondary-nav .container-fluid {
+    align-items: center;
+  }
+  .quarto-secondary-nav .quarto-page-breadcrumbs {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
   .quarto-secondary-nav .breadcrumb {
     flex-wrap: nowrap;
     overflow: hidden;
