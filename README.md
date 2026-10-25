@@ -19,7 +19,6 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
   <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/pulls"><img src="https://img.shields.io/github/issues-pr/CausalInferenceLab/Causal-Inference-with-Python?color=a996d6" alt="Pull Requests"></a>
   <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues"><img src="https://img.shields.io/github/issues/CausalInferenceLab/Causal-Inference-with-Python?color=a996d6" alt="Issues"></a>
   <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/graphs/contributors"><img src="https://img.shields.io/github/contributors/CausalInferenceLab/Causal-Inference-with-Python?color=2b9348" alt="Contributors"></a>
-  <a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/actions/workflows/book.yml"><img src="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/actions/workflows/book.yml/badge.svg" alt="웹북 빌드"></a>
   <a href="https://doi.org/10.5281/zenodo.4445778"><img src="https://img.shields.io/badge/%EC%9B%90%EC%84%9C%20DOI-10.5281%2Fzenodo.4445778-blue" alt="원서 DOI"></a>
 </p>
 
@@ -75,7 +74,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 | 21 | [메타러너](https://causalinferencelab.github.io/Causal-Inference-with-Python/21-Meta-Learners.html) | 2023-12-31 | [박병수](https://github.com/Hinterhalter) |
 | 22 | [편향 제거/직교화 머신러닝](https://causalinferencelab.github.io/Causal-Inference-with-Python/22-Debiased-Orthogonal-Machine-Learning.html) | 2023-11-03 | [홍성철](https://github.com/chulhongsung) |
 | 23 | [효과 이질성과 비선형성](https://causalinferencelab.github.io/Causal-Inference-with-Python/23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity.html) | 2024-01-10 | [임종언](https://github.com/limjongun95) |
-| 24 | [이중차분법 사가](https://causalinferencelab.github.io/Causal-Inference-with-Python/24-The-Diff-in-Diff-Saga.html) | 2023-06-26 | [박시온](https://github.com/rockgoat95) |
+| 24 | [이중차분법 시리즈](https://causalinferencelab.github.io/Causal-Inference-with-Python/24-The-Diff-in-Diff-Saga.html) | 2023-06-26 | [박시온](https://github.com/rockgoat95) |
 | 25 | [합성 이중차분법](https://causalinferencelab.github.io/Causal-Inference-with-Python/25-Synthetic-Diff-in-Diff.html) | 2026-10-18 | [신진수](https://github.com/jsshin2022) |
 
 ### 부록
@@ -100,7 +99,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 - 용어와 문체를 『실무로 통하는 인과추론 with 파이썬』 기준으로 통일했습니다.
 - 원문의 오류는 본문과 수식을 고치지 않고 옮긴이 주로 짚었습니다. 뜻이 분명한 오타만 바로잡고 그 사실을 주에 밝혔습니다.
 
-자세한 원칙과 용어표는 [번역 가이드](TRANSLATION_GUIDE.md)에 있습니다.
+원서가 바뀌면 매달 확인해 한국어판에 반영합니다. 자세한 원칙과 용어표는 [번역 가이드](TRANSLATION_GUIDE.md)에 있습니다.
 
 <br>
 
@@ -108,32 +107,9 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 
 - 웹북의 각 장 끝 '의견 나누기'에서 GitHub 계정으로 로그인해 댓글을 남길 수 있습니다. 댓글은 장별로 [GitHub Discussions](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/discussions)에 모입니다.
 - 오역, 오탈자, 깨진 수식이나 그림은 [이슈](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues)로 알려 주세요.
-- 직접 고치고 싶다면 [번역 가이드](TRANSLATION_GUIDE.md)를 읽고 PR을 보내 주세요. 원고는 `causal-inference-for-the-brave-and-true/` 폴더의 노트북입니다.
+- 직접 고치고 싶다면 [번역 가이드](TRANSLATION_GUIDE.md)와 [기여 안내](CONTRIBUTING.md)를 읽고 PR을 보내 주세요. 원고는 `causal-inference-for-the-brave-and-true/` 폴더의 노트북입니다.
+- 더 나은 번역어가 있다면 [용어 제안](https://github.com/CausalInferenceLab/Causal-Inference-with-Python/issues/new?template=term-proposal.yml)으로 알려 주세요.
 - 그 밖의 문의는 메인테이너 [신진수](https://github.com/jsshin2022)에게 부탁드립니다.
-
-<br>
-
-## 웹북 빌드
-
-웹북은 [Quarto](https://quarto.org/) Book으로 만듭니다. `main`에 머지되면 GitHub Actions(`.github/workflows/book.yml`)가 빌드해 GitHub Pages에 배포합니다. PR에서는 빌드만 확인하며, 결과물은 Actions의 `book-preview` 아티팩트로 내려받아 볼 수 있습니다.
-
-로컬에서 미리 보려면 Quarto를 설치한 뒤 다음을 실행하세요. 노트북은 다시 실행하지 않고 저장된 출력을 그대로 씁니다.
-
-```bash
-pip install jupyter
-python book/prepare.py
-cd book && quarto preview
-```
-
-`book/prepare.py`는 빌드할 때 [번역 가이드](TRANSLATION_GUIDE.md)의 용어표로 웹북의 '용어집' 페이지를 만들고, `book/postrender.py`는 렌더링이 끝난 뒤 웹북 검색 색인(`search-index.json`)을 만듭니다. `book/prepare.py`는 빌드할 때만 장 제목, 수식 표기, 접힌 코드, 옮긴이 주 상자를 책 형식으로 바꿉니다. 그래서 노트북은 원서와 같은 구조로 두면 됩니다.
-
-읽기 기능(읽은 장 기록, 이어 읽기, 장 끝 평가, 허브로 가는 링크)은 `book/reader.html`, GA4 설정은 `book/analytics.html`에 있습니다. 읽은 장 기록은 독자의 브라우저(`localStorage`의 `cil-book-*`)에만 남고, 같은 도메인의 [Causal Inference Hub](https://causalinferencelab.github.io/)가 이 기록으로 진도와 활동 여권 스탬프를 보여 줍니다.
-
-<br>
-
-## 원서 변경 반영
-
-원서가 바뀌면 GitHub Actions(`Upstream watch`)가 매월 1일 확인해 바뀐 장과 본문 변경을 정리한 이슈를 메인테이너에게 배정합니다. 번역을 고친 PR이 메인테이너 검토를 거쳐 머지되면 웹북에 반영되고 이슈는 자동으로 닫힙니다. 자세한 절차는 [번역 가이드](TRANSLATION_GUIDE.md#5-원서-변경-반영)에 있습니다.
 
 <br>
 

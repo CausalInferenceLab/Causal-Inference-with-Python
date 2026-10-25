@@ -428,6 +428,101 @@ main:has(.hero) #title-block-header {
   text-align: center;
 }
 
+// 모든 페이지 맨 위: Causal Inference Hub 띠
+.cil-hubbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  margin: 0 0 1.4rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba($indigo, 0.14);
+  background: linear-gradient(90deg, $lavender-soft 0%, rgba($lavender-soft, 0.35) 100%);
+  font-size: 0.84rem;
+}
+
+.cil-hubbar a {
+  text-decoration: none;
+}
+
+.cil-hubbar-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $navy;
+}
+
+.cil-hubbar-home img {
+  width: 22px;
+  height: auto;
+  margin: 0;
+}
+
+.cil-hubbar-home span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.cil-hubbar-home b {
+  font-weight: 800;
+}
+
+.cil-hubbar-home small {
+  font-size: 0.72rem;
+  color: $sidebar-fg;
+}
+
+.cil-hubbar-where {
+  color: lighten($body-color, 25%);
+}
+
+.cil-hubbar-where b {
+  color: $indigo;
+}
+
+.cil-hubbar-nav {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.cil-hubbar-nav a {
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  color: $indigo;
+  font-weight: 650;
+}
+
+.cil-hubbar-nav a:hover {
+  background: rgba($indigo, 0.1);
+}
+
+@media (max-width: 767.98px) {
+  .cil-hubbar-where {
+    display: none;
+  }
+  .cil-hubbar-nav {
+    margin-left: 0;
+    width: 100%;
+  }
+  .cil-hubbar-nav a {
+    padding-left: 0;
+    padding-right: 0.8rem;
+  }
+}
+
+a.hero-brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.hero-brand:hover .hero-brand-team {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 // 사이드바 맨 위: Causal Inference Hub로 가는 카드
 .hub-card {
   display: flex;
@@ -512,28 +607,6 @@ main:has(.hero) #title-block-header {
   .cil-hub-mobile {
     display: none;
   }
-}
-
-// 첫 화면 위치 표시: 인과추론 허브 › 서가
-.hero .hero-crumb {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 1.1rem;
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.hero .hero-crumb a {
-  color: rgba(255, 255, 255, 0.88);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-}
-
-.hero .hero-crumb a:hover {
-  color: #fff;
-  border-bottom-color: #fff;
 }
 
 // 장 첫머리: 분량, 위치, 노트북
