@@ -18,7 +18,7 @@
 
   // ---------- 허브(같은 도메인의 팀 사이트)로 가는 링크: 같은 탭, utm_*, 클릭 이벤트 ----------
   function placement(a) {
-    var spots = [["#quarto-sidebar", "sidebar"], [".quarto-secondary-nav", "topbar"], [".nav-footer", "footer"],
+    var spots = [[".cil-hubbar", "hubbar"], ["#quarto-sidebar", "sidebar"], [".quarto-secondary-nav", "topbar"], [".nav-footer", "footer"],
       [".hero", "hero"], [".hub-banner", "intro_banner"], [".cil-end", "chapter_end"], ["main", "content"]];
     for (var i = 0; i < spots.length; i++) if (a.closest(spots[i][0])) return spots[i][1];
     return "other";
@@ -72,6 +72,20 @@
       });
     }
     paintSidebar();
+
+    // 모든 페이지 맨 위: 이 책이 Causal Inference Hub의 자료라는 띠
+    if (main) {
+      var bar0 = document.createElement("div");
+      bar0.className = "cil-hubbar";
+      bar0.innerHTML =
+        '<a class="cil-hubbar-home" href="' + HUB + '"><img src="assets/causal-lab-mark.png" alt="" width="22" height="25">' +
+          '<span><b>Causal Inference Hub</b><small>가짜연구소 인과추론팀</small></span></a>' +
+        '<span class="cil-hubbar-where">이 책은 허브 커리큘럼의 <b>L1</b> 자료입니다</span>' +
+        '<nav class="cil-hubbar-nav" aria-label="Causal Inference Hub">' +
+          '<a href="' + HUB + '#curriculum">커리큘럼</a><a href="' + HUB + '#posts">연재</a><a href="' + HUB + '#join">참여하기</a>' +
+        "</nav>";
+      main.insertBefore(bar0, main.firstChild);
+    }
 
     // 좁은 화면 상단 막대: 허브 바로가기
     var nav = document.querySelector(".quarto-secondary-nav .container-fluid");

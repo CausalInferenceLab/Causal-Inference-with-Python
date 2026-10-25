@@ -37,7 +37,7 @@ book:
     collapse-level: 3
     header: |
       <a class="hub-card" href="https://causalinferencelab.github.io/"><span class="hub-card-arrow" aria-hidden="true">←</span><span class="hub-card-text"><b>Causal Inference Hub</b><small>인과추론팀 커리큘럼과 오픈소스</small></span></a>
-      <a class="brand-lockup" href="https://pseudo-lab.com/" target="_blank" rel="noopener" aria-label="가짜연구소">
+      <a class="brand-lockup" href="https://causalinferencelab.github.io/" title="Causal Inference Hub로 가기" aria-label="가짜연구소 인과추론팀 Causal Inference Hub로 가기">
         <img class="brand-pseudolab only-light" src="assets/pseudolab-dark.png" alt="가짜연구소 Pseudo Lab">
         <img class="brand-pseudolab only-dark" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
         <span class="brand-divider"></span>

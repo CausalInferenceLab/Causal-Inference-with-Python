@@ -234,3 +234,18 @@ body {
   background: rgba(111, 207, 151, 0.1);
   border-color: rgba(111, 207, 151, 0.3);
 }
+
+.cil-hubbar {
+  border-color: #2b2e40;
+  background: linear-gradient(90deg, rgba(180, 165, 234, 0.12) 0%, rgba(180, 165, 234, 0.04) 100%);
+}
+
+.cil-hubbar-home,
+.cil-hubbar-where b,
+.cil-hubbar-nav a {
+  color: #eceaff;
+}
+
+.cil-hubbar-where {
+  color: #9a9db0;
+}

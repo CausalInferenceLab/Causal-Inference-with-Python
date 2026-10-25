@@ -7,16 +7,11 @@ aliases:
 ```{=html}
 <div class="hero">
   <div class="hero-main">
-    <nav class="hero-crumb" aria-label="위치">
-      <a href="https://causalinferencelab.github.io/">인과추론 허브</a>
-      <span aria-hidden="true">›</span>
-      <a href="https://causalinferencelab.github.io/#station=Causal-Inference-with-Python">커리큘럼 L1</a>
-    </nav>
-    <div class="hero-brand">
+    <a class="hero-brand" href="https://causalinferencelab.github.io/" title="Causal Inference Hub로 가기">
       <img class="hero-pseudolab" src="assets/pseudolab-light.png" alt="가짜연구소 Pseudo Lab">
       <span class="hero-brand-divider"></span>
       <span class="hero-brand-team">인과추론팀 <b>Causal-Lab</b></span>
-    </div>
+    </a>
     <p class="hero-title">Python으로 하는<br>인과추론</p>
     <p class="hero-sub"><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
     <div class="hero-actions">

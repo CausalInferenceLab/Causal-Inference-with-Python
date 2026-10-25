@@ -48,7 +48,7 @@ CHAPTERS = {
     "21-Meta-Learners": "메타러너",
     "22-Debiased-Orthogonal-Machine-Learning": "편향 제거/직교화 머신러닝",
     "23-Challenges-with-Effect-Heterogeneity-and-Nonlinearity": "효과 이질성과 비선형성",
-    "24-The-Diff-in-Diff-Saga": "이중차분법 사가",
+    "24-The-Diff-in-Diff-Saga": "이중차분법 시리즈",
     "25-Synthetic-Diff-in-Diff": "합성 이중차분법",
     "Debiasing-with-Orthogonalization": "직교화로 편향 제거하기",
     "Debiasing-with-Propensity-Score": "성향점수로 편향 제거하기",
