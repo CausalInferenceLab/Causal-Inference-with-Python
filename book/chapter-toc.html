@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!toc || !header || !document.querySelector("main h2")) return;
   var box = document.createElement("details");
   box.className = "inline-toc";
-  box.open = true;
+  // 첫 화면은 표지(hero)가 먼저 보이도록 표지 아래에 접어 둔다
+  var hero = document.querySelector("main .hero");
+  box.open = !hero;
   var summary = document.createElement("summary");
   summary.textContent = "이 장의 내용";
   box.appendChild(summary);
@@ -17,6 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
   list.querySelectorAll("[id]").forEach(function (el) { el.removeAttribute("id"); });
   list.querySelectorAll("a").forEach(function (a) { a.classList.remove("active"); a.removeAttribute("data-scroll-target"); });
   box.appendChild(list);
-  header.insertAdjacentElement("afterend", box);
+  (hero || header).insertAdjacentElement("afterend", box);
 });
 </script>
