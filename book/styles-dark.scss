@@ -249,3 +249,25 @@ body {
 .cil-hubbar-where {
   color: #9a9db0;
 }
+
+.authors .author {
+  background: #1b1d2a;
+  border-color: #2b2e40;
+}
+
+.authors .author-tr {
+  background: rgba(169, 150, 214, 0.1);
+  border-color: rgba(169, 150, 214, 0.35);
+}
+
+.authors .author-role {
+  color: #b4a5ea;
+}
+
+.authors .author-name {
+  color: #eceaff;
+}
+
+.sidebar-credit:hover {
+  color: #b4a5ea;
+}

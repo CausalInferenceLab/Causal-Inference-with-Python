@@ -48,6 +48,10 @@
     var page = slug(location.pathname);
     var main = document.getElementById("quarto-document-content");
 
+    // 지은이·옮긴이 한 줄은 책 제목 바로 아래로
+    var credit = document.querySelector("#quarto-sidebar .sidebar-credit"), stitle = document.querySelector("#quarto-sidebar .sidebar-title");
+    if (credit && stitle) { stitle.insertAdjacentElement("afterend", credit); credit.classList.add("is-under-title"); }
+
     // 책의 장 목록: 왼쪽 목차 순서(들어가며·용어집 제외)
     var chapters = [], seen = {};
     document.querySelectorAll("#quarto-sidebar a.sidebar-link[href]").forEach(function (a) {
@@ -80,7 +84,7 @@
       bar0.innerHTML =
         '<a class="cil-hubbar-home" href="' + HUB + '"><img src="assets/causal-lab-mark.png" alt="" width="22" height="25">' +
           '<span><b>Causal Inference Hub</b><small>가짜연구소 인과추론팀</small></span></a>' +
-        '<span class="cil-hubbar-where">이 책은 허브 커리큘럼의 <b>L1</b> 자료입니다</span>' +
+        '<span class="cil-hubbar-where">이 책은 허브 커리큘럼 <b>Level 1</b> 자료입니다</span>' +
         '<nav class="cil-hubbar-nav" aria-label="Causal Inference Hub">' +
           '<a href="' + HUB + '#curriculum">커리큘럼</a><a href="' + HUB + '#posts">연재</a><a href="' + HUB + '#join">참여하기</a>' +
         "</nav>";
@@ -266,6 +270,22 @@
       });
       io.observe(sentinel);
     }
+  });
+
+  // 줄보다 긴 인라인 수식은 그 줄 안에서만 옆으로 밀어 보게 한다(좁은 화면에서 페이지 전체가 밀리지 않도록)
+  function fitMath() {
+    document.querySelectorAll("main span.math.inline").forEach(function (s) {
+      var c = s.querySelector("mjx-container"), box = s.closest("p, li, td, dd") || s.parentElement;
+      if (!c || !box) return;
+      s.classList.remove("math-wide");
+      if (c.getBoundingClientRect().width > box.clientWidth) s.classList.add("math-wide");
+    });
+  }
+  window.addEventListener("load", function () {
+    var mj = window.MathJax && window.MathJax.startup && window.MathJax.startup.promise;
+    (mj || Promise.resolve()).then(fitMath);
+    var t;
+    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(fitMath, 200); });
   });
 })();
 </script>

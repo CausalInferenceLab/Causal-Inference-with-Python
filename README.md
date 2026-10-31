@@ -1,6 +1,8 @@
 # Python으로 하는 인과추론: 개념부터 실습까지
 
-Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) 한국어판입니다.
+[Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)의 한국어판입니다.
+
+Matheus Facure 지음 · [신진수](https://www.linkedin.com/in/jinsoo-shin-436060162/)와 [가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김
 
 <p align="center">
   <a href="https://causalinferencelab.github.io/Causal-Inference-with-Python/"><img src="book/assets/readme/banner.png" alt="Python으로 하는 인과추론 웹북" width="100%"></a>
@@ -34,7 +36,7 @@ Matheus Facure의 [Causal Inference for The Brave and True](https://matheusfacur
 
 번역은 전문 번역가가 아니라 데이터 분석가, 데이터 과학자, 연구자들이 함께 했습니다. 용어는 『실무로 통하는 인과추론 with 파이썬』(한빛미디어)과 맞췄고, 핵심 용어는 처음 나올 때 영어를 함께 적었습니다. 어색한 문장이나 잘못된 번역을 발견하면 언제든 알려 주세요.
 
-이 책은 인과추론팀의 오픈소스와 자료를 L0–L4 커리큘럼으로 엮은 [Causal Inference Hub](https://causalinferencelab.github.io/)의 L1 중심 자료입니다. [허브에서 이 책의 자리](https://causalinferencelab.github.io/#station=Causal-Inference-with-Python)를 열면 앞뒤로 이어지는 자료를 볼 수 있습니다.
+이 책은 인과추론팀의 오픈소스와 자료를 Level 0–4 커리큘럼으로 엮은 [Causal Inference Hub](https://causalinferencelab.github.io/)의 Level 1 중심 자료입니다. [허브에서 이 책의 자리](https://causalinferencelab.github.io/#station=Causal-Inference-with-Python)를 열면 앞뒤로 이어지는 자료를 볼 수 있습니다.
 
 <br>
 

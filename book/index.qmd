@@ -14,6 +14,7 @@ aliases:
     </a>
     <p class="hero-title">Python으로 하는<br>인과추론</p>
     <p class="hero-sub"><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> 한국어판. 인과추론의 기초부터 실무 응용까지, 모든 실습을 파이썬으로.</p>
+    <p class="hero-credit">Matheus Facure 지음 · <a href="#authors">신진수</a>와 가짜연구소 인과추론팀 옮김</p>
     <div class="hero-actions">
       <a class="primary" href="01-Introduction-To-Causality.html">1장부터 읽기</a>
       <a class="ghost" href="https://causalinferencelab.github.io/">인과추론 허브</a>
@@ -95,15 +96,15 @@ aliases:
   <span class="hub-banner-text">
     <span class="hub-banner-k">가짜연구소 인과추론팀</span>
     <span class="hub-banner-t">Causal Inference Hub</span>
-    <span class="hub-banner-d">웹북, 영상, 스터디 자료, 데이터 에이전트까지. 팀이 만든 오픈소스를 L0–L4 커리큘럼으로 엮었습니다.</span>
+    <span class="hub-banner-d">웹북, 영상, 스터디 자료, 데이터 에이전트까지. 팀이 만든 오픈소스를 Level 0–4 커리큘럼으로 엮었습니다.</span>
   </span>
   <span class="hub-banner-go">허브 둘러보기 <span aria-hidden="true">→</span></span>
 </a>
 ```
 
-이 책은 가짜연구소 인과추론팀의 [Causal Inference Hub](https://causalinferencelab.github.io/)에 있는 자료입니다. 허브는 팀이 2022년부터 만든 오픈소스와 자료를 L0부터 L4까지 커리큘럼으로 엮어 둔 곳이고, 이 책은 L1('어떻게 추정하나')의 중심 자료입니다. 허브에서는 이 책을 'Brave & True 인과추론 번역서'로 소개합니다.
+이 책은 가짜연구소 인과추론팀의 [Causal Inference Hub](https://causalinferencelab.github.io/)에 있는 자료입니다. 허브는 팀이 2022년부터 만든 오픈소스와 자료를 Level 0부터 4까지 커리큘럼으로 엮어 둔 곳이고, 이 책은 Level 1('어떻게 추정하나')의 중심 자료입니다. 허브에서는 이 책을 'Brave & True 인과추론 번역서'로 소개합니다.
 
-인과추론이 처음이라면 L0의 [영상으로 여는 인과추론](https://causalinferencelab.github.io/causal-studio/)으로 먼저 감을 잡고 넘어와도 좋습니다. 책을 마친 뒤에는 관심에 따라 이렇게 이어 갈 수 있습니다.
+인과추론이 처음이라면 Level 0의 [영상으로 여는 인과추론](https://causalinferencelab.github.io/causal-studio/)으로 먼저 감을 잡고 넘어와도 좋습니다. 책을 마친 뒤에는 관심에 따라 이렇게 이어 갈 수 있습니다.
 
 - 내 데이터에 적용해 보고 싶다면: [산업 사례 템플릿](https://causalinferencelab.github.io/#station=causal-inference-practice), [책 예제 코드](https://causalinferencelab.github.io/#station=causal-inference-in-python-code)
 - 메타러너와 이중 머신러닝을 코드로 더 익히고 싶다면: ML 트랙의 [CausalML 스터디](https://causalinferencelab.github.io/#station=causal-inference-with-causalML)
@@ -124,6 +125,10 @@ aliases:
 
 한국어 번역에 흔쾌히 동의해 준 Matheus Facure와, 번역과 실습 자료를 함께 만든 인과추론팀 멤버들에게 감사드립니다.
 
+```{=html}
+<p class="signoff">2026년 10월<br>옮긴이 신진수</p>
+```
+
 ## 원저자의 감사의 말
 
 > 이 시리즈 전체를 Joshua Angrist, Alberto Abadie, Christopher Walters의 훌륭한 계량경제학 강의에 바치는 헌사로 생각합니다. 1부의 아이디어는 대부분 이들이 미국경제학회(American Economic Association)에서 한 강의에서 가져왔습니다. Angrist의 책들은 계량경제학이 아주 유용할 뿐 아니라 무척 재미있다는 것을 알려 주었고, Miguel Hernan과 Jamie Robins의 책은 가장 까다로운 인과적 질문 앞에서 늘 믿고 기댄 동반자였습니다.
@@ -133,3 +138,47 @@ aliases:
 - [Causal Inference: What If](https://miguelhernan.org/whatifbook)
 
 원서는 누구나 무료로 볼 수 있는 오픈소스 자료입니다. 원서가 도움이 되었다면 저자의 [Patreon](https://www.patreon.com/causal_inference_for_the_brave_and_true)을 후원하거나 [원서 저장소에 스타](https://github.com/matheusfacure/python-causality-handbook/stargazers)를 남겨 주세요.
+
+## 지은이와 옮긴이 {#authors}
+
+```{=html}
+<div class="authors">
+  <section class="author">
+    <p class="author-role">지은이</p>
+    <p class="author-name">Matheus Facure</p>
+    <p class="author-desc">브라질 핀테크 Nubank의 경제학자이자 데이터 과학자로, 신용카드와 대출, 마케팅 문제에 인과추론을 적용해 왔습니다. 이 책을 누구나 무료로 볼 수 있게 공개했고, 이후 『Causal Inference in Python』(O'Reilly, 2023)을 썼습니다.</p>
+    <p class="author-links"><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">원서</a><a href="https://github.com/matheusfacure">GitHub</a></p>
+  </section>
+  <section class="author author-tr">
+    <p class="author-role">옮긴이</p>
+    <p class="author-name">신진수</p>
+    <p class="author-desc">크래프톤 시니어 데이터 분석가로 크리에이터 생태계 분석과 마케팅 효과 측정을 맡고 있습니다. 가짜연구소 이사로 인과추론팀을 이끌고 있으며, 『실무로 통하는 인과추론 with 파이썬』(한빛미디어) 번역을 주도했습니다. Korea Business Experimentation Symposium(KBES)과 데이터 포럼처럼 학계와 산업을 잇는 자리도 함께 만들고 있습니다.</p>
+    <p class="author-links"><a href="https://www.linkedin.com/in/jinsoo-shin-436060162/">LinkedIn</a><a href="https://github.com/jsshin2022">GitHub</a><a href="https://causalinferencelab.github.io/article.html#brave-true-webbook-01">번역 노트</a></p>
+  </section>
+  <section class="author author-team">
+    <p class="author-role">함께 옮긴 사람들</p>
+    <p class="author-name">가짜연구소 인과추론팀</p>
+    <p class="author-desc">데이터 분석가, 데이터 과학자, 연구자가 모인 팀입니다. 2022년부터 가짜연구소 4기에서 6기에 걸쳐 스터디를 하며 이 책을 처음 옮겼고, 이번 개정까지 함께했습니다.</p>
+    <p class="author-links"><a href="https://causalinferencelab.github.io/#contrib">함께한 사람들</a><a href="https://github.com/CausalInferenceLab/Causal-Inference-with-Python/graphs/contributors">기여자</a></p>
+  </section>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "Python으로 하는 인과추론",
+  "alternateName": "Causal Inference for The Brave and True 한국어판",
+  "inLanguage": "ko",
+  "url": "https://causalinferencelab.github.io/Causal-Inference-with-Python/",
+  "isAccessibleForFree": true,
+  "author": {"@type": "Person", "name": "Matheus Facure", "url": "https://github.com/matheusfacure"},
+  "translator": [
+    {"@type": "Person", "name": "신진수", "url": "https://www.linkedin.com/in/jinsoo-shin-436060162/", "sameAs": ["https://github.com/jsshin2022"]},
+    {"@type": "Organization", "name": "가짜연구소 인과추론팀", "url": "https://causalinferencelab.github.io/"}
+  ],
+  "translationOfWork": {"@type": "Book", "name": "Causal Inference for The Brave and True", "inLanguage": "en", "url": "https://matheusfacure.github.io/python-causality-handbook/"},
+  "publisher": {"@type": "Organization", "name": "가짜연구소", "url": "https://pseudo-lab.com/"}
+}
+</script>
+```

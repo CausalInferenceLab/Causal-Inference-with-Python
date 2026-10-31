@@ -18,6 +18,9 @@ book:
   author:
     - name: Matheus Facure
       role: 지은이
+    - name: 신진수
+      role: 옮긴이
+      url: https://www.linkedin.com/in/jinsoo-shin-436060162/
     - name: 가짜연구소 인과추론팀
       role: 옮긴이
   site-url: https://causalinferencelab.github.io/Causal-Inference-with-Python/
@@ -43,8 +46,9 @@ book:
         <span class="brand-divider"></span>
         <img class="brand-causal" src="assets/causal-lab-mark.png" alt="인과추론팀 Causal-Lab">
       </a>
+      <a class="sidebar-credit" href="index.html#authors">Matheus Facure 지음 · 신진수 외 옮김</a>
   page-footer:
-    left: "[가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김 · 원서 © [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)"
+    left: "[Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) 지음 · [신진수](index.html#authors)와 [가짜연구소](https://pseudo-lab.com/) 인과추론팀 옮김"
     center:
       - text: 인과추론 허브
         href: https://causalinferencelab.github.io/

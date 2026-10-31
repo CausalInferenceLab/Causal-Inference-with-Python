@@ -980,6 +980,118 @@ a.hub-banner:hover {
   opacity: 0.88;
 }
 
+.hero .hero-credit {
+  margin: -0.9rem 0 1.5rem;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero .hero-credit a {
+  color: #fff;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero .hero-credit a:hover {
+  text-decoration-color: #fff;
+}
+
+// 들어가며 끝 서명
+.signoff {
+  margin: 1.4rem 0 0.4rem;
+  text-align: right;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: $sidebar-fg;
+}
+
+// 지은이와 옮긴이
+.authors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  margin: 1rem 0 2rem;
+}
+
+.authors .author {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.2rem 1rem;
+  border-radius: 14px;
+  border: 1px solid $border-color;
+  background: $body-bg;
+}
+
+.authors .author-tr {
+  border-color: rgba($indigo, 0.35);
+  background: $lavender-soft;
+}
+
+.authors .author-team {
+  grid-column: 1 / -1;
+}
+
+.authors .author p {
+  margin: 0;
+}
+
+.authors .author-role {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $indigo;
+}
+
+.authors .author-name {
+  margin-top: 0.15rem !important;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $navy;
+}
+
+.authors .author-desc {
+  flex: 1;
+  margin-top: 0.55rem !important;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.authors .author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  margin-top: 0.8rem !important;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.authors .author-links a {
+  text-decoration: none;
+}
+
+.authors .author-links a::after {
+  content: " →";
+}
+
+// 사이드바 로고 아래 지은이·옮긴이 한 줄
+.sidebar-credit {
+  display: block;
+  margin: -0.45rem 0 0.9rem;
+  font-size: 0.78rem;
+  color: $sidebar-fg;
+  text-decoration: none;
+}
+
+.sidebar-credit:hover {
+  color: $indigo;
+}
+
+.sidebar-credit.is-under-title {
+  margin: 0.15rem 0 0.2rem;
+}
+
 // 사이드바 상단: 가짜연구소 × 인과추론팀
 .brand-lockup {
   display: flex;
@@ -1408,6 +1520,12 @@ h1.title .chapter-number {
 
 // 휴대폰: 목차 버튼에 글자를 붙여 찾기 쉽게
 @media (max-width: 767.98px) {
+  .quarto-secondary-nav .quarto-btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    white-space: nowrap;
+  }
   .quarto-secondary-nav .quarto-btn-toggle::after {
     content: "목차";
     margin-left: 0.35rem;
@@ -1803,4 +1921,14 @@ html.cil-search-open {
   color: #fff !important;
   font-weight: 600;
   text-decoration: none !important;
+}
+
+
+// 줄보다 긴 인라인 수식: 그 수식만 가로로 스크롤
+span.math.inline.math-wide {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.15rem 0;
 }
